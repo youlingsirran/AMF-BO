@@ -1,0 +1,2029 @@
+2026-06-17 14:55:53 [INFO]: Currently using GPU 0
+2026-06-17 14:55:53 [INFO]: dataset: gaia
+2026-06-17 14:55:53 [INFO]: reconstruct: True
+2026-06-17 14:55:53 [INFO]: log_step: 20
+2026-06-17 14:55:53 [INFO]: gpu_device: 0
+2026-06-17 14:55:53 [INFO]: modalities: ['metric', 'trace', 'log']
+2026-06-17 14:55:53 [INFO]: metric_direction: True
+2026-06-17 14:55:53 [INFO]: trace_op: True
+2026-06-17 14:55:53 [INFO]: trace_ab_type: True
+2026-06-17 14:55:53 [INFO]: aug_percent: 0.2
+2026-06-17 14:55:53 [INFO]: aug_times: 10
+2026-06-17 14:55:53 [INFO]: TO: True
+2026-06-17 14:55:53 [INFO]: CM: True
+2026-06-17 14:55:53 [INFO]: dynamic_weight: True
+2026-06-17 14:55:53 [INFO]: temperature: 0.3
+2026-06-17 14:55:53 [INFO]: contrastive_loss_scale: 0.1
+2026-06-17 14:55:53 [INFO]: batch_size: 512
+2026-06-17 14:55:53 [INFO]: alert_embedding_dim: 128
+2026-06-17 14:55:53 [INFO]: graph_hidden_dim: 64
+2026-06-17 14:55:53 [INFO]: graph_out: 32
+2026-06-17 14:55:53 [INFO]: graph_layers: 2
+2026-06-17 14:55:53 [INFO]: linear_hidden: [64]
+2026-06-17 14:55:53 [INFO]: lr: 0.001
+2026-06-17 14:55:53 [INFO]: epochs: 500
+2026-06-17 14:55:53 [INFO]: weight_decay: 0.0001
+2026-06-17 14:55:53 [INFO]: feat_drop: 0
+2026-06-17 14:55:53 [INFO]: patience: 10
+2026-06-17 14:55:53 [INFO]: ft_num: 5
+2026-06-17 14:55:53 [INFO]: aggregator: mean
+2026-06-17 14:55:54 [INFO]: MainModel(
+  (tvdiag): Encoder(
+    (graph_encoder): ModuleDict(
+      (metric): SAGEEncoder(
+        (sage_layers): ModuleList(
+          (0): SAGEConv(
+            (feat_drop): Dropout(p=0, inplace=False)
+            (fc_neigh): Linear(in_features=128, out_features=64, bias=False)
+            (fc_self): Linear(in_features=128, out_features=64, bias=False)
+          )
+          (1): SAGEConv(
+            (feat_drop): Dropout(p=0, inplace=False)
+            (fc_neigh): Linear(in_features=64, out_features=32, bias=False)
+            (fc_self): Linear(in_features=64, out_features=32, bias=False)
+          )
+        )
+        (norm_layers): ModuleList(
+          (0): BatchNorm1d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (1): BatchNorm1d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (residual_proj): ModuleList(
+          (0): Linear(in_features=128, out_features=64, bias=False)
+          (1): Linear(in_features=64, out_features=32, bias=False)
+        )
+      )
+      (log): SAGEEncoder(
+        (sage_layers): ModuleList(
+          (0): SAGEConv(
+            (feat_drop): Dropout(p=0, inplace=False)
+            (fc_neigh): Linear(in_features=128, out_features=64, bias=False)
+            (fc_self): Linear(in_features=128, out_features=64, bias=False)
+          )
+          (1): SAGEConv(
+            (feat_drop): Dropout(p=0, inplace=False)
+            (fc_neigh): Linear(in_features=64, out_features=32, bias=False)
+            (fc_self): Linear(in_features=64, out_features=32, bias=False)
+          )
+        )
+        (norm_layers): ModuleList(
+          (0): BatchNorm1d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (1): BatchNorm1d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (residual_proj): ModuleList(
+          (0): Linear(in_features=128, out_features=64, bias=False)
+          (1): Linear(in_features=64, out_features=32, bias=False)
+        )
+      )
+      (trace): SAGEEncoder(
+        (sage_layers): ModuleList(
+          (0): SAGEConv(
+            (feat_drop): Dropout(p=0, inplace=False)
+            (fc_neigh): Linear(in_features=128, out_features=64, bias=False)
+            (fc_self): Linear(in_features=128, out_features=64, bias=False)
+          )
+          (1): SAGEConv(
+            (feat_drop): Dropout(p=0, inplace=False)
+            (fc_neigh): Linear(in_features=64, out_features=32, bias=False)
+            (fc_self): Linear(in_features=64, out_features=32, bias=False)
+          )
+        )
+        (norm_layers): ModuleList(
+          (0): BatchNorm1d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (1): BatchNorm1d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (residual_proj): ModuleList(
+          (0): Linear(in_features=128, out_features=64, bias=False)
+          (1): Linear(in_features=64, out_features=32, bias=False)
+        )
+      )
+    )
+    (fusion): AdaptiveFusionTopology(
+      (projection_net): Linear(in_features=32, out_features=32, bias=True)
+      (cross_attn): MultiheadAttention(
+        (out_proj): NonDynamicallyQuantizableLinear(in_features=32, out_features=32, bias=True)
+      )
+      (project): Linear(in_features=64, out_features=32, bias=True)
+      (layer_norm): LayerNorm((32,), eps=1e-05, elementwise_affine=True)
+      (cross_ATTN): DualCrossAttnFusion(
+        (q_proj): Linear(in_features=32, out_features=32, bias=True)
+        (k_proj): Linear(in_features=32, out_features=32, bias=True)
+        (v_proj): Linear(in_features=32, out_features=32, bias=True)
+        (out_proj): Linear(in_features=32, out_features=32, bias=True)
+        (norm1): LayerNorm((32,), eps=1e-05, elementwise_affine=True)
+        (norm2): LayerNorm((32,), eps=1e-05, elementwise_affine=True)
+        (dropout): Dropout(p=0.2, inplace=False)
+        (drop1): Dropout(p=0.2, inplace=False)
+        (ffb): Sequential(
+          (0): Linear(in_features=32, out_features=64, bias=True)
+          (1): ReLU()
+          (2): Dropout(p=0.2, inplace=False)
+          (3): Linear(in_features=64, out_features=32, bias=True)
+        )
+      )
+      (fusion_ATTN): TripleCrossAttnFusion(
+        (q_proj): Linear(in_features=32, out_features=32, bias=True)
+        (k_proj): Linear(in_features=32, out_features=32, bias=True)
+        (v_proj): Linear(in_features=32, out_features=32, bias=True)
+        (out_proj1): Linear(in_features=32, out_features=32, bias=True)
+        (out_proj2): Linear(in_features=32, out_features=32, bias=True)
+        (merge): Linear(in_features=64, out_features=32, bias=True)
+        (norm1): LayerNorm((32,), eps=1e-05, elementwise_affine=True)
+        (norm2): LayerNorm((32,), eps=1e-05, elementwise_affine=True)
+        (dropout): Dropout(p=0.2, inplace=False)
+        (drop1): Dropout(p=0.2, inplace=False)
+        (drop2): Dropout(p=0.2, inplace=False)
+        (drop3): Dropout(p=0.2, inplace=False)
+        (ffb): Sequential(
+          (0): Linear(in_features=32, out_features=64, bias=True)
+          (1): ReLU()
+          (2): Dropout(p=0.2, inplace=False)
+          (3): Linear(in_features=64, out_features=32, bias=True)
+        )
+      )
+    )
+    (locator): Voter(
+      (net): FullyConnected(
+        (net): Sequential(
+          (0): Linear(in_features=32, out_features=16, bias=True)
+          (1): Dropout(p=0.2, inplace=False)
+          (2): ReLU()
+          (3): Linear(in_features=16, out_features=1, bias=True)
+        )
+      )
+    )
+    (locator2): Voter(
+      (net): FullyConnected(
+        (net): Sequential(
+          (0): Linear(in_features=32, out_features=16, bias=True)
+          (1): Dropout(p=0.2, inplace=False)
+          (2): ReLU()
+          (3): Linear(in_features=16, out_features=1, bias=True)
+        )
+      )
+    )
+    (typeClassifier): Classifier(
+      (net): Linear(in_features=32, out_features=5, bias=True)
+    )
+    (pre_abc): Sequential(
+      (0): Linear(in_features=96, out_features=32, bias=True)
+      (1): Dropout(p=0.2, inplace=False)
+      (2): ReLU()
+      (3): Linear(in_features=32, out_features=32, bias=True)
+    )
+    (pre_ab): Sequential(
+      (0): Linear(in_features=64, out_features=32, bias=True)
+      (1): Dropout(p=0.2, inplace=False)
+      (2): ReLU()
+      (3): Linear(in_features=32, out_features=32, bias=True)
+    )
+  )
+)
+2026-06-17 14:55:54 [INFO]: Start training for 500 epochs.
+2026-06-17 14:55:54 [DEBUG]: RCA_loss: 2.143, TC_loss: 1.713
+2026-06-17 14:55:54 [DEBUG]: RCA_loss: 2.055, TC_loss: 1.399
+2026-06-17 14:55:55 [DEBUG]: RCA_loss: 1.976, TC_loss: 1.378
+2026-06-17 14:55:55 [DEBUG]: RCA_loss: 2.034, TC_loss: 1.269
+2026-06-17 14:55:55 [DEBUG]: RCA_loss: 2.155, TC_loss: 1.052
+2026-06-17 14:55:55 [DEBUG]: RCA_loss: 2.034, TC_loss: 0.868
+2026-06-17 14:55:55 [DEBUG]: RCA_loss: 2.079, TC_loss: 0.960
+2026-06-17 14:55:55 [DEBUG]: RCA_loss: 1.910, TC_loss: 0.722
+2026-06-17 14:55:56 [DEBUG]: RCA_loss: 1.956, TC_loss: 0.792
+2026-06-17 14:55:56 [DEBUG]: RCA_loss: 1.900, TC_loss: 0.872
+2026-06-17 14:55:56 [DEBUG]: RCA_loss: 1.947, TC_loss: 0.747
+2026-06-17 14:55:56 [DEBUG]: RCA_loss: 1.925, TC_loss: 0.624
+2026-06-17 14:55:56 [DEBUG]: RCA_loss: 1.885, TC_loss: 0.576
+2026-06-17 14:55:56 [DEBUG]: RCA_loss: 1.961, TC_loss: 0.744
+2026-06-17 14:55:56 [DEBUG]: RCA_loss: 1.814, TC_loss: 0.640
+2026-06-17 14:55:57 [DEBUG]: RCA_loss: 1.876, TC_loss: 0.548
+2026-06-17 14:55:57 [DEBUG]: RCA_loss: 1.783, TC_loss: 0.749
+2026-06-17 14:55:57 [DEBUG]: RCA_loss: 1.755, TC_loss: 0.570
+2026-06-17 14:55:57 [DEBUG]: RCA_loss: 1.766, TC_loss: 0.842
+2026-06-17 14:55:57 [DEBUG]: RCA_loss: 1.764, TC_loss: 0.544
+2026-06-17 14:55:57 [DEBUG]: RCA_loss: 1.518, TC_loss: 0.730
+2026-06-17 14:55:58 [DEBUG]: RCA_loss: 1.648, TC_loss: 0.500
+2026-06-17 14:55:58 [DEBUG]: RCA_loss: 1.721, TC_loss: 0.549
+2026-06-17 14:55:58 [DEBUG]: RCA_loss: 1.543, TC_loss: 0.650
+2026-06-17 14:55:58 [DEBUG]: RCA_loss: 1.600, TC_loss: 0.397
+2026-06-17 14:55:58 [DEBUG]: RCA_loss: 1.376, TC_loss: 0.610
+2026-06-17 14:55:58 [DEBUG]: RCA_loss: 1.248, TC_loss: 0.441
+2026-06-17 14:55:58 [DEBUG]: RCA_loss: 1.516, TC_loss: 0.513
+2026-06-17 14:55:59 [DEBUG]: RCA_loss: 1.390, TC_loss: 0.411
+2026-06-17 14:55:59 [DEBUG]: RCA_loss: 1.321, TC_loss: 0.476
+2026-06-17 14:55:59 [DEBUG]: RCA_loss: 1.359, TC_loss: 0.626
+2026-06-17 14:55:59 [DEBUG]: RCA_loss: 1.068, TC_loss: 0.393
+2026-06-17 14:55:59 [DEBUG]: RCA_loss: 1.369, TC_loss: 0.442
+2026-06-17 14:55:59 [DEBUG]: RCA_loss: 0.926, TC_loss: 0.422
+2026-06-17 14:55:59 [DEBUG]: RCA_loss: 1.131, TC_loss: 0.405
+2026-06-17 14:56:00 [DEBUG]: RCA_loss: 1.204, TC_loss: 0.365
+2026-06-17 14:56:00 [DEBUG]: RCA_loss: 0.798, TC_loss: 0.402
+2026-06-17 14:56:00 [DEBUG]: RCA_loss: 0.806, TC_loss: 0.335
+2026-06-17 14:56:00 [DEBUG]: RCA_loss: 0.874, TC_loss: 0.556
+2026-06-17 14:56:00 [INFO]: Epoch 0 done. Loss: 2.327
+2026-06-17 14:56:00 [DEBUG]: RCA_loss: 0.785, TC_loss: 0.382
+2026-06-17 14:56:00 [DEBUG]: RCA_loss: 0.935, TC_loss: 0.378
+2026-06-17 14:56:01 [DEBUG]: RCA_loss: 0.893, TC_loss: 0.492
+2026-06-17 14:56:01 [DEBUG]: RCA_loss: 1.021, TC_loss: 0.407
+2026-06-17 14:56:01 [DEBUG]: RCA_loss: 0.894, TC_loss: 0.293
+2026-06-17 14:56:01 [DEBUG]: RCA_loss: 0.770, TC_loss: 0.316
+2026-06-17 14:56:01 [DEBUG]: RCA_loss: 0.792, TC_loss: 0.392
+2026-06-17 14:56:01 [DEBUG]: RCA_loss: 0.816, TC_loss: 0.339
+2026-06-17 14:56:02 [DEBUG]: RCA_loss: 0.789, TC_loss: 0.533
+2026-06-17 14:56:02 [DEBUG]: RCA_loss: 0.464, TC_loss: 0.569
+2026-06-17 14:56:02 [DEBUG]: RCA_loss: 0.540, TC_loss: 0.426
+2026-06-17 14:56:02 [DEBUG]: RCA_loss: 0.872, TC_loss: 0.299
+2026-06-17 14:56:02 [DEBUG]: RCA_loss: 0.592, TC_loss: 0.357
+2026-06-17 14:56:02 [DEBUG]: RCA_loss: 0.836, TC_loss: 0.546
+2026-06-17 14:56:03 [DEBUG]: RCA_loss: 0.647, TC_loss: 0.450
+2026-06-17 14:56:03 [DEBUG]: RCA_loss: 0.870, TC_loss: 0.308
+2026-06-17 14:56:03 [DEBUG]: RCA_loss: 0.558, TC_loss: 0.548
+2026-06-17 14:56:03 [DEBUG]: RCA_loss: 0.735, TC_loss: 0.414
+2026-06-17 14:56:03 [DEBUG]: RCA_loss: 0.927, TC_loss: 0.697
+2026-06-17 14:56:03 [DEBUG]: RCA_loss: 0.392, TC_loss: 0.356
+2026-06-17 14:56:03 [DEBUG]: RCA_loss: 0.292, TC_loss: 0.484
+2026-06-17 14:56:04 [DEBUG]: RCA_loss: 0.707, TC_loss: 0.313
+2026-06-17 14:56:04 [DEBUG]: RCA_loss: 0.606, TC_loss: 0.350
+2026-06-17 14:56:04 [DEBUG]: RCA_loss: 0.565, TC_loss: 0.370
+2026-06-17 14:56:04 [DEBUG]: RCA_loss: 0.506, TC_loss: 0.246
+2026-06-17 14:56:04 [DEBUG]: RCA_loss: 0.417, TC_loss: 0.476
+2026-06-17 14:56:04 [DEBUG]: RCA_loss: 0.243, TC_loss: 0.313
+2026-06-17 14:56:05 [DEBUG]: RCA_loss: 0.440, TC_loss: 0.395
+2026-06-17 14:56:05 [DEBUG]: RCA_loss: 0.686, TC_loss: 0.307
+2026-06-17 14:56:05 [DEBUG]: RCA_loss: 0.714, TC_loss: 0.302
+2026-06-17 14:56:05 [DEBUG]: RCA_loss: 0.484, TC_loss: 0.437
+2026-06-17 14:56:05 [DEBUG]: RCA_loss: 0.260, TC_loss: 0.260
+2026-06-17 14:56:05 [DEBUG]: RCA_loss: 0.695, TC_loss: 0.294
+2026-06-17 14:56:06 [DEBUG]: RCA_loss: 0.312, TC_loss: 0.277
+2026-06-17 14:56:06 [DEBUG]: RCA_loss: 0.415, TC_loss: 0.302
+2026-06-17 14:56:06 [DEBUG]: RCA_loss: 0.669, TC_loss: 0.221
+2026-06-17 14:56:06 [DEBUG]: RCA_loss: 0.401, TC_loss: 0.269
+2026-06-17 14:56:06 [DEBUG]: RCA_loss: 0.413, TC_loss: 0.208
+2026-06-17 14:56:06 [DEBUG]: RCA_loss: 0.517, TC_loss: 0.182
+2026-06-17 14:56:06 [INFO]: Epoch 1 done. Loss: 1.006
+2026-06-17 14:56:06 [DEBUG]: RCA_loss: 0.370, TC_loss: 0.255
+2026-06-17 14:56:07 [DEBUG]: RCA_loss: 0.488, TC_loss: 0.295
+2026-06-17 14:56:07 [DEBUG]: RCA_loss: 0.484, TC_loss: 0.351
+2026-06-17 14:56:07 [DEBUG]: RCA_loss: 0.550, TC_loss: 0.282
+2026-06-17 14:56:07 [DEBUG]: RCA_loss: 0.352, TC_loss: 0.174
+2026-06-17 14:56:07 [DEBUG]: RCA_loss: 0.403, TC_loss: 0.215
+2026-06-17 14:56:07 [DEBUG]: RCA_loss: 0.475, TC_loss: 0.232
+2026-06-17 14:56:08 [DEBUG]: RCA_loss: 0.572, TC_loss: 0.224
+2026-06-17 14:56:08 [DEBUG]: RCA_loss: 0.606, TC_loss: 0.410
+2026-06-17 14:56:08 [DEBUG]: RCA_loss: 0.215, TC_loss: 0.415
+2026-06-17 14:56:08 [DEBUG]: RCA_loss: 0.298, TC_loss: 0.292
+2026-06-17 14:56:08 [DEBUG]: RCA_loss: 0.747, TC_loss: 0.168
+2026-06-17 14:56:08 [DEBUG]: RCA_loss: 0.480, TC_loss: 0.244
+2026-06-17 14:56:09 [DEBUG]: RCA_loss: 0.404, TC_loss: 0.456
+2026-06-17 14:56:09 [DEBUG]: RCA_loss: 0.355, TC_loss: 0.294
+2026-06-17 14:56:09 [DEBUG]: RCA_loss: 0.553, TC_loss: 0.176
+2026-06-17 14:56:09 [DEBUG]: RCA_loss: 0.339, TC_loss: 0.373
+2026-06-17 14:56:09 [DEBUG]: RCA_loss: 0.463, TC_loss: 0.292
+2026-06-17 14:56:09 [DEBUG]: RCA_loss: 0.493, TC_loss: 0.574
+2026-06-17 14:56:10 [DEBUG]: RCA_loss: 0.202, TC_loss: 0.245
+2026-06-17 14:56:10 [DEBUG]: RCA_loss: 0.141, TC_loss: 0.306
+2026-06-17 14:56:10 [DEBUG]: RCA_loss: 0.396, TC_loss: 0.211
+2026-06-17 14:56:10 [DEBUG]: RCA_loss: 0.544, TC_loss: 0.261
+2026-06-17 14:56:10 [DEBUG]: RCA_loss: 0.333, TC_loss: 0.240
+2026-06-17 14:56:10 [DEBUG]: RCA_loss: 0.438, TC_loss: 0.174
+2026-06-17 14:56:11 [DEBUG]: RCA_loss: 0.281, TC_loss: 0.368
+2026-06-17 14:56:11 [DEBUG]: RCA_loss: 0.176, TC_loss: 0.212
+2026-06-17 14:56:11 [DEBUG]: RCA_loss: 0.318, TC_loss: 0.261
+2026-06-17 14:56:11 [DEBUG]: RCA_loss: 0.401, TC_loss: 0.226
+2026-06-17 14:56:11 [DEBUG]: RCA_loss: 0.521, TC_loss: 0.178
+2026-06-17 14:56:11 [DEBUG]: RCA_loss: 0.397, TC_loss: 0.349
+2026-06-17 14:56:11 [DEBUG]: RCA_loss: 0.213, TC_loss: 0.151
+2026-06-17 14:56:12 [DEBUG]: RCA_loss: 0.422, TC_loss: 0.219
+2026-06-17 14:56:12 [DEBUG]: RCA_loss: 0.227, TC_loss: 0.211
+2026-06-17 14:56:12 [DEBUG]: RCA_loss: 0.196, TC_loss: 0.201
+2026-06-17 14:56:12 [DEBUG]: RCA_loss: 0.448, TC_loss: 0.133
+2026-06-17 14:56:12 [DEBUG]: RCA_loss: 0.284, TC_loss: 0.176
+2026-06-17 14:56:12 [DEBUG]: RCA_loss: 0.297, TC_loss: 0.130
+2026-06-17 14:56:12 [DEBUG]: RCA_loss: 0.263, TC_loss: 0.293
+2026-06-17 14:56:12 [INFO]: Epoch 2 done. Loss: 0.654
+2026-06-17 14:56:13 [DEBUG]: RCA_loss: 0.368, TC_loss: 0.182
+2026-06-17 14:56:13 [DEBUG]: RCA_loss: 0.392, TC_loss: 0.203
+2026-06-17 14:56:13 [DEBUG]: RCA_loss: 0.241, TC_loss: 0.249
+2026-06-17 14:56:13 [DEBUG]: RCA_loss: 0.345, TC_loss: 0.204
+2026-06-17 14:56:13 [DEBUG]: RCA_loss: 0.183, TC_loss: 0.116
+2026-06-17 14:56:13 [DEBUG]: RCA_loss: 0.311, TC_loss: 0.150
+2026-06-17 14:56:13 [DEBUG]: RCA_loss: 0.295, TC_loss: 0.169
+2026-06-17 14:56:14 [DEBUG]: RCA_loss: 0.457, TC_loss: 0.198
+2026-06-17 14:56:14 [DEBUG]: RCA_loss: 0.507, TC_loss: 0.320
+2026-06-17 14:56:14 [DEBUG]: RCA_loss: 0.059, TC_loss: 0.270
+2026-06-17 14:56:14 [DEBUG]: RCA_loss: 0.208, TC_loss: 0.169
+2026-06-17 14:56:14 [DEBUG]: RCA_loss: 0.389, TC_loss: 0.127
+2026-06-17 14:56:14 [DEBUG]: RCA_loss: 0.268, TC_loss: 0.205
+2026-06-17 14:56:15 [DEBUG]: RCA_loss: 0.299, TC_loss: 0.368
+2026-06-17 14:56:15 [DEBUG]: RCA_loss: 0.293, TC_loss: 0.174
+2026-06-17 14:56:15 [DEBUG]: RCA_loss: 0.399, TC_loss: 0.124
+2026-06-17 14:56:15 [DEBUG]: RCA_loss: 0.143, TC_loss: 0.227
+2026-06-17 14:56:15 [DEBUG]: RCA_loss: 0.288, TC_loss: 0.205
+2026-06-17 14:56:15 [DEBUG]: RCA_loss: 0.255, TC_loss: 0.458
+2026-06-17 14:56:16 [DEBUG]: RCA_loss: 0.170, TC_loss: 0.202
+2026-06-17 14:56:16 [DEBUG]: RCA_loss: 0.119, TC_loss: 0.178
+2026-06-17 14:56:16 [DEBUG]: RCA_loss: 0.186, TC_loss: 0.177
+2026-06-17 14:56:16 [DEBUG]: RCA_loss: 0.318, TC_loss: 0.207
+2026-06-17 14:56:16 [DEBUG]: RCA_loss: 0.280, TC_loss: 0.150
+2026-06-17 14:56:16 [DEBUG]: RCA_loss: 0.376, TC_loss: 0.122
+2026-06-17 14:56:16 [DEBUG]: RCA_loss: 0.197, TC_loss: 0.271
+2026-06-17 14:56:17 [DEBUG]: RCA_loss: 0.136, TC_loss: 0.131
+2026-06-17 14:56:17 [DEBUG]: RCA_loss: 0.223, TC_loss: 0.133
+2026-06-17 14:56:17 [DEBUG]: RCA_loss: 0.265, TC_loss: 0.185
+2026-06-17 14:56:17 [DEBUG]: RCA_loss: 0.383, TC_loss: 0.115
+2026-06-17 14:56:17 [DEBUG]: RCA_loss: 0.333, TC_loss: 0.285
+2026-06-17 14:56:17 [DEBUG]: RCA_loss: 0.199, TC_loss: 0.097
+2026-06-17 14:56:17 [DEBUG]: RCA_loss: 0.293, TC_loss: 0.186
+2026-06-17 14:56:18 [DEBUG]: RCA_loss: 0.182, TC_loss: 0.100
+2026-06-17 14:56:18 [DEBUG]: RCA_loss: 0.121, TC_loss: 0.166
+2026-06-17 14:56:18 [DEBUG]: RCA_loss: 0.348, TC_loss: 0.101
+2026-06-17 14:56:18 [DEBUG]: RCA_loss: 0.204, TC_loss: 0.114
+2026-06-17 14:56:18 [DEBUG]: RCA_loss: 0.186, TC_loss: 0.112
+2026-06-17 14:56:18 [DEBUG]: RCA_loss: 0.050, TC_loss: 0.066
+2026-06-17 14:56:18 [INFO]: Epoch 3 done. Loss: 0.456
+2026-06-17 14:56:19 [DEBUG]: RCA_loss: 0.304, TC_loss: 0.121
+2026-06-17 14:56:19 [DEBUG]: RCA_loss: 0.365, TC_loss: 0.165
+2026-06-17 14:56:19 [DEBUG]: RCA_loss: 0.180, TC_loss: 0.225
+2026-06-17 14:56:19 [DEBUG]: RCA_loss: 0.223, TC_loss: 0.122
+2026-06-17 14:56:19 [DEBUG]: RCA_loss: 0.278, TC_loss: 0.076
+2026-06-17 14:56:19 [DEBUG]: RCA_loss: 0.203, TC_loss: 0.109
+2026-06-17 14:56:20 [DEBUG]: RCA_loss: 0.105, TC_loss: 0.094
+2026-06-17 14:56:20 [DEBUG]: RCA_loss: 0.364, TC_loss: 0.151
+2026-06-17 14:56:20 [DEBUG]: RCA_loss: 0.317, TC_loss: 0.220
+2026-06-17 14:56:20 [DEBUG]: RCA_loss: 0.069, TC_loss: 0.191
+2026-06-17 14:56:20 [DEBUG]: RCA_loss: 0.154, TC_loss: 0.087
+2026-06-17 14:56:20 [DEBUG]: RCA_loss: 0.383, TC_loss: 0.084
+2026-06-17 14:56:20 [DEBUG]: RCA_loss: 0.296, TC_loss: 0.159
+2026-06-17 14:56:21 [DEBUG]: RCA_loss: 0.292, TC_loss: 0.262
+2026-06-17 14:56:21 [DEBUG]: RCA_loss: 0.382, TC_loss: 0.110
+2026-06-17 14:56:21 [DEBUG]: RCA_loss: 0.321, TC_loss: 0.087
+2026-06-17 14:56:21 [DEBUG]: RCA_loss: 0.135, TC_loss: 0.184
+2026-06-17 14:56:21 [DEBUG]: RCA_loss: 0.323, TC_loss: 0.186
+2026-06-17 14:56:21 [DEBUG]: RCA_loss: 0.289, TC_loss: 0.364
+2026-06-17 14:56:21 [DEBUG]: RCA_loss: 0.116, TC_loss: 0.170
+2026-06-17 14:56:22 [DEBUG]: RCA_loss: 0.109, TC_loss: 0.097
+2026-06-17 14:56:22 [DEBUG]: RCA_loss: 0.190, TC_loss: 0.148
+2026-06-17 14:56:22 [DEBUG]: RCA_loss: 0.289, TC_loss: 0.166
+2026-06-17 14:56:22 [DEBUG]: RCA_loss: 0.265, TC_loss: 0.101
+2026-06-17 14:56:22 [DEBUG]: RCA_loss: 0.418, TC_loss: 0.079
+2026-06-17 14:56:22 [DEBUG]: RCA_loss: 0.149, TC_loss: 0.242
+2026-06-17 14:56:23 [DEBUG]: RCA_loss: 0.095, TC_loss: 0.097
+2026-06-17 14:56:23 [DEBUG]: RCA_loss: 0.200, TC_loss: 0.116
+2026-06-17 14:56:23 [DEBUG]: RCA_loss: 0.223, TC_loss: 0.146
+2026-06-17 14:56:23 [DEBUG]: RCA_loss: 0.326, TC_loss: 0.076
+2026-06-17 14:56:23 [DEBUG]: RCA_loss: 0.183, TC_loss: 0.217
+2026-06-17 14:56:23 [DEBUG]: RCA_loss: 0.148, TC_loss: 0.077
+2026-06-17 14:56:23 [DEBUG]: RCA_loss: 0.179, TC_loss: 0.121
+2026-06-17 14:56:24 [DEBUG]: RCA_loss: 0.143, TC_loss: 0.081
+2026-06-17 14:56:24 [DEBUG]: RCA_loss: 0.096, TC_loss: 0.128
+2026-06-17 14:56:24 [DEBUG]: RCA_loss: 0.301, TC_loss: 0.064
+2026-06-17 14:56:24 [DEBUG]: RCA_loss: 0.220, TC_loss: 0.067
+2026-06-17 14:56:24 [DEBUG]: RCA_loss: 0.232, TC_loss: 0.097
+2026-06-17 14:56:24 [DEBUG]: RCA_loss: 0.080, TC_loss: 0.040
+2026-06-17 14:56:24 [INFO]: Epoch 4 done. Loss: 0.372
+2026-06-17 14:56:24 [DEBUG]: RCA_loss: 0.186, TC_loss: 0.111
+2026-06-17 14:56:25 [DEBUG]: RCA_loss: 0.220, TC_loss: 0.141
+2026-06-17 14:56:25 [DEBUG]: RCA_loss: 0.114, TC_loss: 0.157
+2026-06-17 14:56:25 [DEBUG]: RCA_loss: 0.153, TC_loss: 0.082
+2026-06-17 14:56:25 [DEBUG]: RCA_loss: 0.177, TC_loss: 0.057
+2026-06-17 14:56:25 [DEBUG]: RCA_loss: 0.157, TC_loss: 0.094
+2026-06-17 14:56:25 [DEBUG]: RCA_loss: 0.099, TC_loss: 0.060
+2026-06-17 14:56:26 [DEBUG]: RCA_loss: 0.357, TC_loss: 0.129
+2026-06-17 14:56:26 [DEBUG]: RCA_loss: 0.260, TC_loss: 0.184
+2026-06-17 14:56:26 [DEBUG]: RCA_loss: 0.086, TC_loss: 0.150
+2026-06-17 14:56:26 [DEBUG]: RCA_loss: 0.106, TC_loss: 0.061
+2026-06-17 14:56:26 [DEBUG]: RCA_loss: 0.229, TC_loss: 0.056
+2026-06-17 14:56:26 [DEBUG]: RCA_loss: 0.200, TC_loss: 0.132
+2026-06-17 14:56:26 [DEBUG]: RCA_loss: 0.190, TC_loss: 0.235
+2026-06-17 14:56:27 [DEBUG]: RCA_loss: 0.138, TC_loss: 0.088
+2026-06-17 14:56:27 [DEBUG]: RCA_loss: 0.260, TC_loss: 0.046
+2026-06-17 14:56:27 [DEBUG]: RCA_loss: 0.122, TC_loss: 0.143
+2026-06-17 14:56:27 [DEBUG]: RCA_loss: 0.240, TC_loss: 0.137
+2026-06-17 14:56:27 [DEBUG]: RCA_loss: 0.134, TC_loss: 0.277
+2026-06-17 14:56:27 [DEBUG]: RCA_loss: 0.060, TC_loss: 0.137
+2026-06-17 14:56:28 [DEBUG]: RCA_loss: 0.109, TC_loss: 0.079
+2026-06-17 14:56:28 [DEBUG]: RCA_loss: 0.122, TC_loss: 0.102
+2026-06-17 14:56:28 [DEBUG]: RCA_loss: 0.172, TC_loss: 0.109
+2026-06-17 14:56:28 [DEBUG]: RCA_loss: 0.186, TC_loss: 0.069
+2026-06-17 14:56:28 [DEBUG]: RCA_loss: 0.232, TC_loss: 0.052
+2026-06-17 14:56:28 [DEBUG]: RCA_loss: 0.143, TC_loss: 0.183
+2026-06-17 14:56:29 [DEBUG]: RCA_loss: 0.064, TC_loss: 0.060
+2026-06-17 14:56:29 [DEBUG]: RCA_loss: 0.289, TC_loss: 0.083
+2026-06-17 14:56:29 [DEBUG]: RCA_loss: 0.233, TC_loss: 0.128
+2026-06-17 14:56:29 [DEBUG]: RCA_loss: 0.331, TC_loss: 0.055
+2026-06-17 14:56:29 [DEBUG]: RCA_loss: 0.176, TC_loss: 0.167
+2026-06-17 14:56:29 [DEBUG]: RCA_loss: 0.135, TC_loss: 0.056
+2026-06-17 14:56:29 [DEBUG]: RCA_loss: 0.116, TC_loss: 0.092
+2026-06-17 14:56:30 [DEBUG]: RCA_loss: 0.191, TC_loss: 0.058
+2026-06-17 14:56:30 [DEBUG]: RCA_loss: 0.101, TC_loss: 0.098
+2026-06-17 14:56:30 [DEBUG]: RCA_loss: 0.302, TC_loss: 0.048
+2026-06-17 14:56:30 [DEBUG]: RCA_loss: 0.120, TC_loss: 0.056
+2026-06-17 14:56:30 [DEBUG]: RCA_loss: 0.123, TC_loss: 0.062
+2026-06-17 14:56:30 [DEBUG]: RCA_loss: 0.065, TC_loss: 0.018
+2026-06-17 14:56:30 [INFO]: Epoch 5 done. Loss: 0.280
+2026-06-17 14:56:31 [DEBUG]: RCA_loss: 0.410, TC_loss: 0.071
+2026-06-17 14:56:31 [DEBUG]: RCA_loss: 0.238, TC_loss: 0.135
+2026-06-17 14:56:31 [DEBUG]: RCA_loss: 0.073, TC_loss: 0.134
+2026-06-17 14:56:31 [DEBUG]: RCA_loss: 0.152, TC_loss: 0.059
+2026-06-17 14:56:31 [DEBUG]: RCA_loss: 0.144, TC_loss: 0.046
+2026-06-17 14:56:31 [DEBUG]: RCA_loss: 0.190, TC_loss: 0.057
+2026-06-17 14:56:31 [DEBUG]: RCA_loss: 0.061, TC_loss: 0.055
+2026-06-17 14:56:32 [DEBUG]: RCA_loss: 0.318, TC_loss: 0.084
+2026-06-17 14:56:32 [DEBUG]: RCA_loss: 0.250, TC_loss: 0.190
+2026-06-17 14:56:32 [DEBUG]: RCA_loss: 0.053, TC_loss: 0.108
+2026-06-17 14:56:32 [DEBUG]: RCA_loss: 0.171, TC_loss: 0.060
+2026-06-17 14:56:32 [DEBUG]: RCA_loss: 0.230, TC_loss: 0.058
+2026-06-17 14:56:32 [DEBUG]: RCA_loss: 0.109, TC_loss: 0.106
+2026-06-17 14:56:33 [DEBUG]: RCA_loss: 0.194, TC_loss: 0.170
+2026-06-17 14:56:33 [DEBUG]: RCA_loss: 0.136, TC_loss: 0.059
+2026-06-17 14:56:33 [DEBUG]: RCA_loss: 0.222, TC_loss: 0.052
+2026-06-17 14:56:33 [DEBUG]: RCA_loss: 0.071, TC_loss: 0.108
+2026-06-17 14:56:33 [DEBUG]: RCA_loss: 0.143, TC_loss: 0.095
+2026-06-17 14:56:33 [DEBUG]: RCA_loss: 0.102, TC_loss: 0.215
+2026-06-17 14:56:34 [DEBUG]: RCA_loss: 0.069, TC_loss: 0.104
+2026-06-17 14:56:34 [DEBUG]: RCA_loss: 0.065, TC_loss: 0.078
+2026-06-17 14:56:34 [DEBUG]: RCA_loss: 0.169, TC_loss: 0.099
+2026-06-17 14:56:34 [DEBUG]: RCA_loss: 0.154, TC_loss: 0.086
+2026-06-17 14:56:34 [DEBUG]: RCA_loss: 0.129, TC_loss: 0.045
+2026-06-17 14:56:34 [DEBUG]: RCA_loss: 0.161, TC_loss: 0.047
+2026-06-17 14:56:34 [DEBUG]: RCA_loss: 0.128, TC_loss: 0.153
+2026-06-17 14:56:35 [DEBUG]: RCA_loss: 0.038, TC_loss: 0.068
+2026-06-17 14:56:35 [DEBUG]: RCA_loss: 0.131, TC_loss: 0.061
+2026-06-17 14:56:35 [DEBUG]: RCA_loss: 0.469, TC_loss: 0.126
+2026-06-17 14:56:35 [DEBUG]: RCA_loss: 0.345, TC_loss: 0.037
+2026-06-17 14:56:35 [DEBUG]: RCA_loss: 0.169, TC_loss: 0.126
+2026-06-17 14:56:35 [DEBUG]: RCA_loss: 0.085, TC_loss: 0.047
+2026-06-17 14:56:36 [DEBUG]: RCA_loss: 0.089, TC_loss: 0.071
+2026-06-17 14:56:36 [DEBUG]: RCA_loss: 0.112, TC_loss: 0.046
+2026-06-17 14:56:36 [DEBUG]: RCA_loss: 0.069, TC_loss: 0.073
+2026-06-17 14:56:36 [DEBUG]: RCA_loss: 0.273, TC_loss: 0.047
+2026-06-17 14:56:36 [DEBUG]: RCA_loss: 0.141, TC_loss: 0.045
+2026-06-17 14:56:36 [DEBUG]: RCA_loss: 0.130, TC_loss: 0.044
+2026-06-17 14:56:36 [DEBUG]: RCA_loss: 0.014, TC_loss: 0.030
+2026-06-17 14:56:36 [INFO]: Epoch 6 done. Loss: 0.248
+2026-06-17 14:56:37 [DEBUG]: RCA_loss: 0.251, TC_loss: 0.059
+2026-06-17 14:56:37 [DEBUG]: RCA_loss: 0.141, TC_loss: 0.139
+2026-06-17 14:56:37 [DEBUG]: RCA_loss: 0.036, TC_loss: 0.121
+2026-06-17 14:56:37 [DEBUG]: RCA_loss: 0.147, TC_loss: 0.042
+2026-06-17 14:56:37 [DEBUG]: RCA_loss: 0.079, TC_loss: 0.030
+2026-06-17 14:56:37 [DEBUG]: RCA_loss: 0.156, TC_loss: 0.063
+2026-06-17 14:56:38 [DEBUG]: RCA_loss: 0.041, TC_loss: 0.035
+2026-06-17 14:56:38 [DEBUG]: RCA_loss: 0.363, TC_loss: 0.074
+2026-06-17 14:56:38 [DEBUG]: RCA_loss: 0.103, TC_loss: 0.141
+2026-06-17 14:56:38 [DEBUG]: RCA_loss: 0.050, TC_loss: 0.107
+2026-06-17 14:56:38 [DEBUG]: RCA_loss: 0.097, TC_loss: 0.041
+2026-06-17 14:56:38 [DEBUG]: RCA_loss: 0.203, TC_loss: 0.044
+2026-06-17 14:56:38 [DEBUG]: RCA_loss: 0.103, TC_loss: 0.095
+2026-06-17 14:56:39 [DEBUG]: RCA_loss: 0.210, TC_loss: 0.157
+2026-06-17 14:56:39 [DEBUG]: RCA_loss: 0.167, TC_loss: 0.047
+2026-06-17 14:56:39 [DEBUG]: RCA_loss: 0.201, TC_loss: 0.046
+2026-06-17 14:56:39 [DEBUG]: RCA_loss: 0.202, TC_loss: 0.097
+2026-06-17 14:56:39 [DEBUG]: RCA_loss: 0.176, TC_loss: 0.080
+2026-06-17 14:56:39 [DEBUG]: RCA_loss: 0.123, TC_loss: 0.190
+2026-06-17 14:56:40 [DEBUG]: RCA_loss: 0.068, TC_loss: 0.091
+2026-06-17 14:56:40 [DEBUG]: RCA_loss: 0.097, TC_loss: 0.063
+2026-06-17 14:56:40 [DEBUG]: RCA_loss: 0.115, TC_loss: 0.064
+2026-06-17 14:56:40 [DEBUG]: RCA_loss: 0.178, TC_loss: 0.063
+2026-06-17 14:56:40 [DEBUG]: RCA_loss: 0.143, TC_loss: 0.047
+2026-06-17 14:56:41 [DEBUG]: RCA_loss: 0.202, TC_loss: 0.045
+2026-06-17 14:56:41 [DEBUG]: RCA_loss: 0.087, TC_loss: 0.121
+2026-06-17 14:56:41 [DEBUG]: RCA_loss: 0.030, TC_loss: 0.057
+2026-06-17 14:56:41 [DEBUG]: RCA_loss: 0.148, TC_loss: 0.054
+2026-06-17 14:56:41 [DEBUG]: RCA_loss: 0.129, TC_loss: 0.140
+2026-06-17 14:56:41 [DEBUG]: RCA_loss: 0.152, TC_loss: 0.038
+2026-06-17 14:56:42 [DEBUG]: RCA_loss: 0.159, TC_loss: 0.105
+2026-06-17 14:56:42 [DEBUG]: RCA_loss: 0.123, TC_loss: 0.050
+2026-06-17 14:56:42 [DEBUG]: RCA_loss: 0.053, TC_loss: 0.081
+2026-06-17 14:56:42 [DEBUG]: RCA_loss: 0.143, TC_loss: 0.044
+2026-06-17 14:56:42 [DEBUG]: RCA_loss: 0.062, TC_loss: 0.062
+2026-06-17 14:56:42 [DEBUG]: RCA_loss: 0.248, TC_loss: 0.040
+2026-06-17 14:56:43 [DEBUG]: RCA_loss: 0.040, TC_loss: 0.040
+2026-06-17 14:56:43 [DEBUG]: RCA_loss: 0.086, TC_loss: 0.043
+2026-06-17 14:56:43 [DEBUG]: RCA_loss: 0.064, TC_loss: 0.042
+2026-06-17 14:56:43 [INFO]: Epoch 7 done. Loss: 0.209
+2026-06-17 14:56:43 [DEBUG]: RCA_loss: 0.219, TC_loss: 0.063
+2026-06-17 14:56:43 [DEBUG]: RCA_loss: 0.116, TC_loss: 0.135
+2026-06-17 14:56:43 [DEBUG]: RCA_loss: 0.024, TC_loss: 0.086
+2026-06-17 14:56:44 [DEBUG]: RCA_loss: 0.088, TC_loss: 0.040
+2026-06-17 14:56:44 [DEBUG]: RCA_loss: 0.119, TC_loss: 0.031
+2026-06-17 14:56:44 [DEBUG]: RCA_loss: 0.184, TC_loss: 0.047
+2026-06-17 14:56:44 [DEBUG]: RCA_loss: 0.116, TC_loss: 0.041
+2026-06-17 14:56:44 [DEBUG]: RCA_loss: 0.151, TC_loss: 0.047
+2026-06-17 14:56:44 [DEBUG]: RCA_loss: 0.202, TC_loss: 0.164
+2026-06-17 14:56:44 [DEBUG]: RCA_loss: 0.122, TC_loss: 0.082
+2026-06-17 14:56:44 [DEBUG]: RCA_loss: 0.109, TC_loss: 0.032
+2026-06-17 14:56:45 [DEBUG]: RCA_loss: 0.164, TC_loss: 0.029
+2026-06-17 14:56:45 [DEBUG]: RCA_loss: 0.206, TC_loss: 0.093
+2026-06-17 14:56:45 [DEBUG]: RCA_loss: 0.134, TC_loss: 0.123
+2026-06-17 14:56:45 [DEBUG]: RCA_loss: 0.199, TC_loss: 0.054
+2026-06-17 14:56:45 [DEBUG]: RCA_loss: 0.183, TC_loss: 0.036
+2026-06-17 14:56:45 [DEBUG]: RCA_loss: 0.118, TC_loss: 0.075
+2026-06-17 14:56:45 [DEBUG]: RCA_loss: 0.203, TC_loss: 0.058
+2026-06-17 14:56:45 [DEBUG]: RCA_loss: 0.090, TC_loss: 0.146
+2026-06-17 14:56:45 [DEBUG]: RCA_loss: 0.095, TC_loss: 0.076
+2026-06-17 14:56:45 [DEBUG]: RCA_loss: 0.091, TC_loss: 0.036
+2026-06-17 14:56:46 [DEBUG]: RCA_loss: 0.114, TC_loss: 0.067
+2026-06-17 14:56:46 [DEBUG]: RCA_loss: 0.132, TC_loss: 0.044
+2026-06-17 14:56:46 [DEBUG]: RCA_loss: 0.070, TC_loss: 0.033
+2026-06-17 14:56:46 [DEBUG]: RCA_loss: 0.206, TC_loss: 0.035
+2026-06-17 14:56:46 [DEBUG]: RCA_loss: 0.101, TC_loss: 0.087
+2026-06-17 14:56:46 [DEBUG]: RCA_loss: 0.040, TC_loss: 0.038
+2026-06-17 14:56:46 [DEBUG]: RCA_loss: 0.186, TC_loss: 0.053
+2026-06-17 14:56:46 [DEBUG]: RCA_loss: 0.109, TC_loss: 0.095
+2026-06-17 14:56:46 [DEBUG]: RCA_loss: 0.136, TC_loss: 0.035
+2026-06-17 14:56:46 [DEBUG]: RCA_loss: 0.078, TC_loss: 0.091
+2026-06-17 14:56:47 [DEBUG]: RCA_loss: 0.079, TC_loss: 0.029
+2026-06-17 14:56:47 [DEBUG]: RCA_loss: 0.060, TC_loss: 0.047
+2026-06-17 14:56:47 [DEBUG]: RCA_loss: 0.109, TC_loss: 0.029
+2026-06-17 14:56:47 [DEBUG]: RCA_loss: 0.047, TC_loss: 0.052
+2026-06-17 14:56:47 [DEBUG]: RCA_loss: 0.145, TC_loss: 0.025
+2026-06-17 14:56:47 [DEBUG]: RCA_loss: 0.039, TC_loss: 0.028
+2026-06-17 14:56:47 [DEBUG]: RCA_loss: 0.106, TC_loss: 0.034
+2026-06-17 14:56:47 [DEBUG]: RCA_loss: 0.004, TC_loss: 0.013
+2026-06-17 14:56:47 [INFO]: Epoch 8 done. Loss: 0.184
+2026-06-17 14:56:47 [DEBUG]: RCA_loss: 0.187, TC_loss: 0.045
+2026-06-17 14:56:47 [DEBUG]: RCA_loss: 0.066, TC_loss: 0.128
+2026-06-17 14:56:47 [DEBUG]: RCA_loss: 0.054, TC_loss: 0.085
+2026-06-17 14:56:48 [DEBUG]: RCA_loss: 0.066, TC_loss: 0.050
+2026-06-17 14:56:48 [DEBUG]: RCA_loss: 0.083, TC_loss: 0.022
+2026-06-17 14:56:48 [DEBUG]: RCA_loss: 0.167, TC_loss: 0.028
+2026-06-17 14:56:48 [DEBUG]: RCA_loss: 0.031, TC_loss: 0.029
+2026-06-17 14:56:48 [DEBUG]: RCA_loss: 0.209, TC_loss: 0.042
+2026-06-17 14:56:48 [DEBUG]: RCA_loss: 0.097, TC_loss: 0.125
+2026-06-17 14:56:48 [DEBUG]: RCA_loss: 0.037, TC_loss: 0.060
+2026-06-17 14:56:48 [DEBUG]: RCA_loss: 0.189, TC_loss: 0.027
+2026-06-17 14:56:48 [DEBUG]: RCA_loss: 0.209, TC_loss: 0.025
+2026-06-17 14:56:48 [DEBUG]: RCA_loss: 0.144, TC_loss: 0.064
+2026-06-17 14:56:49 [DEBUG]: RCA_loss: 0.084, TC_loss: 0.073
+2026-06-17 14:56:49 [DEBUG]: RCA_loss: 0.119, TC_loss: 0.036
+2026-06-17 14:56:49 [DEBUG]: RCA_loss: 0.164, TC_loss: 0.040
+2026-06-17 14:56:49 [DEBUG]: RCA_loss: 0.116, TC_loss: 0.047
+2026-06-17 14:56:49 [DEBUG]: RCA_loss: 0.148, TC_loss: 0.067
+2026-06-17 14:56:49 [DEBUG]: RCA_loss: 0.120, TC_loss: 0.112
+2026-06-17 14:56:49 [DEBUG]: RCA_loss: 0.071, TC_loss: 0.045
+2026-06-17 14:56:49 [DEBUG]: RCA_loss: 0.051, TC_loss: 0.035
+2026-06-17 14:56:49 [DEBUG]: RCA_loss: 0.080, TC_loss: 0.039
+2026-06-17 14:56:49 [DEBUG]: RCA_loss: 0.148, TC_loss: 0.031
+2026-06-17 14:56:50 [DEBUG]: RCA_loss: 0.100, TC_loss: 0.031
+2026-06-17 14:56:50 [DEBUG]: RCA_loss: 0.197, TC_loss: 0.032
+2026-06-17 14:56:50 [DEBUG]: RCA_loss: 0.174, TC_loss: 0.059
+2026-06-17 14:56:50 [DEBUG]: RCA_loss: 0.031, TC_loss: 0.026
+2026-06-17 14:56:50 [DEBUG]: RCA_loss: 0.174, TC_loss: 0.031
+2026-06-17 14:56:50 [DEBUG]: RCA_loss: 0.112, TC_loss: 0.084
+2026-06-17 14:56:50 [DEBUG]: RCA_loss: 0.202, TC_loss: 0.030
+2026-06-17 14:56:50 [DEBUG]: RCA_loss: 0.214, TC_loss: 0.052
+2026-06-17 14:56:50 [DEBUG]: RCA_loss: 0.076, TC_loss: 0.022
+2026-06-17 14:56:50 [DEBUG]: RCA_loss: 0.060, TC_loss: 0.043
+2026-06-17 14:56:51 [DEBUG]: RCA_loss: 0.141, TC_loss: 0.028
+2026-06-17 14:56:51 [DEBUG]: RCA_loss: 0.060, TC_loss: 0.045
+2026-06-17 14:56:51 [DEBUG]: RCA_loss: 0.171, TC_loss: 0.031
+2026-06-17 14:56:51 [DEBUG]: RCA_loss: 0.092, TC_loss: 0.024
+2026-06-17 14:56:51 [DEBUG]: RCA_loss: 0.121, TC_loss: 0.022
+2026-06-17 14:56:51 [DEBUG]: RCA_loss: 0.020, TC_loss: 0.016
+2026-06-17 14:56:51 [INFO]: Epoch 9 done. Loss: 0.167
+2026-06-17 14:56:51 [DEBUG]: RCA_loss: 0.149, TC_loss: 0.040
+2026-06-17 14:56:51 [DEBUG]: RCA_loss: 0.123, TC_loss: 0.110
+2026-06-17 14:56:51 [DEBUG]: RCA_loss: 0.071, TC_loss: 0.063
+2026-06-17 14:56:51 [DEBUG]: RCA_loss: 0.099, TC_loss: 0.023
+2026-06-17 14:56:51 [DEBUG]: RCA_loss: 0.173, TC_loss: 0.018
+2026-06-17 14:56:52 [DEBUG]: RCA_loss: 0.126, TC_loss: 0.029
+2026-06-17 14:56:52 [DEBUG]: RCA_loss: 0.012, TC_loss: 0.026
+2026-06-17 14:56:52 [DEBUG]: RCA_loss: 0.172, TC_loss: 0.043
+2026-06-17 14:56:52 [DEBUG]: RCA_loss: 0.084, TC_loss: 0.117
+2026-06-17 14:56:52 [DEBUG]: RCA_loss: 0.045, TC_loss: 0.056
+2026-06-17 14:56:52 [DEBUG]: RCA_loss: 0.159, TC_loss: 0.024
+2026-06-17 14:56:52 [DEBUG]: RCA_loss: 0.248, TC_loss: 0.023
+2026-06-17 14:56:52 [DEBUG]: RCA_loss: 0.093, TC_loss: 0.050
+2026-06-17 14:56:52 [DEBUG]: RCA_loss: 0.231, TC_loss: 0.058
+2026-06-17 14:56:53 [DEBUG]: RCA_loss: 0.144, TC_loss: 0.037
+2026-06-17 14:56:53 [DEBUG]: RCA_loss: 0.168, TC_loss: 0.026
+2026-06-17 14:56:53 [DEBUG]: RCA_loss: 0.093, TC_loss: 0.041
+2026-06-17 14:56:53 [DEBUG]: RCA_loss: 0.114, TC_loss: 0.070
+2026-06-17 14:56:53 [DEBUG]: RCA_loss: 0.072, TC_loss: 0.087
+2026-06-17 14:56:53 [DEBUG]: RCA_loss: 0.055, TC_loss: 0.034
+2026-06-17 14:56:53 [DEBUG]: RCA_loss: 0.046, TC_loss: 0.024
+2026-06-17 14:56:53 [DEBUG]: RCA_loss: 0.074, TC_loss: 0.029
+2026-06-17 14:56:53 [DEBUG]: RCA_loss: 0.162, TC_loss: 0.030
+2026-06-17 14:56:53 [DEBUG]: RCA_loss: 0.054, TC_loss: 0.028
+2026-06-17 14:56:53 [DEBUG]: RCA_loss: 0.144, TC_loss: 0.026
+2026-06-17 14:56:54 [DEBUG]: RCA_loss: 0.177, TC_loss: 0.058
+2026-06-17 14:56:54 [DEBUG]: RCA_loss: 0.076, TC_loss: 0.026
+2026-06-17 14:56:54 [DEBUG]: RCA_loss: 0.106, TC_loss: 0.032
+2026-06-17 14:56:54 [DEBUG]: RCA_loss: 0.111, TC_loss: 0.082
+2026-06-17 14:56:54 [DEBUG]: RCA_loss: 0.163, TC_loss: 0.017
+2026-06-17 14:56:54 [DEBUG]: RCA_loss: 0.076, TC_loss: 0.053
+2026-06-17 14:56:54 [DEBUG]: RCA_loss: 0.069, TC_loss: 0.018
+2026-06-17 14:56:54 [DEBUG]: RCA_loss: 0.081, TC_loss: 0.037
+2026-06-17 14:56:54 [DEBUG]: RCA_loss: 0.143, TC_loss: 0.025
+2026-06-17 14:56:54 [DEBUG]: RCA_loss: 0.071, TC_loss: 0.043
+2026-06-17 14:56:55 [DEBUG]: RCA_loss: 0.137, TC_loss: 0.023
+2026-06-17 14:56:55 [DEBUG]: RCA_loss: 0.058, TC_loss: 0.018
+2026-06-17 14:56:55 [DEBUG]: RCA_loss: 0.112, TC_loss: 0.024
+2026-06-17 14:56:55 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.012
+2026-06-17 14:56:55 [INFO]: Epoch 10 done. Loss: 0.154
+2026-06-17 14:56:55 [DEBUG]: RCA_loss: 0.262, TC_loss: 0.030
+2026-06-17 14:56:55 [DEBUG]: RCA_loss: 0.067, TC_loss: 0.110
+2026-06-17 14:56:55 [DEBUG]: RCA_loss: 0.037, TC_loss: 0.055
+2026-06-17 14:56:55 [DEBUG]: RCA_loss: 0.069, TC_loss: 0.024
+2026-06-17 14:56:55 [DEBUG]: RCA_loss: 0.117, TC_loss: 0.013
+2026-06-17 14:56:55 [DEBUG]: RCA_loss: 0.131, TC_loss: 0.021
+2026-06-17 14:56:56 [DEBUG]: RCA_loss: 0.023, TC_loss: 0.021
+2026-06-17 14:56:56 [DEBUG]: RCA_loss: 0.319, TC_loss: 0.034
+2026-06-17 14:56:56 [DEBUG]: RCA_loss: 0.115, TC_loss: 0.105
+2026-06-17 14:56:56 [DEBUG]: RCA_loss: 0.024, TC_loss: 0.038
+2026-06-17 14:56:56 [DEBUG]: RCA_loss: 0.095, TC_loss: 0.015
+2026-06-17 14:56:56 [DEBUG]: RCA_loss: 0.152, TC_loss: 0.014
+2026-06-17 14:56:56 [DEBUG]: RCA_loss: 0.071, TC_loss: 0.028
+2026-06-17 14:56:56 [DEBUG]: RCA_loss: 0.107, TC_loss: 0.059
+2026-06-17 14:56:56 [DEBUG]: RCA_loss: 0.144, TC_loss: 0.025
+2026-06-17 14:56:57 [DEBUG]: RCA_loss: 0.282, TC_loss: 0.019
+2026-06-17 14:56:57 [DEBUG]: RCA_loss: 0.063, TC_loss: 0.045
+2026-06-17 14:56:57 [DEBUG]: RCA_loss: 0.152, TC_loss: 0.031
+2026-06-17 14:56:57 [DEBUG]: RCA_loss: 0.044, TC_loss: 0.068
+2026-06-17 14:56:57 [DEBUG]: RCA_loss: 0.043, TC_loss: 0.029
+2026-06-17 14:56:57 [DEBUG]: RCA_loss: 0.070, TC_loss: 0.023
+2026-06-17 14:56:57 [DEBUG]: RCA_loss: 0.051, TC_loss: 0.033
+2026-06-17 14:56:57 [DEBUG]: RCA_loss: 0.366, TC_loss: 0.026
+2026-06-17 14:56:57 [DEBUG]: RCA_loss: 0.060, TC_loss: 0.030
+2026-06-17 14:56:57 [DEBUG]: RCA_loss: 0.321, TC_loss: 0.026
+2026-06-17 14:56:58 [DEBUG]: RCA_loss: 0.161, TC_loss: 0.053
+2026-06-17 14:56:58 [DEBUG]: RCA_loss: 0.045, TC_loss: 0.023
+2026-06-17 14:56:58 [DEBUG]: RCA_loss: 0.133, TC_loss: 0.037
+2026-06-17 14:56:58 [DEBUG]: RCA_loss: 0.114, TC_loss: 0.054
+2026-06-17 14:56:58 [DEBUG]: RCA_loss: 0.211, TC_loss: 0.015
+2026-06-17 14:56:58 [DEBUG]: RCA_loss: 0.074, TC_loss: 0.045
+2026-06-17 14:56:58 [DEBUG]: RCA_loss: 0.060, TC_loss: 0.020
+2026-06-17 14:56:58 [DEBUG]: RCA_loss: 0.071, TC_loss: 0.028
+2026-06-17 14:56:58 [DEBUG]: RCA_loss: 0.123, TC_loss: 0.021
+2026-06-17 14:56:58 [DEBUG]: RCA_loss: 0.153, TC_loss: 0.026
+2026-06-17 14:56:59 [DEBUG]: RCA_loss: 0.168, TC_loss: 0.019
+2026-06-17 14:56:59 [DEBUG]: RCA_loss: 0.086, TC_loss: 0.014
+2026-06-17 14:56:59 [DEBUG]: RCA_loss: 0.120, TC_loss: 0.017
+2026-06-17 14:56:59 [DEBUG]: RCA_loss: 0.031, TC_loss: 0.017
+2026-06-17 14:56:59 [INFO]: Epoch 11 done. Loss: 0.158
+2026-06-17 14:56:59 [DEBUG]: RCA_loss: 0.152, TC_loss: 0.035
+2026-06-17 14:56:59 [DEBUG]: RCA_loss: 0.155, TC_loss: 0.097
+2026-06-17 14:56:59 [DEBUG]: RCA_loss: 0.057, TC_loss: 0.044
+2026-06-17 14:56:59 [DEBUG]: RCA_loss: 0.064, TC_loss: 0.025
+2026-06-17 14:56:59 [DEBUG]: RCA_loss: 0.088, TC_loss: 0.012
+2026-06-17 14:56:59 [DEBUG]: RCA_loss: 0.153, TC_loss: 0.025
+2026-06-17 14:57:00 [DEBUG]: RCA_loss: 0.054, TC_loss: 0.025
+2026-06-17 14:57:00 [DEBUG]: RCA_loss: 0.149, TC_loss: 0.030
+2026-06-17 14:57:00 [DEBUG]: RCA_loss: 0.104, TC_loss: 0.102
+2026-06-17 14:57:00 [DEBUG]: RCA_loss: 0.033, TC_loss: 0.038
+2026-06-17 14:57:00 [DEBUG]: RCA_loss: 0.080, TC_loss: 0.017
+2026-06-17 14:57:00 [DEBUG]: RCA_loss: 0.129, TC_loss: 0.018
+2026-06-17 14:57:00 [DEBUG]: RCA_loss: 0.062, TC_loss: 0.032
+2026-06-17 14:57:00 [DEBUG]: RCA_loss: 0.069, TC_loss: 0.045
+2026-06-17 14:57:00 [DEBUG]: RCA_loss: 0.077, TC_loss: 0.022
+2026-06-17 14:57:00 [DEBUG]: RCA_loss: 0.143, TC_loss: 0.018
+2026-06-17 14:57:01 [DEBUG]: RCA_loss: 0.024, TC_loss: 0.031
+2026-06-17 14:57:01 [DEBUG]: RCA_loss: 0.088, TC_loss: 0.043
+2026-06-17 14:57:01 [DEBUG]: RCA_loss: 0.041, TC_loss: 0.095
+2026-06-17 14:57:01 [DEBUG]: RCA_loss: 0.028, TC_loss: 0.031
+2026-06-17 14:57:01 [DEBUG]: RCA_loss: 0.059, TC_loss: 0.021
+2026-06-17 14:57:01 [DEBUG]: RCA_loss: 0.040, TC_loss: 0.025
+2026-06-17 14:57:01 [DEBUG]: RCA_loss: 0.142, TC_loss: 0.023
+2026-06-17 14:57:01 [DEBUG]: RCA_loss: 0.031, TC_loss: 0.020
+2026-06-17 14:57:01 [DEBUG]: RCA_loss: 0.123, TC_loss: 0.029
+2026-06-17 14:57:01 [DEBUG]: RCA_loss: 0.037, TC_loss: 0.036
+2026-06-17 14:57:01 [DEBUG]: RCA_loss: 0.078, TC_loss: 0.047
+2026-06-17 14:57:02 [DEBUG]: RCA_loss: 0.077, TC_loss: 0.024
+2026-06-17 14:57:02 [DEBUG]: RCA_loss: 0.074, TC_loss: 0.049
+2026-06-17 14:57:02 [DEBUG]: RCA_loss: 0.070, TC_loss: 0.014
+2026-06-17 14:57:02 [DEBUG]: RCA_loss: 0.055, TC_loss: 0.040
+2026-06-17 14:57:02 [DEBUG]: RCA_loss: 0.032, TC_loss: 0.010
+2026-06-17 14:57:02 [DEBUG]: RCA_loss: 0.040, TC_loss: 0.025
+2026-06-17 14:57:02 [DEBUG]: RCA_loss: 0.135, TC_loss: 0.019
+2026-06-17 14:57:02 [DEBUG]: RCA_loss: 0.038, TC_loss: 0.030
+2026-06-17 14:57:02 [DEBUG]: RCA_loss: 0.133, TC_loss: 0.014
+2026-06-17 14:57:02 [DEBUG]: RCA_loss: 0.049, TC_loss: 0.013
+2026-06-17 14:57:03 [DEBUG]: RCA_loss: 0.112, TC_loss: 0.017
+2026-06-17 14:57:03 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.013
+2026-06-17 14:57:03 [INFO]: Epoch 12 done. Loss: 0.113
+2026-06-17 14:57:03 [DEBUG]: RCA_loss: 0.109, TC_loss: 0.034
+2026-06-17 14:57:03 [DEBUG]: RCA_loss: 0.101, TC_loss: 0.085
+2026-06-17 14:57:03 [DEBUG]: RCA_loss: 0.027, TC_loss: 0.032
+2026-06-17 14:57:03 [DEBUG]: RCA_loss: 0.081, TC_loss: 0.013
+2026-06-17 14:57:03 [DEBUG]: RCA_loss: 0.043, TC_loss: 0.012
+2026-06-17 14:57:03 [DEBUG]: RCA_loss: 0.200, TC_loss: 0.022
+2026-06-17 14:57:03 [DEBUG]: RCA_loss: 0.007, TC_loss: 0.014
+2026-06-17 14:57:03 [DEBUG]: RCA_loss: 0.103, TC_loss: 0.020
+2026-06-17 14:57:04 [DEBUG]: RCA_loss: 0.042, TC_loss: 0.048
+2026-06-17 14:57:04 [DEBUG]: RCA_loss: 0.035, TC_loss: 0.031
+2026-06-17 14:57:04 [DEBUG]: RCA_loss: 0.049, TC_loss: 0.011
+2026-06-17 14:57:04 [DEBUG]: RCA_loss: 0.140, TC_loss: 0.013
+2026-06-17 14:57:04 [DEBUG]: RCA_loss: 0.050, TC_loss: 0.020
+2026-06-17 14:57:04 [DEBUG]: RCA_loss: 0.121, TC_loss: 0.028
+2026-06-17 14:57:04 [DEBUG]: RCA_loss: 0.090, TC_loss: 0.016
+2026-06-17 14:57:04 [DEBUG]: RCA_loss: 0.132, TC_loss: 0.023
+2026-06-17 14:57:04 [DEBUG]: RCA_loss: 0.080, TC_loss: 0.015
+2026-06-17 14:57:04 [DEBUG]: RCA_loss: 0.118, TC_loss: 0.026
+2026-06-17 14:57:05 [DEBUG]: RCA_loss: 0.023, TC_loss: 0.049
+2026-06-17 14:57:05 [DEBUG]: RCA_loss: 0.040, TC_loss: 0.017
+2026-06-17 14:57:05 [DEBUG]: RCA_loss: 0.060, TC_loss: 0.019
+2026-06-17 14:57:05 [DEBUG]: RCA_loss: 0.051, TC_loss: 0.023
+2026-06-17 14:57:05 [DEBUG]: RCA_loss: 0.097, TC_loss: 0.017
+2026-06-17 14:57:05 [DEBUG]: RCA_loss: 0.063, TC_loss: 0.016
+2026-06-17 14:57:05 [DEBUG]: RCA_loss: 0.120, TC_loss: 0.020
+2026-06-17 14:57:05 [DEBUG]: RCA_loss: 0.028, TC_loss: 0.065
+2026-06-17 14:57:05 [DEBUG]: RCA_loss: 0.040, TC_loss: 0.020
+2026-06-17 14:57:05 [DEBUG]: RCA_loss: 0.094, TC_loss: 0.014
+2026-06-17 14:57:06 [DEBUG]: RCA_loss: 0.051, TC_loss: 0.047
+2026-06-17 14:57:06 [DEBUG]: RCA_loss: 0.083, TC_loss: 0.015
+2026-06-17 14:57:06 [DEBUG]: RCA_loss: 0.043, TC_loss: 0.028
+2026-06-17 14:57:06 [DEBUG]: RCA_loss: 0.058, TC_loss: 0.008
+2026-06-17 14:57:06 [DEBUG]: RCA_loss: 0.038, TC_loss: 0.020
+2026-06-17 14:57:06 [DEBUG]: RCA_loss: 0.117, TC_loss: 0.012
+2026-06-17 14:57:06 [DEBUG]: RCA_loss: 0.030, TC_loss: 0.027
+2026-06-17 14:57:06 [DEBUG]: RCA_loss: 0.095, TC_loss: 0.012
+2026-06-17 14:57:06 [DEBUG]: RCA_loss: 0.007, TC_loss: 0.011
+2026-06-17 14:57:06 [DEBUG]: RCA_loss: 0.062, TC_loss: 0.016
+2026-06-17 14:57:06 [DEBUG]: RCA_loss: 0.018, TC_loss: 0.005
+2026-06-17 14:57:07 [INFO]: Epoch 13 done. Loss: 0.096
+2026-06-17 14:57:07 [DEBUG]: RCA_loss: 0.109, TC_loss: 0.021
+2026-06-17 14:57:07 [DEBUG]: RCA_loss: 0.087, TC_loss: 0.075
+2026-06-17 14:57:07 [DEBUG]: RCA_loss: 0.010, TC_loss: 0.032
+2026-06-17 14:57:07 [DEBUG]: RCA_loss: 0.055, TC_loss: 0.014
+2026-06-17 14:57:07 [DEBUG]: RCA_loss: 0.032, TC_loss: 0.011
+2026-06-17 14:57:07 [DEBUG]: RCA_loss: 0.072, TC_loss: 0.018
+2026-06-17 14:57:07 [DEBUG]: RCA_loss: 0.007, TC_loss: 0.012
+2026-06-17 14:57:07 [DEBUG]: RCA_loss: 0.125, TC_loss: 0.017
+2026-06-17 14:57:07 [DEBUG]: RCA_loss: 0.042, TC_loss: 0.062
+2026-06-17 14:57:07 [DEBUG]: RCA_loss: 0.007, TC_loss: 0.018
+2026-06-17 14:57:08 [DEBUG]: RCA_loss: 0.028, TC_loss: 0.011
+2026-06-17 14:57:08 [DEBUG]: RCA_loss: 0.188, TC_loss: 0.011
+2026-06-17 14:57:08 [DEBUG]: RCA_loss: 0.029, TC_loss: 0.016
+2026-06-17 14:57:08 [DEBUG]: RCA_loss: 0.077, TC_loss: 0.029
+2026-06-17 14:57:08 [DEBUG]: RCA_loss: 0.142, TC_loss: 0.014
+2026-06-17 14:57:08 [DEBUG]: RCA_loss: 0.112, TC_loss: 0.018
+2026-06-17 14:57:08 [DEBUG]: RCA_loss: 0.029, TC_loss: 0.022
+2026-06-17 14:57:08 [DEBUG]: RCA_loss: 0.080, TC_loss: 0.016
+2026-06-17 14:57:08 [DEBUG]: RCA_loss: 0.035, TC_loss: 0.034
+2026-06-17 14:57:08 [DEBUG]: RCA_loss: 0.051, TC_loss: 0.012
+2026-06-17 14:57:09 [DEBUG]: RCA_loss: 0.120, TC_loss: 0.012
+2026-06-17 14:57:09 [DEBUG]: RCA_loss: 0.087, TC_loss: 0.015
+2026-06-17 14:57:09 [DEBUG]: RCA_loss: 0.086, TC_loss: 0.015
+2026-06-17 14:57:09 [DEBUG]: RCA_loss: 0.037, TC_loss: 0.015
+2026-06-17 14:57:09 [DEBUG]: RCA_loss: 0.152, TC_loss: 0.022
+2026-06-17 14:57:09 [DEBUG]: RCA_loss: 0.016, TC_loss: 0.032
+2026-06-17 14:57:09 [DEBUG]: RCA_loss: 0.047, TC_loss: 0.028
+2026-06-17 14:57:09 [DEBUG]: RCA_loss: 0.133, TC_loss: 0.014
+2026-06-17 14:57:09 [DEBUG]: RCA_loss: 0.097, TC_loss: 0.029
+2026-06-17 14:57:09 [DEBUG]: RCA_loss: 0.081, TC_loss: 0.013
+2026-06-17 14:57:10 [DEBUG]: RCA_loss: 0.050, TC_loss: 0.025
+2026-06-17 14:57:10 [DEBUG]: RCA_loss: 0.099, TC_loss: 0.013
+2026-06-17 14:57:10 [DEBUG]: RCA_loss: 0.073, TC_loss: 0.017
+2026-06-17 14:57:10 [DEBUG]: RCA_loss: 0.132, TC_loss: 0.012
+2026-06-17 14:57:10 [DEBUG]: RCA_loss: 0.051, TC_loss: 0.026
+2026-06-17 14:57:10 [DEBUG]: RCA_loss: 0.153, TC_loss: 0.012
+2026-06-17 14:57:10 [DEBUG]: RCA_loss: 0.060, TC_loss: 0.007
+2026-06-17 14:57:10 [DEBUG]: RCA_loss: 0.110, TC_loss: 0.012
+2026-06-17 14:57:10 [DEBUG]: RCA_loss: 0.005, TC_loss: 0.004
+2026-06-17 14:57:10 [INFO]: Epoch 14 done. Loss: 0.097
+2026-06-17 14:57:10 [DEBUG]: RCA_loss: 0.126, TC_loss: 0.015
+2026-06-17 14:57:11 [DEBUG]: RCA_loss: 0.103, TC_loss: 0.057
+2026-06-17 14:57:11 [DEBUG]: RCA_loss: 0.034, TC_loss: 0.036
+2026-06-17 14:57:11 [DEBUG]: RCA_loss: 0.075, TC_loss: 0.010
+2026-06-17 14:57:11 [DEBUG]: RCA_loss: 0.031, TC_loss: 0.011
+2026-06-17 14:57:11 [DEBUG]: RCA_loss: 0.106, TC_loss: 0.015
+2026-06-17 14:57:11 [DEBUG]: RCA_loss: 0.008, TC_loss: 0.009
+2026-06-17 14:57:11 [DEBUG]: RCA_loss: 0.117, TC_loss: 0.012
+2026-06-17 14:57:11 [DEBUG]: RCA_loss: 0.057, TC_loss: 0.057
+2026-06-17 14:57:11 [DEBUG]: RCA_loss: 0.039, TC_loss: 0.018
+2026-06-17 14:57:11 [DEBUG]: RCA_loss: 0.073, TC_loss: 0.009
+2026-06-17 14:57:12 [DEBUG]: RCA_loss: 0.070, TC_loss: 0.010
+2026-06-17 14:57:12 [DEBUG]: RCA_loss: 0.056, TC_loss: 0.010
+2026-06-17 14:57:12 [DEBUG]: RCA_loss: 0.095, TC_loss: 0.023
+2026-06-17 14:57:12 [DEBUG]: RCA_loss: 0.051, TC_loss: 0.017
+2026-06-17 14:57:12 [DEBUG]: RCA_loss: 0.079, TC_loss: 0.011
+2026-06-17 14:57:12 [DEBUG]: RCA_loss: 0.014, TC_loss: 0.016
+2026-06-17 14:57:12 [DEBUG]: RCA_loss: 0.121, TC_loss: 0.013
+2026-06-17 14:57:12 [DEBUG]: RCA_loss: 0.028, TC_loss: 0.026
+2026-06-17 14:57:12 [DEBUG]: RCA_loss: 0.009, TC_loss: 0.009
+2026-06-17 14:57:12 [DEBUG]: RCA_loss: 0.037, TC_loss: 0.015
+2026-06-17 14:57:13 [DEBUG]: RCA_loss: 0.077, TC_loss: 0.014
+2026-06-17 14:57:13 [DEBUG]: RCA_loss: 0.131, TC_loss: 0.014
+2026-06-17 14:57:13 [DEBUG]: RCA_loss: 0.031, TC_loss: 0.012
+2026-06-17 14:57:13 [DEBUG]: RCA_loss: 0.094, TC_loss: 0.018
+2026-06-17 14:57:13 [DEBUG]: RCA_loss: 0.040, TC_loss: 0.027
+2026-06-17 14:57:13 [DEBUG]: RCA_loss: 0.081, TC_loss: 0.013
+2026-06-17 14:57:13 [DEBUG]: RCA_loss: 0.125, TC_loss: 0.011
+2026-06-17 14:57:13 [DEBUG]: RCA_loss: 0.075, TC_loss: 0.025
+2026-06-17 14:57:13 [DEBUG]: RCA_loss: 0.056, TC_loss: 0.008
+2026-06-17 14:57:13 [DEBUG]: RCA_loss: 0.017, TC_loss: 0.021
+2026-06-17 14:57:14 [DEBUG]: RCA_loss: 0.029, TC_loss: 0.006
+2026-06-17 14:57:14 [DEBUG]: RCA_loss: 0.025, TC_loss: 0.015
+2026-06-17 14:57:14 [DEBUG]: RCA_loss: 0.146, TC_loss: 0.011
+2026-06-17 14:57:14 [DEBUG]: RCA_loss: 0.067, TC_loss: 0.022
+2026-06-17 14:57:14 [DEBUG]: RCA_loss: 0.095, TC_loss: 0.009
+2026-06-17 14:57:14 [DEBUG]: RCA_loss: 0.006, TC_loss: 0.009
+2026-06-17 14:57:14 [DEBUG]: RCA_loss: 0.075, TC_loss: 0.012
+2026-06-17 14:57:14 [DEBUG]: RCA_loss: 0.008, TC_loss: 0.004
+2026-06-17 14:57:14 [INFO]: Epoch 15 done. Loss: 0.083
+2026-06-17 14:57:14 [DEBUG]: RCA_loss: 0.244, TC_loss: 0.017
+2026-06-17 14:57:14 [DEBUG]: RCA_loss: 0.132, TC_loss: 0.053
+2026-06-17 14:57:15 [DEBUG]: RCA_loss: 0.028, TC_loss: 0.022
+2026-06-17 14:57:15 [DEBUG]: RCA_loss: 0.081, TC_loss: 0.009
+2026-06-17 14:57:15 [DEBUG]: RCA_loss: 0.018, TC_loss: 0.008
+2026-06-17 14:57:15 [DEBUG]: RCA_loss: 0.082, TC_loss: 0.013
+2026-06-17 14:57:15 [DEBUG]: RCA_loss: 0.014, TC_loss: 0.010
+2026-06-17 14:57:15 [DEBUG]: RCA_loss: 0.073, TC_loss: 0.012
+2026-06-17 14:57:15 [DEBUG]: RCA_loss: 0.087, TC_loss: 0.042
+2026-06-17 14:57:15 [DEBUG]: RCA_loss: 0.030, TC_loss: 0.014
+2026-06-17 14:57:15 [DEBUG]: RCA_loss: 0.152, TC_loss: 0.008
+2026-06-17 14:57:16 [DEBUG]: RCA_loss: 0.097, TC_loss: 0.008
+2026-06-17 14:57:16 [DEBUG]: RCA_loss: 0.026, TC_loss: 0.015
+2026-06-17 14:57:16 [DEBUG]: RCA_loss: 0.039, TC_loss: 0.035
+2026-06-17 14:57:16 [DEBUG]: RCA_loss: 0.089, TC_loss: 0.011
+2026-06-17 14:57:16 [DEBUG]: RCA_loss: 0.072, TC_loss: 0.013
+2026-06-17 14:57:16 [DEBUG]: RCA_loss: 0.018, TC_loss: 0.012
+2026-06-17 14:57:16 [DEBUG]: RCA_loss: 0.087, TC_loss: 0.012
+2026-06-17 14:57:16 [DEBUG]: RCA_loss: 0.036, TC_loss: 0.023
+2026-06-17 14:57:16 [DEBUG]: RCA_loss: 0.019, TC_loss: 0.009
+2026-06-17 14:57:16 [DEBUG]: RCA_loss: 0.012, TC_loss: 0.018
+2026-06-17 14:57:17 [DEBUG]: RCA_loss: 0.049, TC_loss: 0.011
+2026-06-17 14:57:17 [DEBUG]: RCA_loss: 0.102, TC_loss: 0.012
+2026-06-17 14:57:17 [DEBUG]: RCA_loss: 0.010, TC_loss: 0.009
+2026-06-17 14:57:17 [DEBUG]: RCA_loss: 0.074, TC_loss: 0.011
+2026-06-17 14:57:17 [DEBUG]: RCA_loss: 0.020, TC_loss: 0.018
+2026-06-17 14:57:17 [DEBUG]: RCA_loss: 0.024, TC_loss: 0.008
+2026-06-17 14:57:17 [DEBUG]: RCA_loss: 0.089, TC_loss: 0.010
+2026-06-17 14:57:17 [DEBUG]: RCA_loss: 0.077, TC_loss: 0.020
+2026-06-17 14:57:17 [DEBUG]: RCA_loss: 0.052, TC_loss: 0.006
+2026-06-17 14:57:17 [DEBUG]: RCA_loss: 0.039, TC_loss: 0.016
+2026-06-17 14:57:18 [DEBUG]: RCA_loss: 0.049, TC_loss: 0.007
+2026-06-17 14:57:18 [DEBUG]: RCA_loss: 0.018, TC_loss: 0.017
+2026-06-17 14:57:18 [DEBUG]: RCA_loss: 0.088, TC_loss: 0.009
+2026-06-17 14:57:18 [DEBUG]: RCA_loss: 0.036, TC_loss: 0.014
+2026-06-17 14:57:18 [DEBUG]: RCA_loss: 0.100, TC_loss: 0.007
+2026-06-17 14:57:18 [DEBUG]: RCA_loss: 0.020, TC_loss: 0.007
+2026-06-17 14:57:18 [DEBUG]: RCA_loss: 0.058, TC_loss: 0.012
+2026-06-17 14:57:18 [DEBUG]: RCA_loss: 0.000, TC_loss: 0.006
+2026-06-17 14:57:18 [INFO]: Epoch 16 done. Loss: 0.076
+2026-06-17 14:57:18 [DEBUG]: RCA_loss: 0.071, TC_loss: 0.028
+2026-06-17 14:57:18 [DEBUG]: RCA_loss: 0.048, TC_loss: 0.061
+2026-06-17 14:57:19 [DEBUG]: RCA_loss: 0.006, TC_loss: 0.014
+2026-06-17 14:57:19 [DEBUG]: RCA_loss: 0.010, TC_loss: 0.008
+2026-06-17 14:57:19 [DEBUG]: RCA_loss: 0.068, TC_loss: 0.008
+2026-06-17 14:57:19 [DEBUG]: RCA_loss: 0.145, TC_loss: 0.015
+2026-06-17 14:57:19 [DEBUG]: RCA_loss: 0.002, TC_loss: 0.008
+2026-06-17 14:57:19 [DEBUG]: RCA_loss: 0.015, TC_loss: 0.010
+2026-06-17 14:57:19 [DEBUG]: RCA_loss: 0.021, TC_loss: 0.041
+2026-06-17 14:57:19 [DEBUG]: RCA_loss: 0.007, TC_loss: 0.013
+2026-06-17 14:57:19 [DEBUG]: RCA_loss: 0.196, TC_loss: 0.007
+2026-06-17 14:57:19 [DEBUG]: RCA_loss: 0.041, TC_loss: 0.006
+2026-06-17 14:57:20 [DEBUG]: RCA_loss: 0.060, TC_loss: 0.008
+2026-06-17 14:57:20 [DEBUG]: RCA_loss: 0.019, TC_loss: 0.023
+2026-06-17 14:57:20 [DEBUG]: RCA_loss: 0.140, TC_loss: 0.009
+2026-06-17 14:57:20 [DEBUG]: RCA_loss: 0.139, TC_loss: 0.007
+2026-06-17 14:57:20 [DEBUG]: RCA_loss: 0.013, TC_loss: 0.010
+2026-06-17 14:57:20 [DEBUG]: RCA_loss: 0.081, TC_loss: 0.013
+2026-06-17 14:57:20 [DEBUG]: RCA_loss: 0.049, TC_loss: 0.028
+2026-06-17 14:57:20 [DEBUG]: RCA_loss: 0.011, TC_loss: 0.009
+2026-06-17 14:57:20 [DEBUG]: RCA_loss: 0.237, TC_loss: 0.010
+2026-06-17 14:57:20 [DEBUG]: RCA_loss: 0.056, TC_loss: 0.009
+2026-06-17 14:57:21 [DEBUG]: RCA_loss: 0.177, TC_loss: 0.008
+2026-06-17 14:57:21 [DEBUG]: RCA_loss: 0.157, TC_loss: 0.010
+2026-06-17 14:57:21 [DEBUG]: RCA_loss: 0.134, TC_loss: 0.022
+2026-06-17 14:57:21 [DEBUG]: RCA_loss: 0.023, TC_loss: 0.051
+2026-06-17 14:57:21 [DEBUG]: RCA_loss: 0.094, TC_loss: 0.012
+2026-06-17 14:57:21 [DEBUG]: RCA_loss: 0.087, TC_loss: 0.011
+2026-06-17 14:57:21 [DEBUG]: RCA_loss: 0.074, TC_loss: 0.013
+2026-06-17 14:57:21 [DEBUG]: RCA_loss: 0.081, TC_loss: 0.009
+2026-06-17 14:57:21 [DEBUG]: RCA_loss: 0.031, TC_loss: 0.036
+2026-06-17 14:57:21 [DEBUG]: RCA_loss: 0.074, TC_loss: 0.006
+2026-06-17 14:57:22 [DEBUG]: RCA_loss: 0.072, TC_loss: 0.012
+2026-06-17 14:57:22 [DEBUG]: RCA_loss: 0.112, TC_loss: 0.047
+2026-06-17 14:57:22 [DEBUG]: RCA_loss: 0.042, TC_loss: 0.017
+2026-06-17 14:57:22 [DEBUG]: RCA_loss: 0.191, TC_loss: 0.008
+2026-06-17 14:57:22 [DEBUG]: RCA_loss: 0.079, TC_loss: 0.007
+2026-06-17 14:57:22 [DEBUG]: RCA_loss: 0.157, TC_loss: 0.008
+2026-06-17 14:57:22 [DEBUG]: RCA_loss: 0.002, TC_loss: 0.003
+2026-06-17 14:57:22 [INFO]: Epoch 17 done. Loss: 0.096
+2026-06-17 14:57:22 [DEBUG]: RCA_loss: 0.102, TC_loss: 0.010
+2026-06-17 14:57:22 [DEBUG]: RCA_loss: 0.133, TC_loss: 0.026
+2026-06-17 14:57:22 [DEBUG]: RCA_loss: 0.052, TC_loss: 0.024
+2026-06-17 14:57:22 [DEBUG]: RCA_loss: 0.103, TC_loss: 0.008
+2026-06-17 14:57:23 [DEBUG]: RCA_loss: 0.027, TC_loss: 0.008
+2026-06-17 14:57:23 [DEBUG]: RCA_loss: 0.117, TC_loss: 0.011
+2026-06-17 14:57:23 [DEBUG]: RCA_loss: 0.022, TC_loss: 0.009
+2026-06-17 14:57:23 [DEBUG]: RCA_loss: 0.139, TC_loss: 0.005
+2026-06-17 14:57:23 [DEBUG]: RCA_loss: 0.056, TC_loss: 0.041
+2026-06-17 14:57:23 [DEBUG]: RCA_loss: 0.012, TC_loss: 0.014
+2026-06-17 14:57:23 [DEBUG]: RCA_loss: 0.052, TC_loss: 0.007
+2026-06-17 14:57:23 [DEBUG]: RCA_loss: 0.099, TC_loss: 0.009
+2026-06-17 14:57:23 [DEBUG]: RCA_loss: 0.045, TC_loss: 0.006
+2026-06-17 14:57:23 [DEBUG]: RCA_loss: 0.092, TC_loss: 0.013
+2026-06-17 14:57:24 [DEBUG]: RCA_loss: 0.108, TC_loss: 0.011
+2026-06-17 14:57:24 [DEBUG]: RCA_loss: 0.092, TC_loss: 0.015
+2026-06-17 14:57:24 [DEBUG]: RCA_loss: 0.008, TC_loss: 0.010
+2026-06-17 14:57:24 [DEBUG]: RCA_loss: 0.087, TC_loss: 0.007
+2026-06-17 14:57:24 [DEBUG]: RCA_loss: 0.052, TC_loss: 0.020
+2026-06-17 14:57:24 [DEBUG]: RCA_loss: 0.014, TC_loss: 0.006
+2026-06-17 14:57:24 [DEBUG]: RCA_loss: 0.015, TC_loss: 0.011
+2026-06-17 14:57:24 [DEBUG]: RCA_loss: 0.058, TC_loss: 0.008
+2026-06-17 14:57:24 [DEBUG]: RCA_loss: 0.110, TC_loss: 0.009
+2026-06-17 14:57:24 [DEBUG]: RCA_loss: 0.014, TC_loss: 0.010
+2026-06-17 14:57:24 [DEBUG]: RCA_loss: 0.115, TC_loss: 0.007
+2026-06-17 14:57:25 [DEBUG]: RCA_loss: 0.026, TC_loss: 0.016
+2026-06-17 14:57:25 [DEBUG]: RCA_loss: 0.026, TC_loss: 0.007
+2026-06-17 14:57:25 [DEBUG]: RCA_loss: 0.115, TC_loss: 0.006
+2026-06-17 14:57:25 [DEBUG]: RCA_loss: 0.057, TC_loss: 0.016
+2026-06-17 14:57:25 [DEBUG]: RCA_loss: 0.052, TC_loss: 0.005
+2026-06-17 14:57:25 [DEBUG]: RCA_loss: 0.047, TC_loss: 0.019
+2026-06-17 14:57:25 [DEBUG]: RCA_loss: 0.053, TC_loss: 0.004
+2026-06-17 14:57:25 [DEBUG]: RCA_loss: 0.035, TC_loss: 0.013
+2026-06-17 14:57:25 [DEBUG]: RCA_loss: 0.166, TC_loss: 0.005
+2026-06-17 14:57:26 [DEBUG]: RCA_loss: 0.048, TC_loss: 0.010
+2026-06-17 14:57:26 [DEBUG]: RCA_loss: 0.127, TC_loss: 0.007
+2026-06-17 14:57:26 [DEBUG]: RCA_loss: 0.043, TC_loss: 0.005
+2026-06-17 14:57:26 [DEBUG]: RCA_loss: 0.077, TC_loss: 0.007
+2026-06-17 14:57:26 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.002
+2026-06-17 14:57:26 [INFO]: Epoch 18 done. Loss: 0.079
+2026-06-17 14:57:26 [DEBUG]: RCA_loss: 0.149, TC_loss: 0.019
+2026-06-17 14:57:26 [DEBUG]: RCA_loss: 0.075, TC_loss: 0.027
+2026-06-17 14:57:26 [DEBUG]: RCA_loss: 0.015, TC_loss: 0.018
+2026-06-17 14:57:26 [DEBUG]: RCA_loss: 0.070, TC_loss: 0.007
+2026-06-17 14:57:26 [DEBUG]: RCA_loss: 0.026, TC_loss: 0.005
+2026-06-17 14:57:27 [DEBUG]: RCA_loss: 0.070, TC_loss: 0.010
+2026-06-17 14:57:27 [DEBUG]: RCA_loss: 0.006, TC_loss: 0.008
+2026-06-17 14:57:27 [DEBUG]: RCA_loss: 0.166, TC_loss: 0.009
+2026-06-17 14:57:27 [DEBUG]: RCA_loss: 0.051, TC_loss: 0.037
+2026-06-17 14:57:27 [DEBUG]: RCA_loss: 0.024, TC_loss: 0.015
+2026-06-17 14:57:27 [DEBUG]: RCA_loss: 0.139, TC_loss: 0.006
+2026-06-17 14:57:27 [DEBUG]: RCA_loss: 0.181, TC_loss: 0.006
+2026-06-17 14:57:27 [DEBUG]: RCA_loss: 0.020, TC_loss: 0.006
+2026-06-17 14:57:27 [DEBUG]: RCA_loss: 0.066, TC_loss: 0.023
+2026-06-17 14:57:27 [DEBUG]: RCA_loss: 0.064, TC_loss: 0.009
+2026-06-17 14:57:27 [DEBUG]: RCA_loss: 0.119, TC_loss: 0.007
+2026-06-17 14:57:28 [DEBUG]: RCA_loss: 0.037, TC_loss: 0.006
+2026-06-17 14:57:28 [DEBUG]: RCA_loss: 0.114, TC_loss: 0.013
+2026-06-17 14:57:28 [DEBUG]: RCA_loss: 0.084, TC_loss: 0.012
+2026-06-17 14:57:28 [DEBUG]: RCA_loss: 0.085, TC_loss: 0.005
+2026-06-17 14:57:28 [DEBUG]: RCA_loss: 0.037, TC_loss: 0.010
+2026-06-17 14:57:28 [DEBUG]: RCA_loss: 0.044, TC_loss: 0.008
+2026-06-17 14:57:28 [DEBUG]: RCA_loss: 0.100, TC_loss: 0.009
+2026-06-17 14:57:28 [DEBUG]: RCA_loss: 0.016, TC_loss: 0.006
+2026-06-17 14:57:28 [DEBUG]: RCA_loss: 0.152, TC_loss: 0.010
+2026-06-17 14:57:29 [DEBUG]: RCA_loss: 0.029, TC_loss: 0.013
+2026-06-17 14:57:29 [DEBUG]: RCA_loss: 0.051, TC_loss: 0.008
+2026-06-17 14:57:29 [DEBUG]: RCA_loss: 0.115, TC_loss: 0.007
+2026-06-17 14:57:29 [DEBUG]: RCA_loss: 0.084, TC_loss: 0.011
+2026-06-17 14:57:29 [DEBUG]: RCA_loss: 0.071, TC_loss: 0.004
+2026-06-17 14:57:29 [DEBUG]: RCA_loss: 0.046, TC_loss: 0.018
+2026-06-17 14:57:29 [DEBUG]: RCA_loss: 0.035, TC_loss: 0.004
+2026-06-17 14:57:29 [DEBUG]: RCA_loss: 0.018, TC_loss: 0.008
+2026-06-17 14:57:29 [DEBUG]: RCA_loss: 0.110, TC_loss: 0.005
+2026-06-17 14:57:29 [DEBUG]: RCA_loss: 0.036, TC_loss: 0.008
+2026-06-17 14:57:30 [DEBUG]: RCA_loss: 0.092, TC_loss: 0.007
+2026-06-17 14:57:30 [DEBUG]: RCA_loss: 0.016, TC_loss: 0.004
+2026-06-17 14:57:30 [DEBUG]: RCA_loss: 0.100, TC_loss: 0.009
+2026-06-17 14:57:30 [DEBUG]: RCA_loss: 0.034, TC_loss: 0.003
+2026-06-17 14:57:30 [INFO]: Epoch 19 done. Loss: 0.082
+2026-06-17 14:57:30 [DEBUG]: RCA_loss: 0.142, TC_loss: 0.011
+2026-06-17 14:57:30 [DEBUG]: RCA_loss: 0.104, TC_loss: 0.022
+2026-06-17 14:57:30 [DEBUG]: RCA_loss: 0.005, TC_loss: 0.013
+2026-06-17 14:57:30 [DEBUG]: RCA_loss: 0.012, TC_loss: 0.005
+2026-06-17 14:57:30 [DEBUG]: RCA_loss: 0.035, TC_loss: 0.004
+2026-06-17 14:57:30 [DEBUG]: RCA_loss: 0.041, TC_loss: 0.008
+2026-06-17 14:57:30 [DEBUG]: RCA_loss: 0.007, TC_loss: 0.006
+2026-06-17 14:57:31 [DEBUG]: RCA_loss: 0.049, TC_loss: 0.007
+2026-06-17 14:57:31 [DEBUG]: RCA_loss: 0.044, TC_loss: 0.025
+2026-06-17 14:57:31 [DEBUG]: RCA_loss: 0.017, TC_loss: 0.009
+2026-06-17 14:57:31 [DEBUG]: RCA_loss: 0.089, TC_loss: 0.005
+2026-06-17 14:57:31 [DEBUG]: RCA_loss: 0.133, TC_loss: 0.007
+2026-06-17 14:57:31 [DEBUG]: RCA_loss: 0.006, TC_loss: 0.008
+2026-06-17 14:57:31 [DEBUG]: RCA_loss: 0.115, TC_loss: 0.013
+2026-06-17 14:57:31 [DEBUG]: RCA_loss: 0.050, TC_loss: 0.012
+2026-06-17 14:57:31 [DEBUG]: RCA_loss: 0.168, TC_loss: 0.005
+2026-06-17 14:57:32 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.008
+2026-06-17 14:57:32 [DEBUG]: RCA_loss: 0.104, TC_loss: 0.006
+2026-06-17 14:57:32 [DEBUG]: RCA_loss: 0.082, TC_loss: 0.010
+2026-06-17 14:57:32 [DEBUG]: RCA_loss: 0.010, TC_loss: 0.005
+2026-06-17 14:57:32 [DEBUG]: RCA_loss: 0.044, TC_loss: 0.005
+2026-06-17 14:57:32 [DEBUG]: RCA_loss: 0.053, TC_loss: 0.006
+2026-06-17 14:57:32 [DEBUG]: RCA_loss: 0.110, TC_loss: 0.011
+2026-06-17 14:57:32 [DEBUG]: RCA_loss: 0.004, TC_loss: 0.006
+2026-06-17 14:57:32 [DEBUG]: RCA_loss: 0.120, TC_loss: 0.010
+2026-06-17 14:57:32 [DEBUG]: RCA_loss: 0.015, TC_loss: 0.009
+2026-06-17 14:57:32 [DEBUG]: RCA_loss: 0.020, TC_loss: 0.005
+2026-06-17 14:57:33 [DEBUG]: RCA_loss: 0.124, TC_loss: 0.015
+2026-06-17 14:57:33 [DEBUG]: RCA_loss: 0.050, TC_loss: 0.009
+2026-06-17 14:57:33 [DEBUG]: RCA_loss: 0.055, TC_loss: 0.004
+2026-06-17 14:57:33 [DEBUG]: RCA_loss: 0.055, TC_loss: 0.020
+2026-06-17 14:57:33 [DEBUG]: RCA_loss: 0.020, TC_loss: 0.004
+2026-06-17 14:57:33 [DEBUG]: RCA_loss: 0.013, TC_loss: 0.007
+2026-06-17 14:57:33 [DEBUG]: RCA_loss: 0.103, TC_loss: 0.004
+2026-06-17 14:57:33 [DEBUG]: RCA_loss: 0.049, TC_loss: 0.006
+2026-06-17 14:57:33 [DEBUG]: RCA_loss: 0.095, TC_loss: 0.007
+2026-06-17 14:57:33 [DEBUG]: RCA_loss: 0.017, TC_loss: 0.005
+2026-06-17 14:57:34 [DEBUG]: RCA_loss: 0.123, TC_loss: 0.007
+2026-06-17 14:57:34 [DEBUG]: RCA_loss: 0.000, TC_loss: 0.002
+2026-06-17 14:57:34 [INFO]: Epoch 20 done. Loss: 0.069
+2026-06-17 14:57:34 [DEBUG]: RCA_loss: 0.118, TC_loss: 0.008
+2026-06-17 14:57:34 [DEBUG]: RCA_loss: 0.085, TC_loss: 0.019
+2026-06-17 14:57:34 [DEBUG]: RCA_loss: 0.024, TC_loss: 0.028
+2026-06-17 14:57:34 [DEBUG]: RCA_loss: 0.010, TC_loss: 0.005
+2026-06-17 14:57:34 [DEBUG]: RCA_loss: 0.074, TC_loss: 0.004
+2026-06-17 14:57:34 [DEBUG]: RCA_loss: 0.095, TC_loss: 0.006
+2026-06-17 14:57:34 [DEBUG]: RCA_loss: 0.024, TC_loss: 0.006
+2026-06-17 14:57:34 [DEBUG]: RCA_loss: 0.050, TC_loss: 0.008
+2026-06-17 14:57:35 [DEBUG]: RCA_loss: 0.038, TC_loss: 0.016
+2026-06-17 14:57:35 [DEBUG]: RCA_loss: 0.012, TC_loss: 0.007
+2026-06-17 14:57:35 [DEBUG]: RCA_loss: 0.024, TC_loss: 0.005
+2026-06-17 14:57:35 [DEBUG]: RCA_loss: 0.064, TC_loss: 0.008
+2026-06-17 14:57:35 [DEBUG]: RCA_loss: 0.012, TC_loss: 0.007
+2026-06-17 14:57:35 [DEBUG]: RCA_loss: 0.081, TC_loss: 0.013
+2026-06-17 14:57:35 [DEBUG]: RCA_loss: 0.043, TC_loss: 0.009
+2026-06-17 14:57:35 [DEBUG]: RCA_loss: 0.084, TC_loss: 0.006
+2026-06-17 14:57:35 [DEBUG]: RCA_loss: 0.007, TC_loss: 0.006
+2026-06-17 14:57:35 [DEBUG]: RCA_loss: 0.098, TC_loss: 0.005
+2026-06-17 14:57:36 [DEBUG]: RCA_loss: 0.030, TC_loss: 0.014
+2026-06-17 14:57:36 [DEBUG]: RCA_loss: 0.020, TC_loss: 0.004
+2026-06-17 14:57:36 [DEBUG]: RCA_loss: 0.054, TC_loss: 0.007
+2026-06-17 14:57:36 [DEBUG]: RCA_loss: 0.043, TC_loss: 0.007
+2026-06-17 14:57:36 [DEBUG]: RCA_loss: 0.091, TC_loss: 0.008
+2026-06-17 14:57:36 [DEBUG]: RCA_loss: 0.006, TC_loss: 0.006
+2026-06-17 14:57:36 [DEBUG]: RCA_loss: 0.116, TC_loss: 0.008
+2026-06-17 14:57:36 [DEBUG]: RCA_loss: 0.027, TC_loss: 0.012
+2026-06-17 14:57:36 [DEBUG]: RCA_loss: 0.018, TC_loss: 0.009
+2026-06-17 14:57:36 [DEBUG]: RCA_loss: 0.063, TC_loss: 0.005
+2026-06-17 14:57:37 [DEBUG]: RCA_loss: 0.023, TC_loss: 0.010
+2026-06-17 14:57:37 [DEBUG]: RCA_loss: 0.011, TC_loss: 0.004
+2026-06-17 14:57:37 [DEBUG]: RCA_loss: 0.049, TC_loss: 0.014
+2026-06-17 14:57:37 [DEBUG]: RCA_loss: 0.029, TC_loss: 0.015
+2026-06-17 14:57:37 [DEBUG]: RCA_loss: 0.010, TC_loss: 0.011
+2026-06-17 14:57:37 [DEBUG]: RCA_loss: 0.747, TC_loss: 0.026
+2026-06-17 14:57:37 [DEBUG]: RCA_loss: 0.124, TC_loss: 0.013
+2026-06-17 14:57:37 [DEBUG]: RCA_loss: 0.082, TC_loss: 0.008
+2026-06-17 14:57:37 [DEBUG]: RCA_loss: 0.054, TC_loss: 0.004
+2026-06-17 14:57:37 [DEBUG]: RCA_loss: 0.124, TC_loss: 0.010
+2026-06-17 14:57:38 [DEBUG]: RCA_loss: 0.023, TC_loss: 0.005
+2026-06-17 14:57:38 [INFO]: Epoch 21 done. Loss: 0.079
+2026-06-17 14:57:38 [DEBUG]: RCA_loss: 0.532, TC_loss: 0.021
+2026-06-17 14:57:38 [DEBUG]: RCA_loss: 0.076, TC_loss: 0.018
+2026-06-17 14:57:38 [DEBUG]: RCA_loss: 0.021, TC_loss: 0.029
+2026-06-17 14:57:38 [DEBUG]: RCA_loss: 0.248, TC_loss: 0.012
+2026-06-17 14:57:38 [DEBUG]: RCA_loss: 0.117, TC_loss: 0.005
+2026-06-17 14:57:38 [DEBUG]: RCA_loss: 0.058, TC_loss: 0.012
+2026-06-17 14:57:38 [DEBUG]: RCA_loss: 0.047, TC_loss: 0.018
+2026-06-17 14:57:38 [DEBUG]: RCA_loss: 0.277, TC_loss: 0.025
+2026-06-17 14:57:38 [DEBUG]: RCA_loss: 0.077, TC_loss: 0.036
+2026-06-17 14:57:39 [DEBUG]: RCA_loss: 0.067, TC_loss: 0.019
+2026-06-17 14:57:39 [DEBUG]: RCA_loss: 0.205, TC_loss: 0.012
+2026-06-17 14:57:39 [DEBUG]: RCA_loss: 0.212, TC_loss: 0.022
+2026-06-17 14:57:39 [DEBUG]: RCA_loss: 0.031, TC_loss: 0.013
+2026-06-17 14:57:39 [DEBUG]: RCA_loss: 0.074, TC_loss: 0.034
+2026-06-17 14:57:39 [DEBUG]: RCA_loss: 0.107, TC_loss: 0.025
+2026-06-17 14:57:39 [DEBUG]: RCA_loss: 0.429, TC_loss: 0.012
+2026-06-17 14:57:39 [DEBUG]: RCA_loss: 0.079, TC_loss: 0.018
+2026-06-17 14:57:39 [DEBUG]: RCA_loss: 0.313, TC_loss: 0.024
+2026-06-17 14:57:39 [DEBUG]: RCA_loss: 0.102, TC_loss: 0.027
+2026-06-17 14:57:39 [DEBUG]: RCA_loss: 0.085, TC_loss: 0.011
+2026-06-17 14:57:40 [DEBUG]: RCA_loss: 0.170, TC_loss: 0.011
+2026-06-17 14:57:40 [DEBUG]: RCA_loss: 0.231, TC_loss: 0.010
+2026-06-17 14:57:40 [DEBUG]: RCA_loss: 0.104, TC_loss: 0.019
+2026-06-17 14:57:40 [DEBUG]: RCA_loss: 0.310, TC_loss: 0.008
+2026-06-17 14:57:40 [DEBUG]: RCA_loss: 0.133, TC_loss: 0.017
+2026-06-17 14:57:40 [DEBUG]: RCA_loss: 0.035, TC_loss: 0.016
+2026-06-17 14:57:40 [DEBUG]: RCA_loss: 0.037, TC_loss: 0.010
+2026-06-17 14:57:40 [DEBUG]: RCA_loss: 0.151, TC_loss: 0.024
+2026-06-17 14:57:40 [DEBUG]: RCA_loss: 0.124, TC_loss: 0.020
+2026-06-17 14:57:41 [DEBUG]: RCA_loss: 0.162, TC_loss: 0.007
+2026-06-17 14:57:41 [DEBUG]: RCA_loss: 0.175, TC_loss: 0.017
+2026-06-17 14:57:41 [DEBUG]: RCA_loss: 0.131, TC_loss: 0.008
+2026-06-17 14:57:41 [DEBUG]: RCA_loss: 0.087, TC_loss: 0.018
+2026-06-17 14:57:41 [DEBUG]: RCA_loss: 0.098, TC_loss: 0.039
+2026-06-17 14:57:41 [DEBUG]: RCA_loss: 0.077, TC_loss: 0.018
+2026-06-17 14:57:41 [DEBUG]: RCA_loss: 0.132, TC_loss: 0.030
+2026-06-17 14:57:41 [DEBUG]: RCA_loss: 0.026, TC_loss: 0.012
+2026-06-17 14:57:41 [DEBUG]: RCA_loss: 0.180, TC_loss: 0.014
+2026-06-17 14:57:41 [DEBUG]: RCA_loss: 0.031, TC_loss: 0.088
+2026-06-17 14:57:41 [INFO]: Epoch 22 done. Loss: 0.163
+2026-06-17 14:57:41 [DEBUG]: RCA_loss: 0.267, TC_loss: 0.024
+2026-06-17 14:57:42 [DEBUG]: RCA_loss: 0.066, TC_loss: 0.030
+2026-06-17 14:57:42 [DEBUG]: RCA_loss: 0.076, TC_loss: 0.021
+2026-06-17 14:57:42 [DEBUG]: RCA_loss: 0.357, TC_loss: 0.023
+2026-06-17 14:57:42 [DEBUG]: RCA_loss: 0.094, TC_loss: 0.024
+2026-06-17 14:57:42 [DEBUG]: RCA_loss: 0.087, TC_loss: 0.012
+2026-06-17 14:57:42 [DEBUG]: RCA_loss: 0.127, TC_loss: 0.029
+2026-06-17 14:57:42 [DEBUG]: RCA_loss: 0.088, TC_loss: 0.010
+2026-06-17 14:57:42 [DEBUG]: RCA_loss: 0.197, TC_loss: 0.209
+2026-06-17 14:57:42 [DEBUG]: RCA_loss: 0.390, TC_loss: 0.024
+2026-06-17 14:57:42 [DEBUG]: RCA_loss: 0.071, TC_loss: 0.008
+2026-06-17 14:57:43 [DEBUG]: RCA_loss: 0.382, TC_loss: 0.012
+2026-06-17 14:57:43 [DEBUG]: RCA_loss: 0.182, TC_loss: 0.016
+2026-06-17 14:57:43 [DEBUG]: RCA_loss: 0.089, TC_loss: 0.056
+2026-06-17 14:57:43 [DEBUG]: RCA_loss: 0.082, TC_loss: 0.028
+2026-06-17 14:57:43 [DEBUG]: RCA_loss: 0.241, TC_loss: 0.015
+2026-06-17 14:57:43 [DEBUG]: RCA_loss: 0.241, TC_loss: 0.033
+2026-06-17 14:57:43 [DEBUG]: RCA_loss: 0.420, TC_loss: 0.071
+2026-06-17 14:57:43 [DEBUG]: RCA_loss: 0.259, TC_loss: 0.119
+2026-06-17 14:57:43 [DEBUG]: RCA_loss: 0.094, TC_loss: 0.008
+2026-06-17 14:57:43 [DEBUG]: RCA_loss: 0.195, TC_loss: 0.021
+2026-06-17 14:57:44 [DEBUG]: RCA_loss: 0.229, TC_loss: 0.008
+2026-06-17 14:57:44 [DEBUG]: RCA_loss: 0.186, TC_loss: 0.036
+2026-06-17 14:57:44 [DEBUG]: RCA_loss: 0.207, TC_loss: 0.020
+2026-06-17 14:57:44 [DEBUG]: RCA_loss: 0.214, TC_loss: 0.040
+2026-06-17 14:57:44 [DEBUG]: RCA_loss: 0.151, TC_loss: 0.036
+2026-06-17 14:57:44 [DEBUG]: RCA_loss: 0.117, TC_loss: 0.032
+2026-06-17 14:57:44 [DEBUG]: RCA_loss: 0.102, TC_loss: 0.025
+2026-06-17 14:57:44 [DEBUG]: RCA_loss: 0.141, TC_loss: 0.027
+2026-06-17 14:57:44 [DEBUG]: RCA_loss: 0.132, TC_loss: 0.011
+2026-06-17 14:57:44 [DEBUG]: RCA_loss: 0.038, TC_loss: 0.032
+2026-06-17 14:57:45 [DEBUG]: RCA_loss: 0.163, TC_loss: 0.007
+2026-06-17 14:57:45 [DEBUG]: RCA_loss: 0.134, TC_loss: 0.019
+2026-06-17 14:57:45 [DEBUG]: RCA_loss: 0.215, TC_loss: 0.013
+2026-06-17 14:57:45 [DEBUG]: RCA_loss: 0.061, TC_loss: 0.023
+2026-06-17 14:57:45 [DEBUG]: RCA_loss: 0.273, TC_loss: 0.043
+2026-06-17 14:57:45 [DEBUG]: RCA_loss: 0.083, TC_loss: 0.014
+2026-06-17 14:57:45 [DEBUG]: RCA_loss: 0.211, TC_loss: 0.019
+2026-06-17 14:57:45 [DEBUG]: RCA_loss: 0.026, TC_loss: 0.031
+2026-06-17 14:57:45 [INFO]: Epoch 23 done. Loss: 0.206
+2026-06-17 14:57:45 [DEBUG]: RCA_loss: 0.105, TC_loss: 0.051
+2026-06-17 14:57:45 [DEBUG]: RCA_loss: 0.277, TC_loss: 0.030
+2026-06-17 14:57:45 [DEBUG]: RCA_loss: 0.015, TC_loss: 0.019
+2026-06-17 14:57:46 [DEBUG]: RCA_loss: 0.057, TC_loss: 0.008
+2026-06-17 14:57:46 [DEBUG]: RCA_loss: 0.194, TC_loss: 0.014
+2026-06-17 14:57:46 [DEBUG]: RCA_loss: 0.082, TC_loss: 0.013
+2026-06-17 14:57:46 [DEBUG]: RCA_loss: 0.029, TC_loss: 0.008
+2026-06-17 14:57:46 [DEBUG]: RCA_loss: 0.080, TC_loss: 0.013
+2026-06-17 14:57:46 [DEBUG]: RCA_loss: 0.077, TC_loss: 0.079
+2026-06-17 14:57:46 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.022
+2026-06-17 14:57:46 [DEBUG]: RCA_loss: 0.038, TC_loss: 0.009
+2026-06-17 14:57:46 [DEBUG]: RCA_loss: 0.199, TC_loss: 0.009
+2026-06-17 14:57:46 [DEBUG]: RCA_loss: 0.129, TC_loss: 0.012
+2026-06-17 14:57:47 [DEBUG]: RCA_loss: 0.091, TC_loss: 0.028
+2026-06-17 14:57:47 [DEBUG]: RCA_loss: 0.089, TC_loss: 0.009
+2026-06-17 14:57:47 [DEBUG]: RCA_loss: 0.117, TC_loss: 0.004
+2026-06-17 14:57:47 [DEBUG]: RCA_loss: 0.016, TC_loss: 0.010
+2026-06-17 14:57:47 [DEBUG]: RCA_loss: 0.162, TC_loss: 0.038
+2026-06-17 14:57:47 [DEBUG]: RCA_loss: 0.054, TC_loss: 0.049
+2026-06-17 14:57:47 [DEBUG]: RCA_loss: 0.026, TC_loss: 0.007
+2026-06-17 14:57:47 [DEBUG]: RCA_loss: 0.186, TC_loss: 0.009
+2026-06-17 14:57:47 [DEBUG]: RCA_loss: 0.141, TC_loss: 0.010
+2026-06-17 14:57:47 [DEBUG]: RCA_loss: 0.110, TC_loss: 0.016
+2026-06-17 14:57:48 [DEBUG]: RCA_loss: 0.015, TC_loss: 0.005
+2026-06-17 14:57:48 [DEBUG]: RCA_loss: 0.145, TC_loss: 0.010
+2026-06-17 14:57:48 [DEBUG]: RCA_loss: 0.025, TC_loss: 0.020
+2026-06-17 14:57:48 [DEBUG]: RCA_loss: 0.053, TC_loss: 0.008
+2026-06-17 14:57:48 [DEBUG]: RCA_loss: 0.086, TC_loss: 0.011
+2026-06-17 14:57:48 [DEBUG]: RCA_loss: 0.056, TC_loss: 0.017
+2026-06-17 14:57:48 [DEBUG]: RCA_loss: 0.045, TC_loss: 0.006
+2026-06-17 14:57:48 [DEBUG]: RCA_loss: 0.046, TC_loss: 0.089
+2026-06-17 14:57:48 [DEBUG]: RCA_loss: 0.088, TC_loss: 0.006
+2026-06-17 14:57:49 [DEBUG]: RCA_loss: 0.046, TC_loss: 0.013
+2026-06-17 14:57:49 [DEBUG]: RCA_loss: 0.158, TC_loss: 0.005
+2026-06-17 14:57:49 [DEBUG]: RCA_loss: 0.035, TC_loss: 0.019
+2026-06-17 14:57:49 [DEBUG]: RCA_loss: 0.144, TC_loss: 0.015
+2026-06-17 14:57:49 [DEBUG]: RCA_loss: 0.109, TC_loss: 0.004
+2026-06-17 14:57:49 [DEBUG]: RCA_loss: 0.108, TC_loss: 0.009
+2026-06-17 14:57:49 [DEBUG]: RCA_loss: 0.013, TC_loss: 0.002
+2026-06-17 14:57:49 [INFO]: Epoch 24 done. Loss: 0.108
+2026-06-17 14:57:49 [DEBUG]: RCA_loss: 0.252, TC_loss: 0.014
+2026-06-17 14:57:49 [DEBUG]: RCA_loss: 0.129, TC_loss: 0.017
+2026-06-17 14:57:49 [DEBUG]: RCA_loss: 0.077, TC_loss: 0.147
+2026-06-17 14:57:49 [DEBUG]: RCA_loss: 0.035, TC_loss: 0.015
+2026-06-17 14:57:50 [DEBUG]: RCA_loss: 0.024, TC_loss: 0.002
+2026-06-17 14:57:50 [DEBUG]: RCA_loss: 0.202, TC_loss: 0.013
+2026-06-17 14:57:50 [DEBUG]: RCA_loss: 0.094, TC_loss: 0.008
+2026-06-17 14:57:50 [DEBUG]: RCA_loss: 0.205, TC_loss: 0.008
+2026-06-17 14:57:50 [DEBUG]: RCA_loss: 0.044, TC_loss: 0.041
+2026-06-17 14:57:50 [DEBUG]: RCA_loss: 0.009, TC_loss: 0.009
+2026-06-17 14:57:50 [DEBUG]: RCA_loss: 0.088, TC_loss: 0.004
+2026-06-17 14:57:50 [DEBUG]: RCA_loss: 0.080, TC_loss: 0.010
+2026-06-17 14:57:50 [DEBUG]: RCA_loss: 0.032, TC_loss: 0.007
+2026-06-17 14:57:51 [DEBUG]: RCA_loss: 0.101, TC_loss: 0.011
+2026-06-17 14:57:51 [DEBUG]: RCA_loss: 0.059, TC_loss: 0.008
+2026-06-17 14:57:51 [DEBUG]: RCA_loss: 0.128, TC_loss: 0.013
+2026-06-17 14:57:51 [DEBUG]: RCA_loss: 0.006, TC_loss: 0.005
+2026-06-17 14:57:51 [DEBUG]: RCA_loss: 0.069, TC_loss: 0.009
+2026-06-17 14:57:51 [DEBUG]: RCA_loss: 0.037, TC_loss: 0.016
+2026-06-17 14:57:51 [DEBUG]: RCA_loss: 0.020, TC_loss: 0.006
+2026-06-17 14:57:51 [DEBUG]: RCA_loss: 0.019, TC_loss: 0.007
+2026-06-17 14:57:51 [DEBUG]: RCA_loss: 0.056, TC_loss: 0.005
+2026-06-17 14:57:51 [DEBUG]: RCA_loss: 0.141, TC_loss: 0.010
+2026-06-17 14:57:51 [DEBUG]: RCA_loss: 0.025, TC_loss: 0.008
+2026-06-17 14:57:52 [DEBUG]: RCA_loss: 0.114, TC_loss: 0.009
+2026-06-17 14:57:52 [DEBUG]: RCA_loss: 0.051, TC_loss: 0.011
+2026-06-17 14:57:52 [DEBUG]: RCA_loss: 0.049, TC_loss: 0.005
+2026-06-17 14:57:52 [DEBUG]: RCA_loss: 0.054, TC_loss: 0.004
+2026-06-17 14:57:52 [DEBUG]: RCA_loss: 0.041, TC_loss: 0.009
+2026-06-17 14:57:52 [DEBUG]: RCA_loss: 0.181, TC_loss: 0.005
+2026-06-17 14:57:52 [DEBUG]: RCA_loss: 0.049, TC_loss: 0.014
+2026-06-17 14:57:52 [DEBUG]: RCA_loss: 0.054, TC_loss: 0.007
+2026-06-17 14:57:52 [DEBUG]: RCA_loss: 0.019, TC_loss: 0.009
+2026-06-17 14:57:52 [DEBUG]: RCA_loss: 0.099, TC_loss: 0.007
+2026-06-17 14:57:53 [DEBUG]: RCA_loss: 0.049, TC_loss: 0.009
+2026-06-17 14:57:53 [DEBUG]: RCA_loss: 0.062, TC_loss: 0.006
+2026-06-17 14:57:53 [DEBUG]: RCA_loss: 0.014, TC_loss: 0.004
+2026-06-17 14:57:53 [DEBUG]: RCA_loss: 0.085, TC_loss: 0.010
+2026-06-17 14:57:53 [DEBUG]: RCA_loss: 0.000, TC_loss: 0.001
+2026-06-17 14:57:53 [INFO]: Epoch 25 done. Loss: 0.088
+2026-06-17 14:57:53 [DEBUG]: RCA_loss: 0.143, TC_loss: 0.014
+2026-06-17 14:57:53 [DEBUG]: RCA_loss: 0.065, TC_loss: 0.013
+2026-06-17 14:57:53 [DEBUG]: RCA_loss: 0.010, TC_loss: 0.018
+2026-06-17 14:57:53 [DEBUG]: RCA_loss: 0.035, TC_loss: 0.004
+2026-06-17 14:57:53 [DEBUG]: RCA_loss: 0.012, TC_loss: 0.003
+2026-06-17 14:57:54 [DEBUG]: RCA_loss: 0.036, TC_loss: 0.009
+2026-06-17 14:57:54 [DEBUG]: RCA_loss: 0.008, TC_loss: 0.006
+2026-06-17 14:57:54 [DEBUG]: RCA_loss: 0.058, TC_loss: 0.008
+2026-06-17 14:57:54 [DEBUG]: RCA_loss: 0.024, TC_loss: 0.025
+2026-06-17 14:57:54 [DEBUG]: RCA_loss: 0.002, TC_loss: 0.010
+2026-06-17 14:57:54 [DEBUG]: RCA_loss: 0.025, TC_loss: 0.005
+2026-06-17 14:57:54 [DEBUG]: RCA_loss: 0.101, TC_loss: 0.007
+2026-06-17 14:57:54 [DEBUG]: RCA_loss: 0.012, TC_loss: 0.007
+2026-06-17 14:57:54 [DEBUG]: RCA_loss: 0.037, TC_loss: 0.012
+2026-06-17 14:57:54 [DEBUG]: RCA_loss: 0.040, TC_loss: 0.006
+2026-06-17 14:57:55 [DEBUG]: RCA_loss: 0.134, TC_loss: 0.010
+2026-06-17 14:57:55 [DEBUG]: RCA_loss: 0.025, TC_loss: 0.005
+2026-06-17 14:57:55 [DEBUG]: RCA_loss: 0.039, TC_loss: 0.008
+2026-06-17 14:57:55 [DEBUG]: RCA_loss: 0.002, TC_loss: 0.014
+2026-06-17 14:57:55 [DEBUG]: RCA_loss: 0.028, TC_loss: 0.004
+2026-06-17 14:57:55 [DEBUG]: RCA_loss: 0.013, TC_loss: 0.005
+2026-06-17 14:57:55 [DEBUG]: RCA_loss: 0.007, TC_loss: 0.006
+2026-06-17 14:57:55 [DEBUG]: RCA_loss: 0.066, TC_loss: 0.006
+2026-06-17 14:57:55 [DEBUG]: RCA_loss: 0.006, TC_loss: 0.006
+2026-06-17 14:57:56 [DEBUG]: RCA_loss: 0.050, TC_loss: 0.008
+2026-06-17 14:57:56 [DEBUG]: RCA_loss: 0.009, TC_loss: 0.013
+2026-06-17 14:57:56 [DEBUG]: RCA_loss: 0.025, TC_loss: 0.004
+2026-06-17 14:57:56 [DEBUG]: RCA_loss: 0.042, TC_loss: 0.005
+2026-06-17 14:57:56 [DEBUG]: RCA_loss: 0.036, TC_loss: 0.006
+2026-06-17 14:57:56 [DEBUG]: RCA_loss: 0.030, TC_loss: 0.005
+2026-06-17 14:57:56 [DEBUG]: RCA_loss: 0.006, TC_loss: 0.015
+2026-06-17 14:57:56 [DEBUG]: RCA_loss: 0.022, TC_loss: 0.003
+2026-06-17 14:57:56 [DEBUG]: RCA_loss: 0.044, TC_loss: 0.024
+2026-06-17 14:57:56 [DEBUG]: RCA_loss: 0.100, TC_loss: 0.004
+2026-06-17 14:57:57 [DEBUG]: RCA_loss: 0.006, TC_loss: 0.008
+2026-06-17 14:57:57 [DEBUG]: RCA_loss: 0.087, TC_loss: 0.007
+2026-06-17 14:57:57 [DEBUG]: RCA_loss: 0.021, TC_loss: 0.003
+2026-06-17 14:57:57 [DEBUG]: RCA_loss: 0.055, TC_loss: 0.007
+2026-06-17 14:57:57 [DEBUG]: RCA_loss: 0.002, TC_loss: 0.002
+2026-06-17 14:57:57 [INFO]: Epoch 26 done. Loss: 0.047
+2026-06-17 14:57:57 [DEBUG]: RCA_loss: 0.053, TC_loss: 0.014
+2026-06-17 14:57:57 [DEBUG]: RCA_loss: 0.077, TC_loss: 0.016
+2026-06-17 14:57:57 [DEBUG]: RCA_loss: 0.049, TC_loss: 0.008
+2026-06-17 14:57:57 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.005
+2026-06-17 14:57:57 [DEBUG]: RCA_loss: 0.055, TC_loss: 0.003
+2026-06-17 14:57:58 [DEBUG]: RCA_loss: 0.061, TC_loss: 0.010
+2026-06-17 14:57:58 [DEBUG]: RCA_loss: 0.011, TC_loss: 0.006
+2026-06-17 14:57:58 [DEBUG]: RCA_loss: 0.013, TC_loss: 0.005
+2026-06-17 14:57:58 [DEBUG]: RCA_loss: 0.012, TC_loss: 0.023
+2026-06-17 14:57:58 [DEBUG]: RCA_loss: 0.004, TC_loss: 0.006
+2026-06-17 14:57:58 [DEBUG]: RCA_loss: 0.011, TC_loss: 0.004
+2026-06-17 14:57:58 [DEBUG]: RCA_loss: 0.064, TC_loss: 0.005
+2026-06-17 14:57:58 [DEBUG]: RCA_loss: 0.009, TC_loss: 0.004
+2026-06-17 14:57:58 [DEBUG]: RCA_loss: 0.096, TC_loss: 0.009
+2026-06-17 14:57:58 [DEBUG]: RCA_loss: 0.046, TC_loss: 0.005
+2026-06-17 14:57:58 [DEBUG]: RCA_loss: 0.109, TC_loss: 0.006
+2026-06-17 14:57:59 [DEBUG]: RCA_loss: 0.002, TC_loss: 0.004
+2026-06-17 14:57:59 [DEBUG]: RCA_loss: 0.040, TC_loss: 0.005
+2026-06-17 14:57:59 [DEBUG]: RCA_loss: 0.006, TC_loss: 0.009
+2026-06-17 14:57:59 [DEBUG]: RCA_loss: 0.007, TC_loss: 0.003
+2026-06-17 14:57:59 [DEBUG]: RCA_loss: 0.099, TC_loss: 0.004
+2026-06-17 14:57:59 [DEBUG]: RCA_loss: 0.021, TC_loss: 0.004
+2026-06-17 14:57:59 [DEBUG]: RCA_loss: 0.044, TC_loss: 0.005
+2026-06-17 14:57:59 [DEBUG]: RCA_loss: 0.021, TC_loss: 0.005
+2026-06-17 14:57:59 [DEBUG]: RCA_loss: 0.037, TC_loss: 0.009
+2026-06-17 14:57:59 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.020
+2026-06-17 14:58:00 [DEBUG]: RCA_loss: 0.016, TC_loss: 0.007
+2026-06-17 14:58:00 [DEBUG]: RCA_loss: 0.039, TC_loss: 0.004
+2026-06-17 14:58:00 [DEBUG]: RCA_loss: 0.022, TC_loss: 0.005
+2026-06-17 14:58:00 [DEBUG]: RCA_loss: 0.013, TC_loss: 0.002
+2026-06-17 14:58:00 [DEBUG]: RCA_loss: 0.009, TC_loss: 0.012
+2026-06-17 14:58:00 [DEBUG]: RCA_loss: 0.103, TC_loss: 0.003
+2026-06-17 14:58:00 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.005
+2026-06-17 14:58:00 [DEBUG]: RCA_loss: 0.113, TC_loss: 0.006
+2026-06-17 14:58:00 [DEBUG]: RCA_loss: 0.005, TC_loss: 0.008
+2026-06-17 14:58:00 [DEBUG]: RCA_loss: 0.031, TC_loss: 0.005
+2026-06-17 14:58:01 [DEBUG]: RCA_loss: 0.005, TC_loss: 0.003
+2026-06-17 14:58:01 [DEBUG]: RCA_loss: 0.087, TC_loss: 0.006
+2026-06-17 14:58:01 [DEBUG]: RCA_loss: 0.000, TC_loss: 0.001
+2026-06-17 14:58:01 [INFO]: Epoch 27 done. Loss: 0.044
+2026-06-17 14:58:01 [DEBUG]: RCA_loss: 0.106, TC_loss: 0.014
+2026-06-17 14:58:01 [DEBUG]: RCA_loss: 0.051, TC_loss: 0.015
+2026-06-17 14:58:01 [DEBUG]: RCA_loss: 0.009, TC_loss: 0.008
+2026-06-17 14:58:01 [DEBUG]: RCA_loss: 0.008, TC_loss: 0.003
+2026-06-17 14:58:01 [DEBUG]: RCA_loss: 0.023, TC_loss: 0.003
+2026-06-17 14:58:01 [DEBUG]: RCA_loss: 0.055, TC_loss: 0.006
+2026-06-17 14:58:01 [DEBUG]: RCA_loss: 0.002, TC_loss: 0.007
+2026-06-17 14:58:02 [DEBUG]: RCA_loss: 0.056, TC_loss: 0.004
+2026-06-17 14:58:02 [DEBUG]: RCA_loss: 0.014, TC_loss: 0.014
+2026-06-17 14:58:02 [DEBUG]: RCA_loss: 0.025, TC_loss: 0.006
+2026-06-17 14:58:02 [DEBUG]: RCA_loss: 0.031, TC_loss: 0.003
+2026-06-17 14:58:02 [DEBUG]: RCA_loss: 0.102, TC_loss: 0.004
+2026-06-17 14:58:02 [DEBUG]: RCA_loss: 0.014, TC_loss: 0.006
+2026-06-17 14:58:02 [DEBUG]: RCA_loss: 0.034, TC_loss: 0.008
+2026-06-17 14:58:02 [DEBUG]: RCA_loss: 0.020, TC_loss: 0.005
+2026-06-17 14:58:02 [DEBUG]: RCA_loss: 0.140, TC_loss: 0.004
+2026-06-17 14:58:02 [DEBUG]: RCA_loss: 0.013, TC_loss: 0.004
+2026-06-17 14:58:03 [DEBUG]: RCA_loss: 0.092, TC_loss: 0.010
+2026-06-17 14:58:03 [DEBUG]: RCA_loss: 0.036, TC_loss: 0.007
+2026-06-17 14:58:03 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.003
+2026-06-17 14:58:03 [DEBUG]: RCA_loss: 0.168, TC_loss: 0.004
+2026-06-17 14:58:03 [DEBUG]: RCA_loss: 0.026, TC_loss: 0.004
+2026-06-17 14:58:03 [DEBUG]: RCA_loss: 0.037, TC_loss: 0.005
+2026-06-17 14:58:03 [DEBUG]: RCA_loss: 0.013, TC_loss: 0.004
+2026-06-17 14:58:03 [DEBUG]: RCA_loss: 0.066, TC_loss: 0.006
+2026-06-17 14:58:03 [DEBUG]: RCA_loss: 0.008, TC_loss: 0.007
+2026-06-17 14:58:03 [DEBUG]: RCA_loss: 0.066, TC_loss: 0.006
+2026-06-17 14:58:03 [DEBUG]: RCA_loss: 0.076, TC_loss: 0.003
+2026-06-17 14:58:04 [DEBUG]: RCA_loss: 0.048, TC_loss: 0.008
+2026-06-17 14:58:04 [DEBUG]: RCA_loss: 0.033, TC_loss: 0.003
+2026-06-17 14:58:04 [DEBUG]: RCA_loss: 0.005, TC_loss: 0.008
+2026-06-17 14:58:04 [DEBUG]: RCA_loss: 0.012, TC_loss: 0.004
+2026-06-17 14:58:04 [DEBUG]: RCA_loss: 0.038, TC_loss: 0.007
+2026-06-17 14:58:04 [DEBUG]: RCA_loss: 0.126, TC_loss: 0.006
+2026-06-17 14:58:04 [DEBUG]: RCA_loss: 0.004, TC_loss: 0.006
+2026-06-17 14:58:04 [DEBUG]: RCA_loss: 0.033, TC_loss: 0.003
+2026-06-17 14:58:04 [DEBUG]: RCA_loss: 0.016, TC_loss: 0.004
+2026-06-17 14:58:04 [DEBUG]: RCA_loss: 0.127, TC_loss: 0.006
+2026-06-17 14:58:05 [DEBUG]: RCA_loss: 0.001, TC_loss: 0.001
+2026-06-17 14:58:05 [INFO]: Epoch 28 done. Loss: 0.052
+2026-06-17 14:58:05 [DEBUG]: RCA_loss: 0.108, TC_loss: 0.009
+2026-06-17 14:58:05 [DEBUG]: RCA_loss: 0.199, TC_loss: 0.009
+2026-06-17 14:58:05 [DEBUG]: RCA_loss: 0.005, TC_loss: 0.007
+2026-06-17 14:58:05 [DEBUG]: RCA_loss: 0.022, TC_loss: 0.004
+2026-06-17 14:58:05 [DEBUG]: RCA_loss: 0.020, TC_loss: 0.003
+2026-06-17 14:58:05 [DEBUG]: RCA_loss: 0.043, TC_loss: 0.007
+2026-06-17 14:58:05 [DEBUG]: RCA_loss: 0.009, TC_loss: 0.005
+2026-06-17 14:58:05 [DEBUG]: RCA_loss: 0.043, TC_loss: 0.003
+2026-06-17 14:58:05 [DEBUG]: RCA_loss: 0.014, TC_loss: 0.010
+2026-06-17 14:58:06 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.007
+2026-06-17 14:58:06 [DEBUG]: RCA_loss: 0.039, TC_loss: 0.003
+2026-06-17 14:58:06 [DEBUG]: RCA_loss: 0.036, TC_loss: 0.003
+2026-06-17 14:58:06 [DEBUG]: RCA_loss: 0.005, TC_loss: 0.003
+2026-06-17 14:58:06 [DEBUG]: RCA_loss: 0.027, TC_loss: 0.006
+2026-06-17 14:58:06 [DEBUG]: RCA_loss: 0.037, TC_loss: 0.004
+2026-06-17 14:58:06 [DEBUG]: RCA_loss: 0.147, TC_loss: 0.007
+2026-06-17 14:58:06 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.003
+2026-06-17 14:58:06 [DEBUG]: RCA_loss: 0.061, TC_loss: 0.006
+2026-06-17 14:58:06 [DEBUG]: RCA_loss: 0.006, TC_loss: 0.007
+2026-06-17 14:58:07 [DEBUG]: RCA_loss: 0.007, TC_loss: 0.002
+2026-06-17 14:58:07 [DEBUG]: RCA_loss: 0.148, TC_loss: 0.003
+2026-06-17 14:58:07 [DEBUG]: RCA_loss: 0.008, TC_loss: 0.003
+2026-06-17 14:58:07 [DEBUG]: RCA_loss: 0.037, TC_loss: 0.005
+2026-06-17 14:58:07 [DEBUG]: RCA_loss: 0.002, TC_loss: 0.003
+2026-06-17 14:58:07 [DEBUG]: RCA_loss: 0.052, TC_loss: 0.006
+2026-06-17 14:58:07 [DEBUG]: RCA_loss: 0.009, TC_loss: 0.007
+2026-06-17 14:58:07 [DEBUG]: RCA_loss: 0.043, TC_loss: 0.005
+2026-06-17 14:58:07 [DEBUG]: RCA_loss: 0.050, TC_loss: 0.002
+2026-06-17 14:58:07 [DEBUG]: RCA_loss: 0.019, TC_loss: 0.004
+2026-06-17 14:58:08 [DEBUG]: RCA_loss: 0.009, TC_loss: 0.002
+2026-06-17 14:58:08 [DEBUG]: RCA_loss: 0.016, TC_loss: 0.007
+2026-06-17 14:58:08 [DEBUG]: RCA_loss: 0.021, TC_loss: 0.002
+2026-06-17 14:58:08 [DEBUG]: RCA_loss: 0.004, TC_loss: 0.004
+2026-06-17 14:58:08 [DEBUG]: RCA_loss: 0.049, TC_loss: 0.009
+2026-06-17 14:58:08 [DEBUG]: RCA_loss: 0.007, TC_loss: 0.005
+2026-06-17 14:58:08 [DEBUG]: RCA_loss: 0.036, TC_loss: 0.004
+2026-06-17 14:58:08 [DEBUG]: RCA_loss: 0.005, TC_loss: 0.002
+2026-06-17 14:58:08 [DEBUG]: RCA_loss: 0.086, TC_loss: 0.005
+2026-06-17 14:58:08 [DEBUG]: RCA_loss: 0.000, TC_loss: 0.001
+2026-06-17 14:58:08 [INFO]: Epoch 29 done. Loss: 0.043
+2026-06-17 14:58:09 [DEBUG]: RCA_loss: 0.071, TC_loss: 0.006
+2026-06-17 14:58:09 [DEBUG]: RCA_loss: 0.049, TC_loss: 0.007
+2026-06-17 14:58:09 [DEBUG]: RCA_loss: 0.058, TC_loss: 0.007
+2026-06-17 14:58:09 [DEBUG]: RCA_loss: 0.006, TC_loss: 0.002
+2026-06-17 14:58:09 [DEBUG]: RCA_loss: 0.005, TC_loss: 0.002
+2026-06-17 14:58:09 [DEBUG]: RCA_loss: 0.100, TC_loss: 0.004
+2026-06-17 14:58:09 [DEBUG]: RCA_loss: 0.000, TC_loss: 0.004
+2026-06-17 14:58:09 [DEBUG]: RCA_loss: 0.037, TC_loss: 0.002
+2026-06-17 14:58:09 [DEBUG]: RCA_loss: 0.007, TC_loss: 0.011
+2026-06-17 14:58:09 [DEBUG]: RCA_loss: 0.001, TC_loss: 0.004
+2026-06-17 14:58:10 [DEBUG]: RCA_loss: 0.067, TC_loss: 0.003
+2026-06-17 14:58:10 [DEBUG]: RCA_loss: 0.133, TC_loss: 0.003
+2026-06-17 14:58:10 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.003
+2026-06-17 14:58:10 [DEBUG]: RCA_loss: 0.077, TC_loss: 0.008
+2026-06-17 14:58:10 [DEBUG]: RCA_loss: 0.099, TC_loss: 0.003
+2026-06-17 14:58:10 [DEBUG]: RCA_loss: 0.111, TC_loss: 0.003
+2026-06-17 14:58:10 [DEBUG]: RCA_loss: 0.076, TC_loss: 0.003
+2026-06-17 14:58:10 [DEBUG]: RCA_loss: 0.035, TC_loss: 0.009
+2026-06-17 14:58:10 [DEBUG]: RCA_loss: 0.088, TC_loss: 0.005
+2026-06-17 14:58:10 [DEBUG]: RCA_loss: 0.005, TC_loss: 0.003
+2026-06-17 14:58:10 [DEBUG]: RCA_loss: 0.123, TC_loss: 0.003
+2026-06-17 14:58:11 [DEBUG]: RCA_loss: 0.012, TC_loss: 0.004
+2026-06-17 14:58:11 [DEBUG]: RCA_loss: 0.089, TC_loss: 0.004
+2026-06-17 14:58:11 [DEBUG]: RCA_loss: 0.024, TC_loss: 0.003
+2026-06-17 14:58:11 [DEBUG]: RCA_loss: 0.120, TC_loss: 0.007
+2026-06-17 14:58:11 [DEBUG]: RCA_loss: 0.017, TC_loss: 0.005
+2026-06-17 14:58:11 [DEBUG]: RCA_loss: 0.011, TC_loss: 0.003
+2026-06-17 14:58:11 [DEBUG]: RCA_loss: 0.083, TC_loss: 0.002
+2026-06-17 14:58:11 [DEBUG]: RCA_loss: 0.019, TC_loss: 0.003
+2026-06-17 14:58:11 [DEBUG]: RCA_loss: 0.086, TC_loss: 0.002
+2026-06-17 14:58:12 [DEBUG]: RCA_loss: 0.043, TC_loss: 0.012
+2026-06-17 14:58:12 [DEBUG]: RCA_loss: 0.026, TC_loss: 0.002
+2026-06-17 14:58:12 [DEBUG]: RCA_loss: 0.043, TC_loss: 0.003
+2026-06-17 14:58:12 [DEBUG]: RCA_loss: 0.095, TC_loss: 0.004
+2026-06-17 14:58:12 [DEBUG]: RCA_loss: 0.022, TC_loss: 0.007
+2026-06-17 14:58:12 [DEBUG]: RCA_loss: 0.081, TC_loss: 0.006
+2026-06-17 14:58:12 [DEBUG]: RCA_loss: 0.019, TC_loss: 0.002
+2026-06-17 14:58:12 [DEBUG]: RCA_loss: 0.026, TC_loss: 0.003
+2026-06-17 14:58:12 [DEBUG]: RCA_loss: 0.001, TC_loss: 0.001
+2026-06-17 14:58:12 [INFO]: Epoch 30 done. Loss: 0.056
+2026-06-17 14:58:12 [DEBUG]: RCA_loss: 0.105, TC_loss: 0.006
+2026-06-17 14:58:12 [DEBUG]: RCA_loss: 0.090, TC_loss: 0.006
+2026-06-17 14:58:13 [DEBUG]: RCA_loss: 0.011, TC_loss: 0.005
+2026-06-17 14:58:13 [DEBUG]: RCA_loss: 0.009, TC_loss: 0.003
+2026-06-17 14:58:13 [DEBUG]: RCA_loss: 0.014, TC_loss: 0.002
+2026-06-17 14:58:13 [DEBUG]: RCA_loss: 0.049, TC_loss: 0.007
+2026-06-17 14:58:13 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.004
+2026-06-17 14:58:13 [DEBUG]: RCA_loss: 0.060, TC_loss: 0.003
+2026-06-17 14:58:13 [DEBUG]: RCA_loss: 0.075, TC_loss: 0.013
+2026-06-17 14:58:13 [DEBUG]: RCA_loss: 0.006, TC_loss: 0.004
+2026-06-17 14:58:13 [DEBUG]: RCA_loss: 0.051, TC_loss: 0.002
+2026-06-17 14:58:14 [DEBUG]: RCA_loss: 0.064, TC_loss: 0.002
+2026-06-17 14:58:14 [DEBUG]: RCA_loss: 0.016, TC_loss: 0.003
+2026-06-17 14:58:14 [DEBUG]: RCA_loss: 0.041, TC_loss: 0.005
+2026-06-17 14:58:14 [DEBUG]: RCA_loss: 0.017, TC_loss: 0.003
+2026-06-17 14:58:14 [DEBUG]: RCA_loss: 0.059, TC_loss: 0.003
+2026-06-17 14:58:14 [DEBUG]: RCA_loss: 0.010, TC_loss: 0.002
+2026-06-17 14:58:14 [DEBUG]: RCA_loss: 0.036, TC_loss: 0.004
+2026-06-17 14:58:14 [DEBUG]: RCA_loss: 0.023, TC_loss: 0.005
+2026-06-17 14:58:14 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.002
+2026-06-17 14:58:14 [DEBUG]: RCA_loss: 0.009, TC_loss: 0.005
+2026-06-17 14:58:14 [DEBUG]: RCA_loss: 0.010, TC_loss: 0.003
+2026-06-17 14:58:15 [DEBUG]: RCA_loss: 0.146, TC_loss: 0.005
+2026-06-17 14:58:15 [DEBUG]: RCA_loss: 0.000, TC_loss: 0.003
+2026-06-17 14:58:15 [DEBUG]: RCA_loss: 0.069, TC_loss: 0.002
+2026-06-17 14:58:15 [DEBUG]: RCA_loss: 0.021, TC_loss: 0.005
+2026-06-17 14:58:15 [DEBUG]: RCA_loss: 0.026, TC_loss: 0.003
+2026-06-17 14:58:15 [DEBUG]: RCA_loss: 0.071, TC_loss: 0.002
+2026-06-17 14:58:15 [DEBUG]: RCA_loss: 0.006, TC_loss: 0.003
+2026-06-17 14:58:15 [DEBUG]: RCA_loss: 0.010, TC_loss: 0.002
+2026-06-17 14:58:15 [DEBUG]: RCA_loss: 0.030, TC_loss: 0.007
+2026-06-17 14:58:15 [DEBUG]: RCA_loss: 0.010, TC_loss: 0.001
+2026-06-17 14:58:16 [DEBUG]: RCA_loss: 0.007, TC_loss: 0.003
+2026-06-17 14:58:16 [DEBUG]: RCA_loss: 0.187, TC_loss: 0.006
+2026-06-17 14:58:16 [DEBUG]: RCA_loss: 0.012, TC_loss: 0.005
+2026-06-17 14:58:16 [DEBUG]: RCA_loss: 0.027, TC_loss: 0.003
+2026-06-17 14:58:16 [DEBUG]: RCA_loss: 0.011, TC_loss: 0.002
+2026-06-17 14:58:16 [DEBUG]: RCA_loss: 0.110, TC_loss: 0.005
+2026-06-17 14:58:16 [DEBUG]: RCA_loss: 0.001, TC_loss: 0.007
+2026-06-17 14:58:16 [INFO]: Epoch 31 done. Loss: 0.043
+2026-06-17 14:58:16 [DEBUG]: RCA_loss: 0.135, TC_loss: 0.011
+2026-06-17 14:58:16 [DEBUG]: RCA_loss: 0.104, TC_loss: 0.010
+2026-06-17 14:58:16 [DEBUG]: RCA_loss: 0.012, TC_loss: 0.004
+2026-06-17 14:58:17 [DEBUG]: RCA_loss: 0.002, TC_loss: 0.002
+2026-06-17 14:58:17 [DEBUG]: RCA_loss: 0.030, TC_loss: 0.001
+2026-06-17 14:58:17 [DEBUG]: RCA_loss: 0.064, TC_loss: 0.005
+2026-06-17 14:58:17 [DEBUG]: RCA_loss: 0.001, TC_loss: 0.004
+2026-06-17 14:58:17 [DEBUG]: RCA_loss: 0.009, TC_loss: 0.003
+2026-06-17 14:58:17 [DEBUG]: RCA_loss: 0.015, TC_loss: 0.008
+2026-06-17 14:58:17 [DEBUG]: RCA_loss: 0.002, TC_loss: 0.004
+2026-06-17 14:58:17 [DEBUG]: RCA_loss: 0.015, TC_loss: 0.002
+2026-06-17 14:58:17 [DEBUG]: RCA_loss: 0.119, TC_loss: 0.003
+2026-06-17 14:58:17 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.002
+2026-06-17 14:58:18 [DEBUG]: RCA_loss: 0.051, TC_loss: 0.005
+2026-06-17 14:58:18 [DEBUG]: RCA_loss: 0.015, TC_loss: 0.003
+2026-06-17 14:58:18 [DEBUG]: RCA_loss: 0.068, TC_loss: 0.003
+2026-06-17 14:58:18 [DEBUG]: RCA_loss: 0.000, TC_loss: 0.002
+2026-06-17 14:58:18 [DEBUG]: RCA_loss: 0.061, TC_loss: 0.004
+2026-06-17 14:58:18 [DEBUG]: RCA_loss: 0.007, TC_loss: 0.004
+2026-06-17 14:58:18 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.002
+2026-06-17 14:58:18 [DEBUG]: RCA_loss: 0.009, TC_loss: 0.003
+2026-06-17 14:58:18 [DEBUG]: RCA_loss: 0.040, TC_loss: 0.003
+2026-06-17 14:58:18 [DEBUG]: RCA_loss: 0.070, TC_loss: 0.003
+2026-06-17 14:58:19 [DEBUG]: RCA_loss: 0.004, TC_loss: 0.002
+2026-06-17 14:58:19 [DEBUG]: RCA_loss: 0.064, TC_loss: 0.003
+2026-06-17 14:58:19 [DEBUG]: RCA_loss: 0.008, TC_loss: 0.005
+2026-06-17 14:58:19 [DEBUG]: RCA_loss: 0.017, TC_loss: 0.002
+2026-06-17 14:58:19 [DEBUG]: RCA_loss: 0.023, TC_loss: 0.002
+2026-06-17 14:58:19 [DEBUG]: RCA_loss: 0.019, TC_loss: 0.003
+2026-06-17 14:58:19 [DEBUG]: RCA_loss: 0.008, TC_loss: 0.001
+2026-06-17 14:58:19 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.006
+2026-06-17 14:58:19 [DEBUG]: RCA_loss: 0.010, TC_loss: 0.001
+2026-06-17 14:58:19 [DEBUG]: RCA_loss: 0.001, TC_loss: 0.003
+2026-06-17 14:58:20 [DEBUG]: RCA_loss: 0.142, TC_loss: 0.006
+2026-06-17 14:58:20 [DEBUG]: RCA_loss: 0.017, TC_loss: 0.003
+2026-06-17 14:58:20 [DEBUG]: RCA_loss: 0.032, TC_loss: 0.004
+2026-06-17 14:58:20 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.002
+2026-06-17 14:58:20 [DEBUG]: RCA_loss: 0.121, TC_loss: 0.004
+2026-06-17 14:58:20 [DEBUG]: RCA_loss: 0.000, TC_loss: 0.001
+2026-06-17 14:58:20 [INFO]: Epoch 32 done. Loss: 0.038
+2026-06-17 14:58:20 [DEBUG]: RCA_loss: 0.088, TC_loss: 0.008
+2026-06-17 14:58:20 [DEBUG]: RCA_loss: 0.089, TC_loss: 0.006
+2026-06-17 14:58:20 [DEBUG]: RCA_loss: 0.004, TC_loss: 0.003
+2026-06-17 14:58:20 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.002
+2026-06-17 14:58:21 [DEBUG]: RCA_loss: 0.035, TC_loss: 0.002
+2026-06-17 14:58:21 [DEBUG]: RCA_loss: 0.033, TC_loss: 0.007
+2026-06-17 14:58:21 [DEBUG]: RCA_loss: 0.004, TC_loss: 0.003
+2026-06-17 14:58:21 [DEBUG]: RCA_loss: 0.006, TC_loss: 0.002
+2026-06-17 14:58:21 [DEBUG]: RCA_loss: 0.006, TC_loss: 0.014
+2026-06-17 14:58:21 [DEBUG]: RCA_loss: 0.001, TC_loss: 0.004
+2026-06-17 14:58:21 [DEBUG]: RCA_loss: 0.004, TC_loss: 0.002
+2026-06-17 14:58:21 [DEBUG]: RCA_loss: 0.034, TC_loss: 0.002
+2026-06-17 14:58:21 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.002
+2026-06-17 14:58:21 [DEBUG]: RCA_loss: 0.034, TC_loss: 0.005
+2026-06-17 14:58:22 [DEBUG]: RCA_loss: 0.010, TC_loss: 0.003
+2026-06-17 14:58:22 [DEBUG]: RCA_loss: 0.040, TC_loss: 0.003
+2026-06-17 14:58:22 [DEBUG]: RCA_loss: 0.000, TC_loss: 0.002
+2026-06-17 14:58:22 [DEBUG]: RCA_loss: 0.037, TC_loss: 0.003
+2026-06-17 14:58:22 [DEBUG]: RCA_loss: 0.001, TC_loss: 0.005
+2026-06-17 14:58:22 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.001
+2026-06-17 14:58:22 [DEBUG]: RCA_loss: 0.034, TC_loss: 0.002
+2026-06-17 14:58:22 [DEBUG]: RCA_loss: 0.010, TC_loss: 0.002
+2026-06-17 14:58:22 [DEBUG]: RCA_loss: 0.075, TC_loss: 0.004
+2026-06-17 14:58:22 [DEBUG]: RCA_loss: 0.001, TC_loss: 0.002
+2026-06-17 14:58:23 [DEBUG]: RCA_loss: 0.056, TC_loss: 0.002
+2026-06-17 14:58:23 [DEBUG]: RCA_loss: 0.036, TC_loss: 0.006
+2026-06-17 14:58:23 [DEBUG]: RCA_loss: 0.032, TC_loss: 0.002
+2026-06-17 14:58:23 [DEBUG]: RCA_loss: 0.024, TC_loss: 0.001
+2026-06-17 14:58:23 [DEBUG]: RCA_loss: 0.007, TC_loss: 0.002
+2026-06-17 14:58:23 [DEBUG]: RCA_loss: 0.008, TC_loss: 0.002
+2026-06-17 14:58:23 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.005
+2026-06-17 14:58:23 [DEBUG]: RCA_loss: 0.015, TC_loss: 0.001
+2026-06-17 14:58:23 [DEBUG]: RCA_loss: 0.001, TC_loss: 0.005
+2026-06-17 14:58:23 [DEBUG]: RCA_loss: 0.131, TC_loss: 0.002
+2026-06-17 14:58:24 [DEBUG]: RCA_loss: 0.006, TC_loss: 0.003
+2026-06-17 14:58:24 [DEBUG]: RCA_loss: 0.034, TC_loss: 0.004
+2026-06-17 14:58:24 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.002
+2026-06-17 14:58:24 [DEBUG]: RCA_loss: 0.102, TC_loss: 0.004
+2026-06-17 14:58:24 [DEBUG]: RCA_loss: 0.000, TC_loss: 0.001
+2026-06-17 14:58:24 [INFO]: Epoch 33 done. Loss: 0.030
+2026-06-17 14:58:24 [DEBUG]: RCA_loss: 0.078, TC_loss: 0.009
+2026-06-17 14:58:24 [DEBUG]: RCA_loss: 0.098, TC_loss: 0.007
+2026-06-17 14:58:24 [DEBUG]: RCA_loss: 0.004, TC_loss: 0.004
+2026-06-17 14:58:24 [DEBUG]: RCA_loss: 0.009, TC_loss: 0.002
+2026-06-17 14:58:24 [DEBUG]: RCA_loss: 0.011, TC_loss: 0.001
+2026-06-17 14:58:25 [DEBUG]: RCA_loss: 0.025, TC_loss: 0.005
+2026-06-17 14:58:25 [DEBUG]: RCA_loss: 0.001, TC_loss: 0.004
+2026-06-17 14:58:25 [DEBUG]: RCA_loss: 0.013, TC_loss: 0.002
+2026-06-17 14:58:25 [DEBUG]: RCA_loss: 0.017, TC_loss: 0.008
+2026-06-17 14:58:25 [DEBUG]: RCA_loss: 0.001, TC_loss: 0.003
+2026-06-17 14:58:25 [DEBUG]: RCA_loss: 0.008, TC_loss: 0.003
+2026-06-17 14:58:25 [DEBUG]: RCA_loss: 0.075, TC_loss: 0.003
+2026-06-17 14:58:25 [DEBUG]: RCA_loss: 0.004, TC_loss: 0.002
+2026-06-17 14:58:25 [DEBUG]: RCA_loss: 0.010, TC_loss: 0.005
+2026-06-17 14:58:25 [DEBUG]: RCA_loss: 0.035, TC_loss: 0.003
+2026-06-17 14:58:26 [DEBUG]: RCA_loss: 0.091, TC_loss: 0.004
+2026-06-17 14:58:26 [DEBUG]: RCA_loss: 0.001, TC_loss: 0.002
+2026-06-17 14:58:26 [DEBUG]: RCA_loss: 0.034, TC_loss: 0.004
+2026-06-17 14:58:26 [DEBUG]: RCA_loss: 0.089, TC_loss: 0.005
+2026-06-17 14:58:26 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.001
+2026-06-17 14:58:26 [DEBUG]: RCA_loss: 0.004, TC_loss: 0.002
+2026-06-17 14:58:26 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.003
+2026-06-17 14:58:26 [DEBUG]: RCA_loss: 0.071, TC_loss: 0.003
+2026-06-17 14:58:26 [DEBUG]: RCA_loss: 0.005, TC_loss: 0.002
+2026-06-17 14:58:26 [DEBUG]: RCA_loss: 0.056, TC_loss: 0.002
+2026-06-17 14:58:27 [DEBUG]: RCA_loss: 0.008, TC_loss: 0.003
+2026-06-17 14:58:27 [DEBUG]: RCA_loss: 0.021, TC_loss: 0.002
+2026-06-17 14:58:27 [DEBUG]: RCA_loss: 0.036, TC_loss: 0.001
+2026-06-17 14:58:27 [DEBUG]: RCA_loss: 0.009, TC_loss: 0.002
+2026-06-17 14:58:27 [DEBUG]: RCA_loss: 0.009, TC_loss: 0.001
+2026-06-17 14:58:27 [DEBUG]: RCA_loss: 0.004, TC_loss: 0.005
+2026-06-17 14:58:27 [DEBUG]: RCA_loss: 0.007, TC_loss: 0.001
+2026-06-17 14:58:27 [DEBUG]: RCA_loss: 0.002, TC_loss: 0.004
+2026-06-17 14:58:27 [DEBUG]: RCA_loss: 0.064, TC_loss: 0.005
+2026-06-17 14:58:27 [DEBUG]: RCA_loss: 0.002, TC_loss: 0.003
+2026-06-17 14:58:28 [DEBUG]: RCA_loss: 0.020, TC_loss: 0.003
+2026-06-17 14:58:28 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.002
+2026-06-17 14:58:28 [DEBUG]: RCA_loss: 0.052, TC_loss: 0.004
+2026-06-17 14:58:28 [DEBUG]: RCA_loss: 0.001, TC_loss: 0.000
+2026-06-17 14:58:28 [INFO]: Epoch 34 done. Loss: 0.029
+2026-06-17 14:58:28 [DEBUG]: RCA_loss: 0.080, TC_loss: 0.011
+2026-06-17 14:58:28 [DEBUG]: RCA_loss: 0.052, TC_loss: 0.006
+2026-06-17 14:58:28 [DEBUG]: RCA_loss: 0.002, TC_loss: 0.003
+2026-06-17 14:58:28 [DEBUG]: RCA_loss: 0.004, TC_loss: 0.002
+2026-06-17 14:58:28 [DEBUG]: RCA_loss: 0.011, TC_loss: 0.001
+2026-06-17 14:58:28 [DEBUG]: RCA_loss: 0.024, TC_loss: 0.004
+2026-06-17 14:58:29 [DEBUG]: RCA_loss: 0.005, TC_loss: 0.005
+2026-06-17 14:58:29 [DEBUG]: RCA_loss: 0.005, TC_loss: 0.002
+2026-06-17 14:58:29 [DEBUG]: RCA_loss: 0.034, TC_loss: 0.009
+2026-06-17 14:58:29 [DEBUG]: RCA_loss: 0.013, TC_loss: 0.003
+2026-06-17 14:58:29 [DEBUG]: RCA_loss: 0.006, TC_loss: 0.002
+2026-06-17 14:58:29 [DEBUG]: RCA_loss: 0.045, TC_loss: 0.002
+2026-06-17 14:58:29 [DEBUG]: RCA_loss: 0.002, TC_loss: 0.002
+2026-06-17 14:58:29 [DEBUG]: RCA_loss: 0.068, TC_loss: 0.004
+2026-06-17 14:58:29 [DEBUG]: RCA_loss: 0.011, TC_loss: 0.002
+2026-06-17 14:58:29 [DEBUG]: RCA_loss: 0.037, TC_loss: 0.003
+2026-06-17 14:58:30 [DEBUG]: RCA_loss: 0.000, TC_loss: 0.002
+2026-06-17 14:58:30 [DEBUG]: RCA_loss: 0.011, TC_loss: 0.003
+2026-06-17 14:58:30 [DEBUG]: RCA_loss: 0.002, TC_loss: 0.004
+2026-06-17 14:58:30 [DEBUG]: RCA_loss: 0.002, TC_loss: 0.001
+2026-06-17 14:58:30 [DEBUG]: RCA_loss: 0.002, TC_loss: 0.001
+2026-06-17 14:58:30 [DEBUG]: RCA_loss: 0.030, TC_loss: 0.002
+2026-06-17 14:58:30 [DEBUG]: RCA_loss: 0.041, TC_loss: 0.004
+2026-06-17 14:58:30 [DEBUG]: RCA_loss: 0.002, TC_loss: 0.002
+2026-06-17 14:58:30 [DEBUG]: RCA_loss: 0.013, TC_loss: 0.002
+2026-06-17 14:58:30 [DEBUG]: RCA_loss: 0.004, TC_loss: 0.004
+2026-06-17 14:58:31 [DEBUG]: RCA_loss: 0.030, TC_loss: 0.002
+2026-06-17 14:58:31 [DEBUG]: RCA_loss: 0.028, TC_loss: 0.002
+2026-06-17 14:58:31 [DEBUG]: RCA_loss: 0.013, TC_loss: 0.003
+2026-06-17 14:58:31 [DEBUG]: RCA_loss: 0.011, TC_loss: 0.001
+2026-06-17 14:58:31 [DEBUG]: RCA_loss: 0.036, TC_loss: 0.006
+2026-06-17 14:58:31 [DEBUG]: RCA_loss: 0.002, TC_loss: 0.001
+2026-06-17 14:58:31 [DEBUG]: RCA_loss: 0.030, TC_loss: 0.003
+2026-06-17 14:58:31 [DEBUG]: RCA_loss: 0.043, TC_loss: 0.004
+2026-06-17 14:58:31 [DEBUG]: RCA_loss: 0.016, TC_loss: 0.007
+2026-06-17 14:58:31 [DEBUG]: RCA_loss: 0.129, TC_loss: 0.003
+2026-06-17 14:58:32 [DEBUG]: RCA_loss: 0.000, TC_loss: 0.002
+2026-06-17 14:58:32 [DEBUG]: RCA_loss: 0.011, TC_loss: 0.006
+2026-06-17 14:58:32 [DEBUG]: RCA_loss: 0.000, TC_loss: 0.001
+2026-06-17 14:58:32 [INFO]: Epoch 35 done. Loss: 0.026
+2026-06-17 14:58:32 [DEBUG]: RCA_loss: 0.137, TC_loss: 0.007
+2026-06-17 14:58:32 [DEBUG]: RCA_loss: 0.044, TC_loss: 0.008
+2026-06-17 14:58:32 [DEBUG]: RCA_loss: 0.001, TC_loss: 0.003
+2026-06-17 14:58:32 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.002
+2026-06-17 14:58:32 [DEBUG]: RCA_loss: 0.007, TC_loss: 0.002
+2026-06-17 14:58:32 [DEBUG]: RCA_loss: 0.009, TC_loss: 0.002
+2026-06-17 14:58:32 [DEBUG]: RCA_loss: 0.002, TC_loss: 0.003
+2026-06-17 14:58:33 [DEBUG]: RCA_loss: 0.016, TC_loss: 0.002
+2026-06-17 14:58:33 [DEBUG]: RCA_loss: 0.056, TC_loss: 0.007
+2026-06-17 14:58:33 [DEBUG]: RCA_loss: 0.067, TC_loss: 0.004
+2026-06-17 14:58:33 [DEBUG]: RCA_loss: 0.061, TC_loss: 0.002
+2026-06-17 14:58:33 [DEBUG]: RCA_loss: 0.120, TC_loss: 0.001
+2026-06-17 14:58:33 [DEBUG]: RCA_loss: 0.001, TC_loss: 0.002
+2026-06-17 14:58:33 [DEBUG]: RCA_loss: 0.012, TC_loss: 0.006
+2026-06-17 14:58:33 [DEBUG]: RCA_loss: 0.014, TC_loss: 0.002
+2026-06-17 14:58:33 [DEBUG]: RCA_loss: 0.024, TC_loss: 0.002
+2026-06-17 14:58:33 [DEBUG]: RCA_loss: 0.000, TC_loss: 0.002
+2026-06-17 14:58:34 [DEBUG]: RCA_loss: 0.024, TC_loss: 0.004
+2026-06-17 14:58:34 [DEBUG]: RCA_loss: 0.009, TC_loss: 0.003
+2026-06-17 14:58:34 [DEBUG]: RCA_loss: 0.004, TC_loss: 0.001
+2026-06-17 14:58:34 [DEBUG]: RCA_loss: 0.004, TC_loss: 0.002
+2026-06-17 14:58:34 [DEBUG]: RCA_loss: 0.028, TC_loss: 0.002
+2026-06-17 14:58:34 [DEBUG]: RCA_loss: 0.032, TC_loss: 0.002
+2026-06-17 14:58:34 [DEBUG]: RCA_loss: 0.002, TC_loss: 0.002
+2026-06-17 14:58:34 [DEBUG]: RCA_loss: 0.033, TC_loss: 0.004
+2026-06-17 14:58:34 [DEBUG]: RCA_loss: 0.014, TC_loss: 0.003
+2026-06-17 14:58:34 [DEBUG]: RCA_loss: 0.019, TC_loss: 0.007
+2026-06-17 14:58:35 [DEBUG]: RCA_loss: 0.065, TC_loss: 0.001
+2026-06-17 14:58:35 [DEBUG]: RCA_loss: 0.004, TC_loss: 0.002
+2026-06-17 14:58:35 [DEBUG]: RCA_loss: 0.054, TC_loss: 0.001
+2026-06-17 14:58:35 [DEBUG]: RCA_loss: 0.018, TC_loss: 0.007
+2026-06-17 14:58:35 [DEBUG]: RCA_loss: 0.004, TC_loss: 0.002
+2026-06-17 14:58:35 [DEBUG]: RCA_loss: 0.012, TC_loss: 0.003
+2026-06-17 14:58:35 [DEBUG]: RCA_loss: 0.137, TC_loss: 0.005
+2026-06-17 14:58:35 [DEBUG]: RCA_loss: 0.005, TC_loss: 0.002
+2026-06-17 14:58:35 [DEBUG]: RCA_loss: 0.097, TC_loss: 0.002
+2026-06-17 14:58:35 [DEBUG]: RCA_loss: 0.001, TC_loss: 0.002
+2026-06-17 14:58:36 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.004
+2026-06-17 14:58:36 [DEBUG]: RCA_loss: 0.000, TC_loss: 0.001
+2026-06-17 14:58:36 [INFO]: Epoch 36 done. Loss: 0.033
+2026-06-17 14:58:36 [DEBUG]: RCA_loss: 0.245, TC_loss: 0.006
+2026-06-17 14:58:36 [DEBUG]: RCA_loss: 0.226, TC_loss: 0.004
+2026-06-17 14:58:36 [DEBUG]: RCA_loss: 0.017, TC_loss: 0.003
+2026-06-17 14:58:36 [DEBUG]: RCA_loss: 0.004, TC_loss: 0.003
+2026-06-17 14:58:36 [DEBUG]: RCA_loss: 0.028, TC_loss: 0.001
+2026-06-17 14:58:36 [DEBUG]: RCA_loss: 0.147, TC_loss: 0.003
+2026-06-17 14:58:36 [DEBUG]: RCA_loss: 0.001, TC_loss: 0.003
+2026-06-17 14:58:36 [DEBUG]: RCA_loss: 0.038, TC_loss: 0.002
+2026-06-17 14:58:37 [DEBUG]: RCA_loss: 0.091, TC_loss: 0.007
+2026-06-17 14:58:37 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.004
+2026-06-17 14:58:37 [DEBUG]: RCA_loss: 0.090, TC_loss: 0.001
+2026-06-17 14:58:37 [DEBUG]: RCA_loss: 0.097, TC_loss: 0.001
+2026-06-17 14:58:37 [DEBUG]: RCA_loss: 0.007, TC_loss: 0.003
+2026-06-17 14:58:37 [DEBUG]: RCA_loss: 0.029, TC_loss: 0.004
+2026-06-17 14:58:37 [DEBUG]: RCA_loss: 0.045, TC_loss: 0.002
+2026-06-17 14:58:37 [DEBUG]: RCA_loss: 0.089, TC_loss: 0.002
+2026-06-17 14:58:37 [DEBUG]: RCA_loss: 0.002, TC_loss: 0.003
+2026-06-17 14:58:37 [DEBUG]: RCA_loss: 0.054, TC_loss: 0.002
+2026-06-17 14:58:38 [DEBUG]: RCA_loss: 0.005, TC_loss: 0.006
+2026-06-17 14:58:38 [DEBUG]: RCA_loss: 0.007, TC_loss: 0.001
+2026-06-17 14:58:38 [DEBUG]: RCA_loss: 0.018, TC_loss: 0.002
+2026-06-17 14:58:38 [DEBUG]: RCA_loss: 0.045, TC_loss: 0.002
+2026-06-17 14:58:38 [DEBUG]: RCA_loss: 0.055, TC_loss: 0.002
+2026-06-17 14:58:38 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.002
+2026-06-17 14:58:38 [DEBUG]: RCA_loss: 0.035, TC_loss: 0.004
+2026-06-17 14:58:38 [DEBUG]: RCA_loss: 0.010, TC_loss: 0.003
+2026-06-17 14:58:38 [DEBUG]: RCA_loss: 0.015, TC_loss: 0.003
+2026-06-17 14:58:38 [DEBUG]: RCA_loss: 0.059, TC_loss: 0.001
+2026-06-17 14:58:39 [DEBUG]: RCA_loss: 0.065, TC_loss: 0.003
+2026-06-17 14:58:39 [DEBUG]: RCA_loss: 0.026, TC_loss: 0.002
+2026-06-17 14:58:39 [DEBUG]: RCA_loss: 0.001, TC_loss: 0.006
+2026-06-17 14:58:39 [DEBUG]: RCA_loss: 0.037, TC_loss: 0.001
+2026-06-17 14:58:39 [DEBUG]: RCA_loss: 0.011, TC_loss: 0.003
+2026-06-17 14:58:39 [DEBUG]: RCA_loss: 0.051, TC_loss: 0.003
+2026-06-17 14:58:39 [DEBUG]: RCA_loss: 0.007, TC_loss: 0.002
+2026-06-17 14:58:39 [DEBUG]: RCA_loss: 0.103, TC_loss: 0.002
+2026-06-17 14:58:39 [DEBUG]: RCA_loss: 0.010, TC_loss: 0.001
+2026-06-17 14:58:39 [DEBUG]: RCA_loss: 0.053, TC_loss: 0.003
+2026-06-17 14:58:40 [DEBUG]: RCA_loss: 0.000, TC_loss: 0.000
+2026-06-17 14:58:40 [INFO]: Epoch 37 done. Loss: 0.051
+2026-06-17 14:58:40 [DEBUG]: RCA_loss: 0.072, TC_loss: 0.005
+2026-06-17 14:58:40 [DEBUG]: RCA_loss: 0.035, TC_loss: 0.003
+2026-06-17 14:58:40 [DEBUG]: RCA_loss: 0.013, TC_loss: 0.004
+2026-06-17 14:58:40 [DEBUG]: RCA_loss: 0.008, TC_loss: 0.003
+2026-06-17 14:58:40 [DEBUG]: RCA_loss: 0.004, TC_loss: 0.001
+2026-06-17 14:58:40 [DEBUG]: RCA_loss: 0.036, TC_loss: 0.003
+2026-06-17 14:58:40 [DEBUG]: RCA_loss: 0.000, TC_loss: 0.002
+2026-06-17 14:58:40 [DEBUG]: RCA_loss: 0.027, TC_loss: 0.001
+2026-06-17 14:58:40 [DEBUG]: RCA_loss: 0.185, TC_loss: 0.007
+2026-06-17 14:58:40 [DEBUG]: RCA_loss: 0.001, TC_loss: 0.003
+2026-06-17 14:58:41 [DEBUG]: RCA_loss: 0.041, TC_loss: 0.001
+2026-06-17 14:58:41 [DEBUG]: RCA_loss: 0.085, TC_loss: 0.002
+2026-06-17 14:58:41 [DEBUG]: RCA_loss: 0.007, TC_loss: 0.002
+2026-06-17 14:58:41 [DEBUG]: RCA_loss: 0.022, TC_loss: 0.003
+2026-06-17 14:58:41 [DEBUG]: RCA_loss: 0.037, TC_loss: 0.002
+2026-06-17 14:58:41 [DEBUG]: RCA_loss: 0.146, TC_loss: 0.002
+2026-06-17 14:58:41 [DEBUG]: RCA_loss: 0.002, TC_loss: 0.002
+2026-06-17 14:58:41 [DEBUG]: RCA_loss: 0.056, TC_loss: 0.004
+2026-06-17 14:58:41 [DEBUG]: RCA_loss: 0.123, TC_loss: 0.008
+2026-06-17 14:58:42 [DEBUG]: RCA_loss: 0.002, TC_loss: 0.001
+2026-06-17 14:58:42 [DEBUG]: RCA_loss: 0.095, TC_loss: 0.002
+2026-06-17 14:58:42 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.002
+2026-06-17 14:58:42 [DEBUG]: RCA_loss: 0.046, TC_loss: 0.002
+2026-06-17 14:58:42 [DEBUG]: RCA_loss: 0.001, TC_loss: 0.002
+2026-06-17 14:58:42 [DEBUG]: RCA_loss: 0.048, TC_loss: 0.004
+2026-06-17 14:58:42 [DEBUG]: RCA_loss: 0.007, TC_loss: 0.003
+2026-06-17 14:58:42 [DEBUG]: RCA_loss: 0.019, TC_loss: 0.003
+2026-06-17 14:58:42 [DEBUG]: RCA_loss: 0.050, TC_loss: 0.002
+2026-06-17 14:58:42 [DEBUG]: RCA_loss: 0.030, TC_loss: 0.003
+2026-06-17 14:58:43 [DEBUG]: RCA_loss: 0.006, TC_loss: 0.002
+2026-06-17 14:58:43 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.006
+2026-06-17 14:58:43 [DEBUG]: RCA_loss: 0.018, TC_loss: 0.002
+2026-06-17 14:58:43 [DEBUG]: RCA_loss: 0.004, TC_loss: 0.005
+2026-06-17 14:58:43 [DEBUG]: RCA_loss: 0.086, TC_loss: 0.003
+2026-06-17 14:58:43 [DEBUG]: RCA_loss: 0.022, TC_loss: 0.004
+2026-06-17 14:58:43 [DEBUG]: RCA_loss: 0.038, TC_loss: 0.003
+2026-06-17 14:58:43 [DEBUG]: RCA_loss: 0.181, TC_loss: 0.005
+2026-06-17 14:58:43 [DEBUG]: RCA_loss: 0.072, TC_loss: 0.004
+2026-06-17 14:58:43 [DEBUG]: RCA_loss: 0.000, TC_loss: 0.000
+2026-06-17 14:58:43 [INFO]: Epoch 38 done. Loss: 0.046
+2026-06-17 14:58:43 [DEBUG]: RCA_loss: 0.052, TC_loss: 0.011
+2026-06-17 14:58:44 [DEBUG]: RCA_loss: 0.049, TC_loss: 0.003
+2026-06-17 14:58:44 [DEBUG]: RCA_loss: 0.002, TC_loss: 0.003
+2026-06-17 14:58:44 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.002
+2026-06-17 14:58:44 [DEBUG]: RCA_loss: 0.020, TC_loss: 0.001
+2026-06-17 14:58:44 [DEBUG]: RCA_loss: 0.053, TC_loss: 0.004
+2026-06-17 14:58:44 [DEBUG]: RCA_loss: 0.006, TC_loss: 0.003
+2026-06-17 14:58:44 [DEBUG]: RCA_loss: 0.050, TC_loss: 0.002
+2026-06-17 14:58:44 [DEBUG]: RCA_loss: 0.010, TC_loss: 0.008
+2026-06-17 14:58:44 [DEBUG]: RCA_loss: 0.002, TC_loss: 0.006
+2026-06-17 14:58:44 [DEBUG]: RCA_loss: 0.009, TC_loss: 0.004
+2026-06-17 14:58:45 [DEBUG]: RCA_loss: 0.092, TC_loss: 0.002
+2026-06-17 14:58:45 [DEBUG]: RCA_loss: 0.016, TC_loss: 0.002
+2026-06-17 14:58:45 [DEBUG]: RCA_loss: 0.025, TC_loss: 0.004
+2026-06-17 14:58:45 [DEBUG]: RCA_loss: 0.054, TC_loss: 0.003
+2026-06-17 14:58:45 [DEBUG]: RCA_loss: 0.057, TC_loss: 0.003
+2026-06-17 14:58:45 [DEBUG]: RCA_loss: 0.013, TC_loss: 0.002
+2026-06-17 14:58:45 [DEBUG]: RCA_loss: 0.065, TC_loss: 0.003
+2026-06-17 14:58:45 [DEBUG]: RCA_loss: 0.040, TC_loss: 0.005
+2026-06-17 14:58:45 [DEBUG]: RCA_loss: 0.005, TC_loss: 0.001
+2026-06-17 14:58:45 [DEBUG]: RCA_loss: 0.002, TC_loss: 0.002
+2026-06-17 14:58:46 [DEBUG]: RCA_loss: 0.023, TC_loss: 0.002
+2026-06-17 14:58:46 [DEBUG]: RCA_loss: 0.022, TC_loss: 0.002
+2026-06-17 14:58:46 [DEBUG]: RCA_loss: 0.012, TC_loss: 0.002
+2026-06-17 14:58:46 [DEBUG]: RCA_loss: 0.041, TC_loss: 0.003
+2026-06-17 14:58:46 [DEBUG]: RCA_loss: 0.009, TC_loss: 0.004
+2026-06-17 14:58:46 [DEBUG]: RCA_loss: 0.018, TC_loss: 0.002
+2026-06-17 14:58:46 [DEBUG]: RCA_loss: 0.024, TC_loss: 0.002
+2026-06-17 14:58:46 [DEBUG]: RCA_loss: 0.006, TC_loss: 0.003
+2026-06-17 14:58:46 [DEBUG]: RCA_loss: 0.015, TC_loss: 0.001
+2026-06-17 14:58:47 [DEBUG]: RCA_loss: 0.001, TC_loss: 0.007
+2026-06-17 14:58:47 [DEBUG]: RCA_loss: 0.004, TC_loss: 0.001
+2026-06-17 14:58:47 [DEBUG]: RCA_loss: 0.001, TC_loss: 0.005
+2026-06-17 14:58:47 [DEBUG]: RCA_loss: 0.074, TC_loss: 0.002
+2026-06-17 14:58:47 [DEBUG]: RCA_loss: 0.005, TC_loss: 0.004
+2026-06-17 14:58:47 [DEBUG]: RCA_loss: 0.020, TC_loss: 0.002
+2026-06-17 14:58:47 [DEBUG]: RCA_loss: 0.002, TC_loss: 0.001
+2026-06-17 14:58:47 [DEBUG]: RCA_loss: 0.008, TC_loss: 0.005
+2026-06-17 14:58:47 [DEBUG]: RCA_loss: 0.000, TC_loss: 0.001
+2026-06-17 14:58:47 [INFO]: Epoch 39 done. Loss: 0.027
+2026-06-17 14:58:47 [DEBUG]: RCA_loss: 0.120, TC_loss: 0.008
+2026-06-17 14:58:47 [DEBUG]: RCA_loss: 0.076, TC_loss: 0.004
+2026-06-17 14:58:48 [DEBUG]: RCA_loss: 0.002, TC_loss: 0.003
+2026-06-17 14:58:48 [DEBUG]: RCA_loss: 0.005, TC_loss: 0.002
+2026-06-17 14:58:48 [DEBUG]: RCA_loss: 0.014, TC_loss: 0.001
+2026-06-17 14:58:48 [DEBUG]: RCA_loss: 0.012, TC_loss: 0.003
+2026-06-17 14:58:48 [DEBUG]: RCA_loss: 0.007, TC_loss: 0.004
+2026-06-17 14:58:48 [DEBUG]: RCA_loss: 0.056, TC_loss: 0.002
+2026-06-17 14:58:48 [DEBUG]: RCA_loss: 0.015, TC_loss: 0.006
+2026-06-17 14:58:48 [DEBUG]: RCA_loss: 0.002, TC_loss: 0.004
+2026-06-17 14:58:48 [DEBUG]: RCA_loss: 0.004, TC_loss: 0.001
+2026-06-17 14:58:48 [DEBUG]: RCA_loss: 0.023, TC_loss: 0.001
+2026-06-17 14:58:49 [DEBUG]: RCA_loss: 0.005, TC_loss: 0.003
+2026-06-17 14:58:49 [DEBUG]: RCA_loss: 0.036, TC_loss: 0.004
+2026-06-17 14:58:49 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.002
+2026-06-17 14:58:49 [DEBUG]: RCA_loss: 0.113, TC_loss: 0.002
+2026-06-17 14:58:49 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.001
+2026-06-17 14:58:49 [DEBUG]: RCA_loss: 0.021, TC_loss: 0.002
+2026-06-17 14:58:49 [DEBUG]: RCA_loss: 0.001, TC_loss: 0.009
+2026-06-17 14:58:49 [DEBUG]: RCA_loss: 0.011, TC_loss: 0.002
+2026-06-17 14:58:49 [DEBUG]: RCA_loss: 0.145, TC_loss: 0.002
+2026-06-17 14:58:49 [DEBUG]: RCA_loss: 0.008, TC_loss: 0.003
+2026-06-17 14:58:50 [DEBUG]: RCA_loss: 0.135, TC_loss: 0.002
+2026-06-17 14:58:50 [DEBUG]: RCA_loss: 0.001, TC_loss: 0.002
+2026-06-17 14:58:50 [DEBUG]: RCA_loss: 0.117, TC_loss: 0.003
+2026-06-17 14:58:50 [DEBUG]: RCA_loss: 0.005, TC_loss: 0.003
+2026-06-17 14:58:50 [DEBUG]: RCA_loss: 0.044, TC_loss: 0.002
+2026-06-17 14:58:50 [DEBUG]: RCA_loss: 0.073, TC_loss: 0.002
+2026-06-17 14:58:50 [DEBUG]: RCA_loss: 0.031, TC_loss: 0.003
+2026-06-17 14:58:50 [DEBUG]: RCA_loss: 0.009, TC_loss: 0.001
+2026-06-17 14:58:50 [DEBUG]: RCA_loss: 0.012, TC_loss: 0.006
+2026-06-17 14:58:50 [DEBUG]: RCA_loss: 0.011, TC_loss: 0.001
+2026-06-17 14:58:51 [DEBUG]: RCA_loss: 0.011, TC_loss: 0.003
+2026-06-17 14:58:51 [DEBUG]: RCA_loss: 0.091, TC_loss: 0.002
+2026-06-17 14:58:51 [DEBUG]: RCA_loss: 0.015, TC_loss: 0.002
+2026-06-17 14:58:51 [DEBUG]: RCA_loss: 0.045, TC_loss: 0.002
+2026-06-17 14:58:51 [DEBUG]: RCA_loss: 0.015, TC_loss: 0.001
+2026-06-17 14:58:51 [DEBUG]: RCA_loss: 0.039, TC_loss: 0.001
+2026-06-17 14:58:51 [DEBUG]: RCA_loss: 0.000, TC_loss: 0.000
+2026-06-17 14:58:51 [INFO]: Epoch 40 done. Loss: 0.038
+2026-06-17 14:58:51 [DEBUG]: RCA_loss: 0.079, TC_loss: 0.002
+2026-06-17 14:58:51 [DEBUG]: RCA_loss: 0.025, TC_loss: 0.007
+2026-06-17 14:58:51 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.003
+2026-06-17 14:58:51 [DEBUG]: RCA_loss: 0.006, TC_loss: 0.001
+2026-06-17 14:58:52 [DEBUG]: RCA_loss: 0.002, TC_loss: 0.003
+2026-06-17 14:58:52 [DEBUG]: RCA_loss: 0.020, TC_loss: 0.002
+2026-06-17 14:58:52 [DEBUG]: RCA_loss: 0.006, TC_loss: 0.003
+2026-06-17 14:58:52 [DEBUG]: RCA_loss: 0.037, TC_loss: 0.001
+2026-06-17 14:58:52 [DEBUG]: RCA_loss: 0.016, TC_loss: 0.012
+2026-06-17 14:58:52 [DEBUG]: RCA_loss: 0.032, TC_loss: 0.006
+2026-06-17 14:58:52 [DEBUG]: RCA_loss: 0.014, TC_loss: 0.001
+2026-06-17 14:58:52 [DEBUG]: RCA_loss: 0.139, TC_loss: 0.002
+2026-06-17 14:58:52 [DEBUG]: RCA_loss: 0.008, TC_loss: 0.002
+2026-06-17 14:58:52 [DEBUG]: RCA_loss: 0.001, TC_loss: 0.004
+2026-06-17 14:58:53 [DEBUG]: RCA_loss: 0.027, TC_loss: 0.002
+2026-06-17 14:58:53 [DEBUG]: RCA_loss: 0.048, TC_loss: 0.001
+2026-06-17 14:58:53 [DEBUG]: RCA_loss: 0.003, TC_loss: 0.002
+2026-06-17 14:58:53 [DEBUG]: RCA_loss: 0.057, TC_loss: 0.005
+2026-06-17 14:58:53 [DEBUG]: RCA_loss: 0.054, TC_loss: 0.004
+2026-06-17 14:58:53 [DEBUG]: RCA_loss: 0.019, TC_loss: 0.001
+2026-06-17 14:58:53 [DEBUG]: RCA_loss: 0.049, TC_loss: 0.002
+2026-06-17 14:58:53 [DEBUG]: RCA_loss: 0.058, TC_loss: 0.002
+2026-06-17 14:58:53 [DEBUG]: RCA_loss: 0.142, TC_loss: 0.003
+2026-06-17 14:58:53 [DEBUG]: RCA_loss: 0.002, TC_loss: 0.002
+2026-06-17 14:58:54 [DEBUG]: RCA_loss: 0.096, TC_loss: 0.003
+2026-06-17 14:58:54 [DEBUG]: RCA_loss: 0.002, TC_loss: 0.003
+2026-06-17 14:58:54 [DEBUG]: RCA_loss: 0.080, TC_loss: 0.002
+2026-06-17 14:58:54 [DEBUG]: RCA_loss: 0.104, TC_loss: 0.001
+2026-06-17 14:58:54 [DEBUG]: RCA_loss: 0.009, TC_loss: 0.003
+2026-06-17 14:58:54 [DEBUG]: RCA_loss: 0.087, TC_loss: 0.001
+2026-06-17 14:58:54 [DEBUG]: RCA_loss: 0.020, TC_loss: 0.007
+2026-06-17 14:58:54 [DEBUG]: RCA_loss: 0.012, TC_loss: 0.001
+2026-06-17 14:58:54 [DEBUG]: RCA_loss: 0.014, TC_loss: 0.003
+2026-06-17 14:58:54 [DEBUG]: RCA_loss: 0.015, TC_loss: 0.002
+2026-06-17 14:58:55 [DEBUG]: RCA_loss: 0.004, TC_loss: 0.003
+2026-06-17 14:58:55 [DEBUG]: RCA_loss: 0.039, TC_loss: 0.003
+2026-06-17 14:58:55 [DEBUG]: RCA_loss: 0.002, TC_loss: 0.001
+2026-06-17 14:58:55 [DEBUG]: RCA_loss: 0.043, TC_loss: 0.001
+2026-06-17 14:58:55 [DEBUG]: RCA_loss: 0.001, TC_loss: 0.000
+2026-06-17 14:58:55 [INFO]: Epoch 41 done. Loss: 0.039
+2026-06-17 14:58:55 [DEBUG]: RCA_loss: 0.078, TC_loss: 0.003
+2026-06-17 14:58:55 [DEBUG]: RCA_loss: 0.076, TC_loss: 0.004
+2026-06-17 14:58:55 [DEBUG]: RCA_loss: 0.188, TC_loss: 0.004
+2026-06-17 14:58:55 [DEBUG]: RCA_loss: 0.006, TC_loss: 0.014
+2026-06-17 14:58:55 [DEBUG]: RCA_loss: 0.027, TC_loss: 0.001
+2026-06-17 14:58:56 [DEBUG]: RCA_loss: 0.024, TC_loss: 0.004
+2026-06-17 14:58:56 [DEBUG]: RCA_loss: 0.010, TC_loss: 0.003
+2026-06-17 14:58:56 [DEBUG]: RCA_loss: 0.009, TC_loss: 0.003
+2026-06-17 14:58:56 [DEBUG]: RCA_loss: 0.055, TC_loss: 0.009
+2026-06-17 14:58:56 [DEBUG]: RCA_loss: 0.167, TC_loss: 0.004
+2026-06-17 14:58:56 [DEBUG]: RCA_loss: 0.005, TC_loss: 0.001
+2026-06-17 14:58:56 [DEBUG]: RCA_loss: 0.078, TC_loss: 0.002
+2026-06-17 14:58:56 [DEBUG]: RCA_loss: 0.005, TC_loss: 0.002
+2026-06-17 14:58:56 [DEBUG]: RCA_loss: 0.048, TC_loss: 0.008
+2026-06-17 14:58:56 [DEBUG]: RCA_loss: 0.009, TC_loss: 0.003
+2026-06-17 14:58:56 [DEBUG]: RCA_loss: 0.090, TC_loss: 0.009
+2026-06-17 14:58:57 [DEBUG]: RCA_loss: 0.009, TC_loss: 0.003
+2026-06-17 14:58:57 [DEBUG]: RCA_loss: 0.036, TC_loss: 0.003
+2026-06-17 14:58:57 [DEBUG]: RCA_loss: 0.160, TC_loss: 0.008
+2026-06-17 14:58:57 [DEBUG]: RCA_loss: 0.027, TC_loss: 0.002
+2026-06-17 14:58:57 [DEBUG]: RCA_loss: 0.034, TC_loss: 0.002
+2026-06-17 14:58:57 [DEBUG]: RCA_loss: 0.310, TC_loss: 0.018
+2026-06-17 14:58:57 [DEBUG]: RCA_loss: 0.036, TC_loss: 0.067
+2026-06-17 14:58:57 [DEBUG]: RCA_loss: 0.207, TC_loss: 0.008
+2026-06-17 14:58:57 [DEBUG]: RCA_loss: 0.017, TC_loss: 0.002
+2026-06-17 14:58:57 [DEBUG]: RCA_loss: 0.017, TC_loss: 0.004
+2026-06-17 14:58:58 [DEBUG]: RCA_loss: 0.049, TC_loss: 0.002
+2026-06-17 14:58:58 [DEBUG]: RCA_loss: 0.040, TC_loss: 0.010
+2026-06-17 14:58:58 [DEBUG]: RCA_loss: 0.058, TC_loss: 0.010
+2026-06-17 14:58:58 [DEBUG]: RCA_loss: 0.008, TC_loss: 0.002
+2026-06-17 14:58:58 [DEBUG]: RCA_loss: 0.139, TC_loss: 0.018
+2026-06-17 14:58:58 [DEBUG]: RCA_loss: 0.162, TC_loss: 0.001
+2026-06-17 14:58:58 [DEBUG]: RCA_loss: 0.004, TC_loss: 0.003
+2026-06-17 14:58:58 [DEBUG]: RCA_loss: 0.107, TC_loss: 0.005
+2026-06-17 14:58:58 [DEBUG]: RCA_loss: 0.043, TC_loss: 0.002
+2026-06-17 14:58:58 [DEBUG]: RCA_loss: 0.149, TC_loss: 0.017
+2026-06-17 14:58:59 [DEBUG]: RCA_loss: 0.005, TC_loss: 0.004
+2026-06-17 14:58:59 [DEBUG]: RCA_loss: 0.018, TC_loss: 0.005
+2026-06-17 14:58:59 [DEBUG]: RCA_loss: 0.038, TC_loss: 0.002
+2026-06-17 14:58:59 [INFO]: Epoch 42 done. Loss: 0.073
+2026-06-17 14:58:59 [DEBUG]: RCA_loss: 0.064, TC_loss: 0.011
+2026-06-17 14:58:59 [DEBUG]: RCA_loss: 0.028, TC_loss: 0.010
+2026-06-17 14:58:59 [DEBUG]: RCA_loss: 0.012, TC_loss: 0.005
+2026-06-17 14:58:59 [DEBUG]: RCA_loss: 0.171, TC_loss: 0.004
+2026-06-17 14:58:59 [DEBUG]: RCA_loss: 0.154, TC_loss: 0.003
+2026-06-17 14:58:59 [DEBUG]: RCA_loss: 0.053, TC_loss: 0.004
+2026-06-17 14:58:59 [DEBUG]: RCA_loss: 0.014, TC_loss: 0.005
+2026-06-17 14:59:00 [DEBUG]: RCA_loss: 0.032, TC_loss: 0.003
+2026-06-17 14:59:00 [DEBUG]: RCA_loss: 0.174, TC_loss: 0.071
+2026-06-17 14:59:00 [DEBUG]: RCA_loss: 0.001, TC_loss: 0.005
+2026-06-17 14:59:00 [DEBUG]: RCA_loss: 0.007, TC_loss: 0.004
+2026-06-17 14:59:00 [DEBUG]: RCA_loss: 0.048, TC_loss: 0.004
+2026-06-17 14:59:00 [DEBUG]: RCA_loss: 0.133, TC_loss: 0.004
+2026-06-17 14:59:00 [DEBUG]: RCA_loss: 0.051, TC_loss: 0.006
+2026-06-17 14:59:00 [DEBUG]: RCA_loss: 0.010, TC_loss: 0.008
+2026-06-17 14:59:00 [DEBUG]: RCA_loss: 0.182, TC_loss: 0.004
+2026-06-17 14:59:01 [DEBUG]: RCA_loss: 0.019, TC_loss: 0.003
+2026-06-17 14:59:01 [DEBUG]: RCA_loss: 0.058, TC_loss: 0.009
+2026-06-17 14:59:01 [DEBUG]: RCA_loss: 0.019, TC_loss: 0.005
+2026-06-17 14:59:01 [DEBUG]: RCA_loss: 0.189, TC_loss: 0.003
+2026-06-17 14:59:01 [DEBUG]: RCA_loss: 0.047, TC_loss: 0.002
+2026-06-17 14:59:01 [DEBUG]: RCA_loss: 0.031, TC_loss: 0.006
+2026-06-17 14:59:01 [DEBUG]: RCA_loss: 0.126, TC_loss: 0.006
+2026-06-17 14:59:01 [DEBUG]: RCA_loss: 0.069, TC_loss: 0.004
+2026-06-17 14:59:01 [DEBUG]: RCA_loss: 0.073, TC_loss: 0.004
+2026-06-17 14:59:01 [DEBUG]: RCA_loss: 0.020, TC_loss: 0.009
+2026-06-17 14:59:01 [DEBUG]: RCA_loss: 0.047, TC_loss: 0.002
+2026-06-17 14:59:02 [DEBUG]: RCA_loss: 0.089, TC_loss: 0.006
+2026-06-17 14:59:02 [DEBUG]: RCA_loss: 0.123, TC_loss: 0.006
+2026-06-17 14:59:02 [DEBUG]: RCA_loss: 0.046, TC_loss: 0.001
+2026-06-17 14:59:02 [DEBUG]: RCA_loss: 0.109, TC_loss: 0.015
+2026-06-17 14:59:02 [DEBUG]: RCA_loss: 0.038, TC_loss: 0.003
+2026-06-17 14:59:02 [DEBUG]: RCA_loss: 0.017, TC_loss: 0.003
+2026-06-17 14:59:02 [DEBUG]: RCA_loss: 0.092, TC_loss: 0.006
+2026-06-17 14:59:02 [DEBUG]: RCA_loss: 0.043, TC_loss: 0.007
+2026-06-17 14:59:02 [DEBUG]: RCA_loss: 0.021, TC_loss: 0.005
+2026-06-17 14:59:02 [DEBUG]: RCA_loss: 0.091, TC_loss: 0.005
+2026-06-17 14:59:03 [DEBUG]: RCA_loss: 0.061, TC_loss: 0.003
+2026-06-17 14:59:03 [DEBUG]: RCA_loss: 0.404, TC_loss: 0.005
+2026-06-17 14:59:03 [INFO]: Epoch 43 done. Loss: 0.075
+2026-06-17 14:59:03 [DEBUG]: RCA_loss: 0.079, TC_loss: 0.015
+2026-06-17 14:59:03 [DEBUG]: RCA_loss: 0.069, TC_loss: 0.005
+2026-06-17 14:59:03 [DEBUG]: RCA_loss: 0.154, TC_loss: 0.007
+2026-06-17 14:59:03 [DEBUG]: RCA_loss: 0.010, TC_loss: 0.004
+2026-06-17 14:59:03 [DEBUG]: RCA_loss: 0.009, TC_loss: 0.002
+2026-06-17 14:59:03 [DEBUG]: RCA_loss: 0.070, TC_loss: 0.016
+2026-06-17 14:59:03 [DEBUG]: RCA_loss: 0.101, TC_loss: 0.006
+2026-06-17 14:59:03 [DEBUG]: RCA_loss: 0.022, TC_loss: 0.066
+2026-06-17 14:59:04 [DEBUG]: RCA_loss: 0.047, TC_loss: 0.032
+2026-06-17 14:59:04 [DEBUG]: RCA_loss: 0.011, TC_loss: 0.006
+2026-06-17 14:59:04 [DEBUG]: RCA_loss: 0.023, TC_loss: 0.002
+2026-06-17 14:59:04 [DEBUG]: RCA_loss: 0.028, TC_loss: 0.006
+2026-06-17 14:59:04 [DEBUG]: RCA_loss: 0.049, TC_loss: 0.018
+2026-06-17 14:59:04 [DEBUG]: RCA_loss: 0.029, TC_loss: 0.013
+2026-06-17 14:59:04 [DEBUG]: RCA_loss: 0.017, TC_loss: 0.005
+2026-06-17 14:59:04 [DEBUG]: RCA_loss: 0.059, TC_loss: 0.023
+2026-06-17 14:59:04 [DEBUG]: RCA_loss: 0.006, TC_loss: 0.004
+2026-06-17 14:59:04 [DEBUG]: RCA_loss: 0.041, TC_loss: 0.003
+2026-06-17 14:59:05 [DEBUG]: RCA_loss: 0.062, TC_loss: 0.007
+2026-06-17 14:59:05 [DEBUG]: RCA_loss: 0.011, TC_loss: 0.002
+2026-06-17 14:59:05 [DEBUG]: RCA_loss: 0.024, TC_loss: 0.002
+2026-06-17 14:59:05 [DEBUG]: RCA_loss: 0.085, TC_loss: 0.006
+2026-06-17 14:59:05 [DEBUG]: RCA_loss: 0.052, TC_loss: 0.006
+2026-06-17 14:59:05 [DEBUG]: RCA_loss: 0.186, TC_loss: 0.006
+2026-06-17 14:59:05 [DEBUG]: RCA_loss: 0.027, TC_loss: 0.005
+2026-06-17 14:59:05 [DEBUG]: RCA_loss: 0.019, TC_loss: 0.008
+2026-06-17 14:59:05 [DEBUG]: RCA_loss: 0.039, TC_loss: 0.008
+2026-06-17 14:59:05 [DEBUG]: RCA_loss: 0.095, TC_loss: 0.004
+2026-06-17 14:59:06 [DEBUG]: RCA_loss: 0.072, TC_loss: 0.004
+2026-06-17 14:59:06 [DEBUG]: RCA_loss: 0.060, TC_loss: 0.002
+2026-06-17 14:59:06 [DEBUG]: RCA_loss: 0.035, TC_loss: 0.028
+2026-06-17 14:59:06 [DEBUG]: RCA_loss: 0.026, TC_loss: 0.002
+2026-06-17 14:59:06 [DEBUG]: RCA_loss: 0.048, TC_loss: 0.045
+2026-06-17 14:59:06 [DEBUG]: RCA_loss: 0.065, TC_loss: 0.004
+2026-06-17 14:59:06 [DEBUG]: RCA_loss: 0.091, TC_loss: 0.003
+2026-06-17 14:59:06 [DEBUG]: RCA_loss: 0.053, TC_loss: 0.003
+2026-06-17 14:59:06 [DEBUG]: RCA_loss: 0.078, TC_loss: 0.006
+2026-06-17 14:59:06 [DEBUG]: RCA_loss: 0.023, TC_loss: 0.004
+2026-06-17 14:59:07 [DEBUG]: RCA_loss: 0.000, TC_loss: 0.006
+2026-06-17 14:59:07 [INFO]: Epoch 44 done. Loss: 0.062
+2026-06-17 14:59:07 [DEBUG]: RCA_loss: 0.089, TC_loss: 0.006
+2026-06-17 14:59:07 [DEBUG]: RCA_loss: 0.074, TC_loss: 0.011
+2026-06-17 14:59:07 [DEBUG]: RCA_loss: 0.090, TC_loss: 0.003
+2026-06-17 14:59:07 [DEBUG]: RCA_loss: 0.349, TC_loss: 0.023
+2026-06-17 14:59:07 [DEBUG]: RCA_loss: 0.295, TC_loss: 0.005
+2026-06-17 14:59:07 [DEBUG]: RCA_loss: 0.218, TC_loss: 0.013
+2026-06-17 14:59:07 [DEBUG]: RCA_loss: 0.058, TC_loss: 0.018
+2026-06-17 14:59:07 [DEBUG]: RCA_loss: 0.358, TC_loss: 0.009
+2026-06-17 14:59:07 [DEBUG]: RCA_loss: 0.201, TC_loss: 0.077
+2026-06-17 14:59:08 [DEBUG]: RCA_loss: 0.018, TC_loss: 0.004
+2026-06-17 14:59:08 [DEBUG]: RCA_loss: 0.063, TC_loss: 0.006
+2026-06-17 14:59:08 [DEBUG]: RCA_loss: 0.503, TC_loss: 0.004
+2026-06-17 14:59:08 [DEBUG]: RCA_loss: 0.080, TC_loss: 0.018
+2026-06-17 14:59:08 [DEBUG]: RCA_loss: 0.324, TC_loss: 0.029
+2026-06-17 14:59:08 [DEBUG]: RCA_loss: 0.230, TC_loss: 0.005
+2026-06-17 14:59:08 [DEBUG]: RCA_loss: 0.160, TC_loss: 0.003
+2026-06-17 14:59:08 [DEBUG]: RCA_loss: 0.135, TC_loss: 0.012
+2026-06-17 14:59:08 [DEBUG]: RCA_loss: 0.259, TC_loss: 0.014
+2026-06-17 14:59:08 [DEBUG]: RCA_loss: 0.184, TC_loss: 0.050
+2026-06-17 14:59:09 [DEBUG]: RCA_loss: 0.076, TC_loss: 0.003
+2026-06-17 14:59:09 [DEBUG]: RCA_loss: 0.053, TC_loss: 0.063
+2026-06-17 14:59:09 [DEBUG]: RCA_loss: 0.093, TC_loss: 0.004
+2026-06-17 14:59:09 [DEBUG]: RCA_loss: 0.093, TC_loss: 0.006
+2026-06-17 14:59:09 [DEBUG]: RCA_loss: 0.155, TC_loss: 0.003
+2026-06-17 14:59:09 [DEBUG]: RCA_loss: 0.173, TC_loss: 0.010
+2026-06-17 14:59:09 [DEBUG]: RCA_loss: 0.090, TC_loss: 0.008
+2026-06-17 14:59:09 [DEBUG]: RCA_loss: 0.109, TC_loss: 0.010
+2026-06-17 14:59:09 [DEBUG]: RCA_loss: 0.266, TC_loss: 0.004
+2026-06-17 14:59:09 [DEBUG]: RCA_loss: 0.071, TC_loss: 0.008
+2026-06-17 14:59:09 [DEBUG]: RCA_loss: 0.074, TC_loss: 0.004
+2026-06-17 14:59:10 [DEBUG]: RCA_loss: 0.095, TC_loss: 0.015
+2026-06-17 14:59:10 [DEBUG]: RCA_loss: 0.032, TC_loss: 0.005
+2026-06-17 14:59:10 [DEBUG]: RCA_loss: 0.029, TC_loss: 0.005
+2026-06-17 14:59:10 [DEBUG]: RCA_loss: 0.117, TC_loss: 0.007
+2026-06-17 14:59:10 [DEBUG]: RCA_loss: 0.033, TC_loss: 0.007
+2026-06-17 14:59:10 [DEBUG]: RCA_loss: 0.079, TC_loss: 0.009
+2026-06-17 14:59:10 [DEBUG]: RCA_loss: 0.016, TC_loss: 0.005
+2026-06-17 14:59:10 [DEBUG]: RCA_loss: 0.111, TC_loss: 0.006
+2026-06-17 14:59:10 [DEBUG]: RCA_loss: 0.001, TC_loss: 0.008
+2026-06-17 14:59:10 [INFO]: Epoch 45 done. Loss: 0.156
+2026-06-17 14:59:10 [INFO]: Early stop at epoch 45 due to lack of improvement.
+2026-06-17 14:59:10 [INFO]: Training has finished.
+2026-06-17 14:59:10 [DEBUG]: The training time is 196.42783045768738[s]
+2026-06-17 14:59:10 [DEBUG]: The training time per epoch is 4.27017022734103[s]
+2026-06-17 14:59:13 [DEBUG]: The test time is 1.6039137840270996[s]
+2026-06-17 14:59:13 [DEBUG]: The test time per epoch is 0.05346379280090332[s]
+2026-06-17 14:59:13 [INFO]: [Root localization] HR@1: 82.396%, HR@2: 89.792%, HR@3: 92.708%, HR@4: 94.375%, HR@5: 95.208%,  MRR@3: 0.871
+2026-06-17 14:59:13 [INFO]: [Failure type classification] precision: 94.315%, recall: 96.562%, f1-score: 95.411%
