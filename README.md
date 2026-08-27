@@ -7,7 +7,7 @@
 - Failure Type Identification
 This repository offers the core implementation of *AMF-BO*.
 
-![](./amfbo/structure.pdf)
+![](./amfbo/structure.jpg)
 
 ## Project Structure
 
