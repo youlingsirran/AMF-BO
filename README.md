@@ -5,6 +5,7 @@
 *AMF-BO* is designed to achieve accurate failure diagnosis in microservice-based systems. It leverages three types of monitoring data—metrics, traces, and logs—to accomplish two core diagnostic tasks:
 - Root Cause Localization
 - Failure Type Identification
+
 This repository offers the core implementation of *AMF-BO*.
 
 ![](./amfbo/structure_1.jpg)
