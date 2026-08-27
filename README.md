@@ -40,7 +40,9 @@ AMFBO/
 We evaluate AMF-BO on three public benchmark datasets covering logs, metrics, and traces.
 - **D1 (GAIA)** – Collected from a QR‑code login system. Available at [GAIA](https://github.com/CloudWise-OpenSource/GAIA-DataSet).
 - **D2 (AIOps‑22)** – From the 2022 CCF AIOps Challenge, based on HipsterShop. Download from the [challenge website](https://competition.aiops-challenge.com).
-- **D3 (SockShop)** – Deployed on Kubernetes with ChaosMesh injections. The benchmark is from [microservices‑demo](https://github.com/microservices-demo/microservices-demo); our processed version is included in the `data/` directory of this repository.
+- **D3 (SockShop)** – Deployed on Kubernetes with ChaosMesh injections. The benchmark is from [microservices‑demo](https://github.com/microservices-demo/microservices-demo).
+
+Our processed version is included in the `data/` directory of this repository.
 
 
 ## Getting Started
